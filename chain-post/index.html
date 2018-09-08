@@ -3,8 +3,277 @@
 <head>
     <meta charset="UTF-8">
     <title>Chain-Post</title>
+
+    <script src="//unpkg.com/golos-js@0.7.0/dist/golos.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
 </head>
 <body>
-    <h1>Hello to Chain-Post tool for posting your work to different blockchains ;-)</h1>
+    <form action="#" method="POST" id="form">
+        <label for="title">Title</label>
+        <input type="text" name="title" id="title" size="50" />
+
+        <br />
+
+        <label for="body">Body</label>
+        <textarea name="body" id="body" cols="100" rows="20"></textarea>
+
+        <br />
+
+        <label for="tags">Tags</label>
+        <input type="text" name="tags" id="tags" size="50" />
+
+        <br />
+
+        <label for="account">Account</label>
+        <input type="text" name="account" id="account" size="50" />
+
+        <br />
+
+        <label for="wif">Post key</label>
+        <input type="text" name="wif" id="wif" size="50" />
+
+        <br />
+
+        <input type="submit" id="submit" value="Post" />
+    </form>
+
+    <script type="application/javascript">
+        jQuery(document).ready(function($) {
+            $('#form').on('submit', function(e) {
+                e.preventDefault();
+
+                var posttitle = document.getElementById("title").value,
+//                    wssgolos = (document.getElementById("golosnode").value)?document.getElementById("golosnode").value:'wss://ws.golos.io',
+                    post_body = document.getElementById("body").value, //MD.value(),
+//                    feature = document.getElementById("feature").value.replace(/ /g, ''),
+                    author = document.getElementById("account").value.toLowerCase().replace(/ /g, '').replace(/@/g, ''),
+//                    appname = (document.getElementById("appname").value)?document.getElementById("appname").value:'@vik',
+                    appname = '@chain-post',
+                    wif = document.getElementById("wif").value.replace(/ /g, '');
+
+                if (false === golos.auth.isWif(wif)) {
+                    return alert('Вы допустили ошибку в поле ввода постинг ключа. Будьте внимательны! Неправильное использование ключей влечет потерю аккаунта!');
+                }
+
+//                golos.config.set('websocket',wssgolos);
+
+//                var permlink = document.getElementById("permlink").value.toLowerCase().replace(/\,/g, '-').replace(/\./g, '-');
+                var permlink = 'chain-post-' + author + '-' + Math.round(new Date().getTime()/1000);
+
+/*
+                if (!permlink) {
+                    permlink = transform(posttitle, "-"),
+                        permlink=permlink.replace(/([^a-zA-Z0-9 \-]*)/g,'');
+                    permlink=permlink.replace(/---/g,'-');
+                    permlink=permlink.replace(/--/g,'-');
+                    permlink=permlink.replace(/--/g,'-');
+                    permlink=permlink.replace(/^\-+|\-+$/g, '');
+                }
+*/
+
+
+                var tgs = document.getElementById("tags").value,
+                    tagspace = tgs.toLowerCase().replace(/,/g, ' ').replace(/  /g, ' '),
+                    tagsraw = tagspace.split(' '),
+                    tags = [];
+
+                for (tag of tagsraw) {
+//                    var rutag = tag.replace(/ые/g, 'yie')
+
+//                    tags.push(transform(rutag, "-"))
+                    tags.push(tag)
+                }
+
+
+
+                var jsonMetadata = {
+                        "app": appname,
+                        "format": "markdown",
+                        "tags": tags,
+//                        "image": (feature)?[feature]:featuredImage
+                        "image": []
+                    },
+//                    parentpermlink = document.getElementById("parentpermlink").value,
+//                    parentPermlink =(isEditMode || parentpermlink)?parentpermlink:tags[0],
+                    parentPermlink = tags[0],
+//                    beneficiaries = document.getElementById("benics").value,
+                    beneficiaries = "[{\"account\":\"chain-post\",\"weight\":500}]",
+//                    Allinpower = document.getElementById("Allinpower").checked,
+                   Allinpower = false,
+//                    declinePayout = document.getElementById("declinePayout").checked,
+                   declinePayout = false,
+//                    allowCur = (document.getElementById("declineCur").checked)?false:true,
+                   allowCur = true,
+//                    parentauthor = (document.getElementById("parentauthor").value)?(document.getElementById("parentauthor").value):"";
+                    parentauthor = "";
+                var cleanBenef = "";
+
+                try {
+                    cleanBenef = (beneficiaries) ? JSON.parse(beneficiaries) : ""
+                } catch(e) {
+                    return alert("Вы ввели неправильный формат данных в поле бенефициаров! "+e);
+                }
+
+//                $('#alerts').fadeIn();
+
+                var beneficiariesObj = [
+                    [0, {
+                        "beneficiaries": (beneficiaries) ? cleanBenef : ""
+                    }]
+                ];
+/*
+                if(document.getElementById("benevik").checked){
+                    beneficiariesObj = [[0,{"beneficiaries":[{"account":"vik","weight":1000},{"account":"netfriend","weight":1000}]}]];
+                    beneficiaries = true
+                }
+*/
+                if(!permlink)return alert('Не удалось конвертировать ваш заголовок в ссылку. Задайте ссылку отдельно. Поле permlink в расширенных настройках поста')
+
+                var commentOptions = {
+                    "author": author,
+                    "permlink": permlink,
+                    "max_accepted_payout": (declinePayout) ? '0.000 GBG' : '1000000.000 GBG',
+                    "percent_steem_dollars": (Allinpower) ? 0 : 10000,
+                    "allow_votes": true,
+                    "allow_curation_rewards": allowCur,
+                    "extensions": (beneficiaries) ? beneficiariesObj : []
+                };
+
+                var newTx = {
+                    "parent_author": parentauthor,
+                    "parent_permlink": parentPermlink,
+                    "author": author,
+                    "permlink": permlink,
+                    "title": posttitle,
+                    "body": post_body,
+                    "json_metadata": JSON.stringify(jsonMetadata)
+                };
+
+                // if(!isEditMode && (declinePayout||Allinpower||beneficiaries||!allowCur))newTx.push(commentOptions);
+
+//                newTx.push(commentOptions);
+
+
+/*
+                golos.api.getDynamicGlobalProperties(function(e, g) {
+
+                    if (e) return alert(tryAgain);
+
+                    Date.prototype.addHours = function(h) {
+                        this.setTime(this.getTime() + (h*60*60*1000));
+                        return this;
+                    }
+                    var d = new Date(g.time).addHours(0.4);
+                    expire = d.getFullYear() + "-" + ('0' + (d.getMonth() + 1)).slice(-2) + "-" + ('0' + d.getDate()).slice(-2) + "T" + ('0' + d.getHours()).slice(-2) + ":" + ('0' + d.getMinutes()).slice(-2) + ":" + ('0' + d.getSeconds()).slice(-2);
+                    var taposBlock = g.head_block_number - 2;
+                    golos.api.getBlockHeader(taposBlock, function(err, blockLink) {
+                        if (err) return alert(tryAgain);
+                        var blockid = blockLink.previous;
+                        n = [];
+                        for (var i = 0; i < blockid.length; i += 2) {
+                            n.push(blockid.substr(i, 2));
+                        }
+                        var hex = n[7] + n[6] + n[5] + n[4];
+                        var refBlockNum = taposBlock - 1 & 0xffff;
+                        var refBlockPrefix = parseInt(hex, 16)
+
+
+                        var trx = {
+                            "expiration": expire,
+                            "extensions": [],
+                            "operations": newTx,
+                            "ref_block_num": refBlockNum,
+                            "ref_block_prefix": refBlockPrefix
+                        };
+
+
+                        var trxs = "";
+                        try {
+                            trxs = golos.auth.signTransaction(trx, {
+                                "posting": wif
+                            });
+                            $('.sendbutton').fadeOut();
+                        } catch (error) {
+                            console.log(error)
+                            var etxt = JSON.stringify(error);
+                            $('.sendbutton').fadeIn();
+                            $('#addimg').removeClass('loading');
+                            if(etxt.includes('instead got 149'))return alert('Вы вставили пароль вместо постинг-ключа. Используйте ТОЛЬКО ПОСТИНГ КЛЮЧ, использование пароля небезопасно!');
+                            return alert("Не удалось подписать транзакцию c постом. Откройте консоль браузера для просмотра подробностей" + error.message);
+
+                        }
+                        console.log(JSON.stringify(trxs,null,4))
+
+                        if(author==='tester')return console.log(JSON.stringify(trxs,null,4));
+                        golos.api.broadcastTransactionSynchronous(trxs, function(err, result) {
+                            console.log(err, result);
+                            $('.sendbutton').fadeIn();
+                            if (err) {
+                                var errorNotice = err;
+
+                                var etxt = JSON.stringify(err);
+
+                                if(etxt.includes('missing required posting authority'))errorNotice='Неправильный постинг ключ! Постинг ключ должен начинаться на цифру 5 и содержать 51 символ.';
+                                if(etxt.includes('permlink is too long'))errorNotice='Слишком длинный permlink! Используйте заголовок короче или настройте короткую ссылку в расширенных опциях!';
+                                if(etxt.includes('Invalid permlink character'))errorNotice='Ошибка! permlink содержит недопустимый символ! Отредактируйте поле permlink или первый тег поста';
+
+                                if(etxt.includes('STEEMIT_MIN_ROOT_COMMENT_INTERVAL'))errorNotice='Ошибка! Должно пройти 5 минут с момента публикации последнего поста.';
+
+
+
+                                return document.getElementById('alerts').innerHTML = ('<blockquote style="color:red"><h4>Ошибка!</h4> <pre><xmp>' + errorNotice + '</xmp><pre></blockquote>');
+                            }
+                            var directUrl = 'https://golos.cf/'+parentPermlink+'/@'+author+'/'+permlink;
+                            var postUrl = '<a href="'+directUrl+'">@'+author+'/'+permlink+'</a>';
+                            var succesPub = (isEditMode)?'Пост отредактирован ':'Пост размещен ';
+
+                            document.getElementById('alerts').innerHTML = (succesPub+postUrl);
+                            $('#alerts').addClass('published')
+                            $('.sendbutton').fadeOut();
+
+                            MD.value("");
+                            window.location.replace(directUrl);
+
+                        });
+                    });
+                });
+*/
+                golos.broadcast.comment(
+                    wif,
+                    newTx['parent_author'],
+                    newTx['parent_permlink'],
+                    newTx['author'],
+                    newTx['permlink'],
+                    newTx['title'],
+                    newTx['body'],
+                    newTx['json_metadata'],
+                    function(err, result) {
+                        //console.log(err, result);
+                        if (!err) {
+                            console.log('comment', result);
+
+                            golos.broadcast.commentOptions(
+                                wif,
+                                commentOptions['author'],
+                                commentOptions['permlink'],
+                                commentOptions['max_accepted_payout'],
+                                commentOptions['percent_steem_dollars'],
+                                commentOptions['allow_votes'],
+                                commentOptions['allow_curation_rewards'],
+                                commentOptions['extensions'],
+                                function(err, result) {
+                                    console.log(err, result);
+                                }
+                            );
+                        }
+                        else {
+                            console.error(err);
+                        }
+                    }
+                );
+            });
+
+        });
+    </script>
 </body>
 </html>
