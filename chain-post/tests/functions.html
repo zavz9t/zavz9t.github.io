@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Tests of project functions</title>
+
+    <link rel="stylesheet" href="//code.jquery.com/qunit/qunit-2.6.2.css">
+    <script src="//code.jquery.com/qunit/qunit-2.6.2.js"></script>
+
+    <script src="../js/app.js"></script>
+
+    <script>
+        QUnit.test('permlink builder', function( assert ) {
+            assert.equal(stripAndTransliterate(''), '');
+            assert.equal(stripAndTransliterate('hello'), 'hello');
+            assert.equal(stripAndTransliterate('Hello dear friends!'), 'hello-dear-friends');
+            assert.equal(stripAndTransliterate('Word-to-Word text'), 'word-to-word-text');
+            assert.equal(stripAndTransliterate('Several  spaces   test     fin'), 'several-spaces-test-fin');
+            assert.equal(stripAndTransliterate('Several  spaces   test     fin', '_'), 'several_spaces_test_fin');
+            assert.equal(stripAndTransliterate('Some, item. He-he'), 'some-item-he-he');
+            assert.equal(stripAndTransliterate('Another,item.Be-be'), 'another-item-be-be');
+            assert.equal(stripAndTransliterate('Привіт друзі!'), 'ru--privit-druzi');
+            assert.equal(stripAndTransliterate('Странные вещи'), 'ru--strannyie-veshchi');
+            assert.equal(stripAndTransliterate('(💯 апвот) Очень злая собака 😨 - 7'), 'ru--apvot-ochenx-zlaya-sobaka-7');
+            assert.equal(stripAndTransliterate('(💯 апвот) Динозаври на вулиці 😱 - 2'), 'ru--apvot-dinozavri-na-vuliczi-2');
+            assert.equal(
+                stripAndTransliterate('[Щоденник досягнень] День 32/100 | 08.09.2018'),
+                'ru--shchodennik-dosyagnenx-denx-32-100-08-09-2018'
+            );
+            assert.equal(
+                stripAndTransliterate('[Щоденник досягнень] День 32/100 | 08.09.2018', '_', 'ua-'),
+                'ua-shchodennik_dosyagnenx_denx_32_100_08_09_2018'
+            );
+        });
+
+        QUnit.test('permlink builder', function( assert ) {
+            var date = new Date('October 3, 2014 09:13:00');
+
+            assert.equal(buildDefaultPermlink('test', '@chain-post', date), 'chain-post-test-2014-10-3-9-13-0');
+            assert.equal(buildDefaultPermlink('test.new', '@chain-post', date), 'chain-post-test.new-2014-10-3-9-13-0');
+            assert.equal(buildDefaultPermlink('@test-ch', '@chain-post', date), 'chain-post-test-ch-2014-10-3-9-13-0');
+        });
+    </script>
+</head>
+<body>
+
+<div id="qunit"></div>
+
+</body>
+</html>
