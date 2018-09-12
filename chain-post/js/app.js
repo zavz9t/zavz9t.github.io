@@ -229,7 +229,7 @@ function publishToVox(
 ) {
     let imgPrefix = ``;
 
-    steem.api.setOptions({ url: 'https://vox.community:9000' });
+    steem.api.setOptions({ url: 'wss://vox.community/ws' });
     steem.config.set('address_prefix', 'VOX');
     steem.config.set('chain_id', '88a13f63de69c3a927594e07d991691c20e4cf1f34f83ae9bd26441db42a8acd');
 
@@ -344,7 +344,7 @@ function publishToSteem(
             'json_metadata': jsonMetadata,
             'decline_payout': declinePayout,
             'all_in_power': allInPower,
-            'beneficiaries': []
+            'beneficiaries': beneficiaries
         });
 
         return false;
