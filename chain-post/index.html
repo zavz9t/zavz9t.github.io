@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <title>Chain-Post</title>
 
-    <script src="//unpkg.com/golos-js@0.7.0/dist/golos.min.js"></script>
+    <script src="node_modules/golos-js/dist/golos.min.js"></script>
+    <script src="node_modules/@steemit/steem-js/dist/steem.min.js"></script>
+    <script src="node_modules/wlsjs-staging/dist/wlsjs.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
 
     <script src="js/app.js"></script>
@@ -25,14 +27,84 @@
         <input type="text" name="tags" id="tags" size="50" />
 
         <br />
+        <hr />
 
-        <label for="account">Account</label>
-        <input type="text" name="account" id="account" size="50" />
+        <h3>Steem Account</h3>
 
         <br />
 
-        <label for="wif">Post key</label>
-        <input type="password" name="wif" id="wif" size="50" />
+        <label for="tags-steem">Steem Tags</label>
+        <input type="text" name="tags-steem" id="tags-steem" size="50" />
+
+        <br />
+
+        <label for="account-steem">Account</label>
+        <input type="text" name="account-steem" id="account-steem" size="50" />
+
+        <br />
+
+        <label for="wif-steem">Post key</label>
+        <input type="password" name="wif-steem" id="wif-steem" size="50" />
+
+        <br />
+        <hr />
+
+        <h3>Golos Account</h3>
+
+        <br />
+
+        <label for="tags-golos">Golos Tags</label>
+        <input type="text" name="tags-golos" id="tags-golos" size="50" />
+
+        <br />
+
+        <label for="account-golos">Account</label>
+        <input type="text" name="account-golos" id="account-golos" size="50" />
+
+        <br />
+
+        <label for="wif-golos">Post key</label>
+        <input type="password" name="wif-golos" id="wif-golos" size="50" />
+
+        <br />
+        <hr />
+
+        <h3>VOX Account</h3>
+
+        <br />
+
+        <label for="tags-vox">VOX Tags</label>
+        <input type="text" name="tags-vox" id="tags-vox" size="50" />
+
+        <br />
+
+        <label for="account-vox">Account</label>
+        <input type="text" name="account-vox" id="account-vox" size="50" />
+
+        <br />
+
+        <label for="wif-vox">Post key</label>
+        <input type="password" name="wif-vox" id="wif-vox" size="50" />
+
+        <br />
+        <hr />
+
+        <h3>WhaleShare Account</h3>
+
+        <br />
+
+        <label for="tags-wls">WhaleShare Tags</label>
+        <input type="text" name="tags-wls" id="tags-wls" size="50" />
+
+        <br />
+
+        <label for="account-wls">Account</label>
+        <input type="text" name="account-wls" id="account-wls" size="50" />
+
+        <br />
+
+        <label for="wif-wls">Post key</label>
+        <input type="password" name="wif-wls" id="wif-wls" size="50" />
 
         <br />
 
