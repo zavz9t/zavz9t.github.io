@@ -1,13 +1,23 @@
 const placeholders = {
-    '{f_zavz9t}': `<center>
+    '{f_zavz9t}': `---
+<center>
 ### [![](https://s19.postimg.cc/855m162ab/27cb8858fa0dfe41d2b1190533c8af9a63-32x32.png) SteemIt](https://steemit.com/@zavz9t) [![](https://s19.postimg.cc/6er6dbmyr/download-32x32.jpg) WhaleShares](https://whaleshares.io/@zavz9t) [![](https://s19.postimg.cc/7tsr21vrn/1480-32x32.png) Golos](https://golos.io/@zavz9t) [![VOX](https://s19.postimg.cc/fgjyfjt4j/vox-32.png)](https://vox.community/@zavz9t)
 </center>`,
-    '{f_lego-cat}': `<center>
+    '{f_lego-cat}': `---
+<center>
 ### [![](https://s19.postimg.cc/855m162ab/27cb8858fa0dfe41d2b1190533c8af9a63-32x32.png) SteemIt](https://steemit.com/@lego-cat) [![](https://s19.postimg.cc/6er6dbmyr/download-32x32.jpg) WhaleShares](https://whaleshares.io/@lego-cat) [![](https://s19.postimg.cc/7tsr21vrn/1480-32x32.png) Golos](https://golos.io/@lego-cat) [![VOX](https://s19.postimg.cc/fgjyfjt4j/vox-32.png)](https://vox.community/@lego-cat)
 </center>`,
-    '{f_v-mi}': `<center>
+    '{f_v-mi}': `---
+<center>
 ### [![](https://s19.postimg.cc/855m162ab/27cb8858fa0dfe41d2b1190533c8af9a63-32x32.png) SteemIt](https://steemit.com/@v-mi) [![](https://s19.postimg.cc/6er6dbmyr/download-32x32.jpg) WhaleShares](https://whaleshares.io/@v-mi) [![](https://s19.postimg.cc/7tsr21vrn/1480-32x32.png) Golos](https://golos.io/@v-mi) [![VOX](https://s19.postimg.cc/fgjyfjt4j/vox-32.png)](https://vox.community/@v-mi)
-</center>`
+</center>`,
+    '{f_cp_ua}': `---
+
+## Декілька слів про те, куди Ви попали
+
+Даний розділ починався з того, що я ділився горнятками кави, які я отримував і бачив у різноманітних закладах. Оскільки вони часто бували яскравими та веселими, то я вирішив ними ділитися з тими, кому це цікаво. Пізніше, я побачив, що є багато різноманітних горняток навколо, то я почав ділитися і ними також, а назва залишилася, як ознака того, з чого все почалося 😉
+
+<center>![](https://s19.postimg.cc/bw7u1jeyr/shutterstock_1012867498.jpg)</center>`
 };
 
 function stripAndTransliterate(input, spaceReplacement, ruPrefix) {
@@ -130,6 +140,10 @@ function handleTags(tags) {
     return result;
 }
 
+function stripPlaceholders(body) {
+    return body.replace(/{\.+}/g, '');
+}
+
 function publishToGolos(
     wif,
     author,
@@ -143,7 +157,10 @@ function publishToGolos(
     allInPower,
     beneficiaries
 ) {
-    let imgPrefix = `https://imgp.golos.io/400x0/`;
+    let placeholdersLocal = {
+        '{img_p}': `https://imgp.golos.io/400x0/`,
+        '{img_p_8}': `https://imgp.golos.io/800x0/`
+    };
 
     if (false === isTest() && false === golos.auth.isWif(wif)) {
         return alert('Вы допустили ошибку в поле ввода постинг ключа. Будьте внимательны! Неправильное использование ключей влечет потерю аккаунта!');
@@ -152,13 +169,18 @@ function publishToGolos(
     let beneficiariesLocal = JSON.parse(JSON.stringify(beneficiaries));
     beneficiariesLocal.push({"account": "golosio", "weight": 1000});
 
-    postBody = postBody.replace('{img_p}', imgPrefix);
+    jsonMetadata[`app`] = `golos.io/0.1`;
+
+    for (let key in placeholdersLocal) {
+        postBody = postBody.replace(key, placeholdersLocal[key]);
+    }
     for (let key in placeholders) {
         postBody = postBody.replace(key, placeholders[key]);
     }
+    postBody = stripPlaceholders(postBody);
 
     if (isTest()) {
-        console.log({
+        console.log('golos', {
             'wif': wif,
             'author': author,
             'permlink': permlink,
@@ -227,7 +249,8 @@ function publishToVox(
     allInPower,
     beneficiaries
 ) {
-    let imgPrefix = ``;
+    let placeholdersLocal = {
+    };
 
     steem.api.setOptions({ url: 'wss://vox.community/ws' });
     steem.config.set('address_prefix', 'VOX');
@@ -242,13 +265,16 @@ function publishToVox(
 
     jsonMetadata['tags'].push('dpos-post');
 
-    postBody = postBody.replace('{img_p}', imgPrefix);
+    for (let key in placeholdersLocal) {
+        postBody = postBody.replace(key, placeholdersLocal[key]);
+    }
     for (let key in placeholders) {
         postBody = postBody.replace(key, placeholders[key]);
     }
+    postBody = stripPlaceholders(postBody);
 
     if (isTest()) {
-        console.log({
+        console.log(`vox`, {
             'wif': wif,
             'author': author,
             'permlink': permlink,
@@ -317,7 +343,11 @@ function publishToSteem(
     allInPower,
     beneficiaries
 ) {
-    let imgPrefix = `https://steemitimages.com/400x0/`;
+
+    let placeholdersLocal = {
+        '{img_p}': `https://steemitimages.com/400x0/`,
+        '{img_p_8}': `https://steemitimages.com/800x0/`
+    };
 
     steem.api.setOptions({ url: 'wss://gtg.steem.house:8090' });
     steem.config.set('address_prefix','STM');
@@ -327,13 +357,16 @@ function publishToSteem(
         return alert('Вы допустили ошибку в поле ввода постинг ключа. Будьте внимательны! Неправильное использование ключей влечет потерю аккаунта!');
     }
 
-    postBody = postBody.replace('{img_p}', imgPrefix);
+    for (let key in placeholdersLocal) {
+        postBody = postBody.replace(key, placeholdersLocal[key]);
+    }
     for (let key in placeholders) {
         postBody = postBody.replace(key, placeholders[key]);
     }
+    postBody = stripPlaceholders(postBody);
 
     if (isTest()) {
-        console.log({
+        console.log(`steem`, {
             'wif': wif,
             'author': author,
             'permlink': permlink,
@@ -363,19 +396,19 @@ function publishToSteem(
             if (!err) {
                 console.log('comment', result);
 
-                steem.broadcast.commentOptions(
-                    wif,
-                    author,
-                    permlink,
-                    (declinePayout) ? '0.000 SBD' : '1000000.000 SBD',
-                    (allInPower) ? 0 : 10000,
-                    true,
-                    true,
-                    [],
-                    function(err, result) {
-                        console.log(err, result);
-                    }
-                );
+                // steem.broadcast.commentOptions(
+                //     wif,
+                //     author,
+                //     permlink,
+                //     (declinePayout) ? '0.000 SBD' : '1000000.000 SBD',
+                //     (allInPower) ? 0 : 10000,
+                //     true,
+                //     true,
+                //     [],
+                //     function(err, result) {
+                //         console.log(err, result);
+                //     }
+                // );
             }
             else {
                 console.error(err);
@@ -397,19 +430,32 @@ function publishToWls(
     allInPower,
     beneficiaries
 ) {
-    let imgPrefix = `https://whaleshares.io/imageproxy/400x0/`;
+    let placeholdersLocal = {
+        '{img_p}': `https://whaleshares.io/imageproxy/400x0/`,
+        '{img_p_8}': `https://whaleshares.io/imageproxy/800x0/`,
+        '{f_wls}': `---
+<center>
+Join our Whaleshares curation Group On Discord.
+We look for quality contents and help the needful.
+You are formally invited to out Group.
+https://discord.gg/JAW8fBt
+</center>`
+    };
 
     if (false === isTest() && false === wlsjs.auth.isWif(wif)) {
         return alert('Вы допустили ошибку в поле ввода постинг ключа. Будьте внимательны! Неправильное использование ключей влечет потерю аккаунта!');
     }
 
-    postBody = postBody.replace('{img_p}', imgPrefix);
+    for (let key in placeholdersLocal) {
+        postBody = postBody.replace(key, placeholdersLocal[key]);
+    }
     for (let key in placeholders) {
         postBody = postBody.replace(key, placeholders[key]);
     }
+    postBody = stripPlaceholders(postBody);
 
     if (isTest()) {
-        console.log({
+        console.log(`wls`, {
             'wif': wif,
             'author': author,
             'permlink': permlink,
@@ -439,24 +485,24 @@ function publishToWls(
             if (!err) {
                 console.log('comment', result);
 
-                wlsjs.broadcast.commentOptions(
-                    wif,
-                    author,
-                    permlink,
-                    (declinePayout) ? '0.000 WLS' : '1000000.000 WLS',
-                    (allInPower) ? 0 : 10000,
-                    true,
-                    true,
-                    [[
-                        0,
-                        {
-                            'beneficiaries': beneficiaries
-                        }
-                    ]],
-                    function(err, result) {
-                        console.log(err, result);
-                    }
-                );
+                // wlsjs.broadcast.commentOptions(
+                //     wif,
+                //     author,
+                //     permlink,
+                //     (declinePayout) ? '0.000 WLS' : '1000000.000 WLS',
+                //     (allInPower) ? 0 : 10000,
+                //     true,
+                //     true,
+                //     [[
+                //         0,
+                //         {
+                //             'beneficiaries': beneficiaries
+                //         }
+                //     ]],
+                //     function(err, result) {
+                //         console.log(err, result);
+                //     }
+                // );
             }
             else {
                 console.error(err);
