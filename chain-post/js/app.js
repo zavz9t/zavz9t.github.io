@@ -200,7 +200,6 @@ function publishToGolos(
 
     if (publishAsGolosio) {
         beneficiariesLocal.push({"account": "golosio", "weight": 1000});
-        jsonMetadata[`app`] = `golos.io/0.1`;
     }
     if (publishForVik) {
         beneficiariesLocal.push({"account": "netfriend", "weight": 1000});
@@ -215,59 +214,49 @@ function publishToGolos(
     }
     postBody = stripPlaceholders(postBody);
 
+    let operations = [
+        [
+            `comment`,
+            {
+                'parent_author': parentAuthor,
+                'parent_permlink': parentPermlink,
+                'author': author,
+                'permlink': permlink,
+                'title': postTitle,
+                'body': postBody,
+                'json_metadata': JSON.stringify(jsonMetadata)
+            }
+        ],
+        [
+            `comment_options`,
+            {
+                'author': author,
+                'permlink': permlink,
+                'max_accepted_payout': (declinePayout) ? '0.000 GBG' : '1000000.000 GBG',
+                'percent_steem_dollars': (allInPower) ? 0 : 10000,
+                'allow_votes': true,
+                'allow_curation_rewards': true,
+                'extensions': [[
+                    0,
+                    {
+                        'beneficiaries': beneficiariesLocal
+                    }
+                ]]
+            }
+        ]
+    ];
+
     if (isTest()) {
-        console.log('golos', {
-            'wif': wif,
-            'author': author,
-            'permlink': permlink,
-            'parent_author': parentAuthor,
-            'parent_permlink': parentPermlink,
-            'post_title': postTitle,
-            'post_body': postBody,
-            'json_metadata': jsonMetadata,
-            'decline_payout': declinePayout,
-            'all_in_power': allInPower,
-            'beneficiaries': beneficiariesLocal
-        });
+        console.log('golos', operations);
 
         return false;
     }
 
-    golos.broadcast.comment(
-        wif,
-        parentAuthor,
-        parentPermlink,
-        author,
-        permlink,
-        postTitle,
-        postBody,
-        jsonMetadata,
-        function(err, result) {
-            if (!err) {
-                console.log('comment', result);
-
-                golos.broadcast.commentOptions(
-                    wif,
-                    author,
-                    permlink,
-                    (declinePayout) ? '0.000 GBG' : '1000000.000 GBG',
-                    (allInPower) ? 0 : 10000,
-                    true,
-                    true,
-                    [[
-                        0,
-                        {
-                            'beneficiaries': beneficiariesLocal
-                        }
-                    ]],
-                    function(err, result) {
-                        console.log(err, result);
-                    }
-                );
-            }
-            else {
-                console.error(err);
-            }
+    golos.broadcast.send(
+        {'extensions': [], 'operations': operations},
+        {'posting': wif},
+        function (err, result) {
+            console.log('golos', err, result);
         }
     );
 }
@@ -308,59 +297,49 @@ function publishToVox(
     }
     postBody = stripPlaceholders(postBody);
 
+    let operations = [
+        [
+            `comment`,
+            {
+                'parent_author': parentAuthor,
+                'parent_permlink': parentPermlink,
+                'author': author,
+                'permlink': permlink,
+                'title': postTitle,
+                'body': postBody,
+                'json_metadata': JSON.stringify(jsonMetadata)
+            }
+        ],
+        [
+            `comment_options`,
+            {
+                'author': author,
+                'permlink': permlink,
+                'max_accepted_payout': (declinePayout) ? '0.000 GOLD' : '1000000.000 GOLD',
+                'percent_steem_dollars': (allInPower) ? 0 : 10000,
+                'allow_votes': true,
+                'allow_curation_rewards': true,
+                'extensions': [[
+                    0,
+                    {
+                        'beneficiaries': beneficiariesLocal
+                    }
+                ]]
+            }
+        ]
+    ];
+
     if (isTest()) {
-        console.log(`vox`, {
-            'wif': wif,
-            'author': author,
-            'permlink': permlink,
-            'parent_author': parentAuthor,
-            'parent_permlink': parentPermlink,
-            'post_title': postTitle,
-            'post_body': postBody,
-            'json_metadata': jsonMetadata,
-            'decline_payout': declinePayout,
-            'all_in_power': allInPower,
-            'beneficiaries': beneficiariesLocal
-        });
+        console.log(`vox`, operations);
 
         return false;
     }
 
-    steem.broadcast.comment(
-        wif,
-        parentAuthor,
-        parentPermlink,
-        author,
-        permlink,
-        postTitle,
-        postBody,
-        jsonMetadata,
-        function(err, result) {
-            if (!err) {
-                console.log('comment', result);
-
-                steem.broadcast.commentOptions(
-                    wif,
-                    author,
-                    permlink,
-                    (declinePayout) ? '0.000 GOLD' : '1000000.000 GOLD',
-                    (allInPower) ? 0 : 10000,
-                    true,
-                    true,
-                    [[
-                        0,
-                        {
-                            'beneficiaries': beneficiariesLocal
-                        }
-                    ]],
-                    function(err, result) {
-                        console.log(err, result);
-                    }
-                );
-            }
-            else {
-                console.error(err);
-            }
+    steem.broadcast.send(
+        {'extensions': [], 'operations': operations},
+        {'posting': wif},
+        function (err, result) {
+            console.log('vox', err, result);
         }
     );
 }
@@ -400,54 +379,50 @@ function publishToSteem(
     }
     postBody = stripPlaceholders(postBody);
 
+    let operations = [
+        [
+            `comment`,
+            {
+                'parent_author': parentAuthor,
+                'parent_permlink': parentPermlink,
+                'author': author,
+                'permlink': permlink,
+                'title': postTitle,
+                'body': postBody,
+                'json_metadata': JSON.stringify(jsonMetadata)
+            }
+        ],
+        [
+            `comment_options`,
+            {
+                'author': author,
+                'permlink': permlink,
+                'max_accepted_payout': (declinePayout) ? '0.000 SBD' : '1000000.000 SBD',
+                'percent_steem_dollars': (allInPower) ? 0 : 10000,
+                'allow_votes': true,
+                'allow_curation_rewards': true,
+                // 'extensions': [[
+                //     0,
+                //     {
+                //         'beneficiaries': beneficiaries
+                //     }
+                // ]]
+                'extensions': []
+            }
+        ]
+    ];
+
     if (isTest()) {
-        console.log(`steem`, {
-            'wif': wif,
-            'author': author,
-            'permlink': permlink,
-            'parent_author': parentAuthor,
-            'parent_permlink': parentPermlink,
-            'post_title': postTitle,
-            'post_body': postBody,
-            'json_metadata': jsonMetadata,
-            'decline_payout': declinePayout,
-            'all_in_power': allInPower,
-            'beneficiaries': beneficiaries
-        });
+        console.log(`steem`, operations);
 
         return false;
     }
 
-    steem.broadcast.comment(
-        wif,
-        parentAuthor,
-        parentPermlink,
-        author,
-        permlink,
-        postTitle,
-        postBody,
-        jsonMetadata,
-        function(err, result) {
-            if (!err) {
-                console.log('comment', result);
-
-                // steem.broadcast.commentOptions(
-                //     wif,
-                //     author,
-                //     permlink,
-                //     (declinePayout) ? '0.000 SBD' : '1000000.000 SBD',
-                //     (allInPower) ? 0 : 10000,
-                //     true,
-                //     true,
-                //     [],
-                //     function(err, result) {
-                //         console.log(err, result);
-                //     }
-                // );
-            }
-            else {
-                console.error(err);
-            }
+    steem.broadcast.send(
+        {'extensions': [], 'operations': operations},
+        {'posting': wif},
+        function (err, result) {
+            console.log('steem', err, result);
         }
     );
 }
@@ -490,59 +465,49 @@ https://discord.gg/JAW8fBt
     }
     postBody = stripPlaceholders(postBody);
 
+    let operations = [
+        [
+            `comment`,
+            {
+                'parent_author': parentAuthor,
+                'parent_permlink': parentPermlink,
+                'author': author,
+                'permlink': permlink,
+                'title': postTitle,
+                'body': postBody,
+                'json_metadata': JSON.stringify(jsonMetadata)
+            }
+        ],
+        [
+            `comment_options`,
+            {
+                'author': author,
+                'permlink': permlink,
+                'max_accepted_payout': (declinePayout) ? '0.000 WLS' : '1000000.000 WLS',
+                'percent_steem_dollars': (allInPower) ? 0 : 10000,
+                'allow_votes': true,
+                'allow_curation_rewards': true,
+                'extensions': [[
+                    0,
+                    {
+                        'beneficiaries': beneficiaries
+                    }
+                ]]
+            }
+        ]
+    ];
+
     if (isTest()) {
-        console.log(`wls`, {
-            'wif': wif,
-            'author': author,
-            'permlink': permlink,
-            'parent_author': parentAuthor,
-            'parent_permlink': parentPermlink,
-            'post_title': postTitle,
-            'post_body': postBody,
-            'json_metadata': jsonMetadata,
-            'decline_payout': declinePayout,
-            'all_in_power': allInPower,
-            'beneficiaries': beneficiaries
-        });
+        console.log(`wls`, operations);
 
         return false;
     }
 
-    wlsjs.broadcast.comment(
-        wif,
-        parentAuthor,
-        parentPermlink,
-        author,
-        permlink,
-        postTitle,
-        postBody,
-        jsonMetadata,
-        function(err, result) {
-            if (!err) {
-                console.log('comment', result);
-
-                // wlsjs.broadcast.commentOptions(
-                //     wif,
-                //     author,
-                //     permlink,
-                //     (declinePayout) ? '0.000 WLS' : '1000000.000 WLS',
-                //     (allInPower) ? 0 : 10000,
-                //     true,
-                //     true,
-                //     [[
-                //         0,
-                //         {
-                //             'beneficiaries': beneficiaries
-                //         }
-                //     ]],
-                //     function(err, result) {
-                //         console.log(err, result);
-                //     }
-                // );
-            }
-            else {
-                console.error(err);
-            }
+    wlsjs.broadcast.send(
+        {'extensions': [], 'operations': operations},
+        {'posting': wif},
+        function (err, result) {
+            console.log('wls', err, result);
         }
     );
 }
