@@ -2,22 +2,50 @@ const placeholders = {
     '{f_zavz9t}': `---
 <center>
 ### [![](https://s19.postimg.cc/855m162ab/27cb8858fa0dfe41d2b1190533c8af9a63-32x32.png) SteemIt](https://steemit.com/@zavz9t) [![](https://s19.postimg.cc/6er6dbmyr/download-32x32.jpg) WhaleShares](https://whaleshares.io/@zavz9t) [![](https://s19.postimg.cc/7tsr21vrn/1480-32x32.png) Golos](https://golos.io/@zavz9t) [![VOX](https://s19.postimg.cc/fgjyfjt4j/vox-32.png)](https://vox.community/@zavz9t)
-</center>`,
+</center>
+`,
     '{f_lego-cat}': `---
 <center>
 ### [![](https://s19.postimg.cc/855m162ab/27cb8858fa0dfe41d2b1190533c8af9a63-32x32.png) SteemIt](https://steemit.com/@lego-cat) [![](https://s19.postimg.cc/6er6dbmyr/download-32x32.jpg) WhaleShares](https://whaleshares.io/@lego-cat) [![](https://s19.postimg.cc/7tsr21vrn/1480-32x32.png) Golos](https://golos.io/@lego-cat) [![VOX](https://s19.postimg.cc/fgjyfjt4j/vox-32.png)](https://vox.community/@lego-cat)
-</center>`,
+</center>
+`,
     '{f_v-mi}': `---
 <center>
 ### [![](https://s19.postimg.cc/855m162ab/27cb8858fa0dfe41d2b1190533c8af9a63-32x32.png) SteemIt](https://steemit.com/@v-mi) [![](https://s19.postimg.cc/6er6dbmyr/download-32x32.jpg) WhaleShares](https://whaleshares.io/@v-mi) [![](https://s19.postimg.cc/7tsr21vrn/1480-32x32.png) Golos](https://golos.io/@v-mi) [![VOX](https://s19.postimg.cc/fgjyfjt4j/vox-32.png)](https://vox.community/@v-mi)
-</center>`,
+</center>
+`,
     '{f_cp_ua}': `---
 
 ## Декілька слів про те, куди Ви попали
 
 Даний розділ починався з того, що я ділився горнятками кави, які я отримував і бачив у різноманітних закладах. Оскільки вони часто бували яскравими та веселими, то я вирішив ними ділитися з тими, кому це цікаво. Пізніше, я побачив, що є багато різноманітних горняток навколо, то я почав ділитися і ними також, а назва залишилася, як ознака того, з чого все почалося 😉
 
-<center>![](https://s19.postimg.cc/bw7u1jeyr/shutterstock_1012867498.jpg)</center>`
+<center>![](https://s19.postimg.cc/bw7u1jeyr/shutterstock_1012867498.jpg)</center>
+`,
+    '{f_cp_ru}': `---
+
+## Несколько слов о том, куда Вы попали
+
+Данный раздел начинался с того, что я делился чашечками кофе, которые я видел в различных заведениях. Поскольку они были весёлыми и забавными, то я решил ними делиться с теми, кому интересно. Позже я увидел много интересных чашек без кофе и не смог пройти мимо, а название осталось как воспоминание о том, с чего все началось 😉
+
+<center>![](https://s19.postimg.cc/bw7u1jeyr/shutterstock_1012867498.jpg)</center>
+
+---
+
+<center>Оригінальні пости українською в блозі @zavz9t</center>
+`,
+    '{f_ad_ua}': `---
+
+### Декілька слів про розділ
+
+В книжці **"Бог завжди подорожує інкогніто"** я прочитав про метод підвищення/формування самооцінки, вона ж впевненість у собі: протягом 100 днів записувати мінімум 3 речі, якими пишаєшся, завдяки яким - день не пройшов дарма. Мене це зацікавило, то я вирішив спробувати.
+
+<center>**Подивимось що з цього вийде 🙂**</center>
+
+---
+
+<center>[Джерело картинки](https://pixabay.com/en/list-icon-symbol-paper-sign-flat-2389219/)</center>
+`
 };
 
 function stripAndTransliterate(input, spaceReplacement, ruPrefix) {
@@ -155,10 +183,12 @@ function publishToGolos(
     jsonMetadata,
     declinePayout,
     allInPower,
-    beneficiaries
+    beneficiaries,
+    publishAsGolosio,
+    publishForVik
 ) {
     let placeholdersLocal = {
-        '{img_p}': `https://imgp.golos.io/400x0/`,
+        '{img_p_4}': `https://imgp.golos.io/400x0/`,
         '{img_p_8}': `https://imgp.golos.io/800x0/`
     };
 
@@ -167,9 +197,15 @@ function publishToGolos(
     }
 
     let beneficiariesLocal = JSON.parse(JSON.stringify(beneficiaries));
-    beneficiariesLocal.push({"account": "golosio", "weight": 1000});
 
-    jsonMetadata[`app`] = `golos.io/0.1`;
+    if (publishAsGolosio) {
+        beneficiariesLocal.push({"account": "golosio", "weight": 1000});
+        jsonMetadata[`app`] = `golos.io/0.1`;
+    }
+    if (publishForVik) {
+        beneficiariesLocal.push({"account": "netfriend", "weight": 1000});
+        beneficiariesLocal.push({"account": "vik", "weight": publishForVik * 1});
+    }
 
     for (let key in placeholdersLocal) {
         postBody = postBody.replace(key, placeholdersLocal[key]);
@@ -249,8 +285,7 @@ function publishToVox(
     allInPower,
     beneficiaries
 ) {
-    let placeholdersLocal = {
-    };
+    let placeholdersLocal = {};
 
     steem.api.setOptions({ url: 'wss://vox.community/ws' });
     steem.config.set('address_prefix', 'VOX');
@@ -345,7 +380,7 @@ function publishToSteem(
 ) {
 
     let placeholdersLocal = {
-        '{img_p}': `https://steemitimages.com/400x0/`,
+        '{img_p_4}': `https://steemitimages.com/400x0/`,
         '{img_p_8}': `https://steemitimages.com/800x0/`
     };
 
@@ -431,7 +466,7 @@ function publishToWls(
     beneficiaries
 ) {
     let placeholdersLocal = {
-        '{img_p}': `https://whaleshares.io/imageproxy/400x0/`,
+        '{img_p_4}': `https://whaleshares.io/imageproxy/400x0/`,
         '{img_p_8}': `https://whaleshares.io/imageproxy/800x0/`,
         '{f_wls}': `---
 <center>
@@ -439,7 +474,8 @@ Join our Whaleshares curation Group On Discord.
 We look for quality contents and help the needful.
 You are formally invited to out Group.
 https://discord.gg/JAW8fBt
-</center>`
+</center>
+`
     };
 
     if (false === isTest() && false === wlsjs.auth.isWif(wif)) {
@@ -520,6 +556,8 @@ function publishPost() {
         steemWif = stripWif(document.getElementById('wif-steem').value),
         golosAuthor = stripAccount(document.getElementById('account-golos').value),
         golosWif = stripWif(document.getElementById('wif-golos').value),
+        golosAsGolosio = document.getElementById('golos-as-golosio').checked,
+        golosForVik = document.getElementById('golos-for-vik').value,
         voxAuthor = stripAccount(document.getElementById('account-vox').value),
         voxWif = stripWif(document.getElementById('wif-vox').value),
         wlsAuthor = stripAccount(document.getElementById('account-wls').value),
@@ -617,7 +655,9 @@ function publishPost() {
             jsonMetadataGolos,
             declinePayout,
             allInPower,
-            beneficiaries
+            beneficiaries,
+            golosAsGolosio,
+            golosForVik
         );
     }
 
