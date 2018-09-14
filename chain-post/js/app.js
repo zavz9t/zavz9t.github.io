@@ -141,7 +141,7 @@ function handleTags(tags) {
 }
 
 function stripPlaceholders(body) {
-    return body.replace(/{\.+}/g, '');
+    return body.replace(/{.*}/g, '');
 }
 
 function publishToGolos(
