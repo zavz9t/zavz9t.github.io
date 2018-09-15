@@ -4,12 +4,7 @@
     <meta charset="UTF-8">
     <title>Chain-Post</title>
 
-    <script src="js/lib/golos.min.js"></script>
-    <script src="js/lib/steem.min.js"></script>
-    <script src="js/lib/wlsjs.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
-
-    <script src="js/app.js"></script>
+    <script src="js/main.js"></script>
 </head>
 <body>
     <form action="#" method="POST" id="form">
@@ -97,6 +92,11 @@
         <input type="password" name="wif-vox" id="wif-vox" size="50" />
 
         <br />
+
+        <label for="vox-for-ds">Publish for Denis-Skripnik</label>
+        <input type="checkbox" name="vox-for-ds" id="vox-for-ds" />
+
+        <br />
         <hr />
 
         <h3>WhaleShare Account</h3>
@@ -120,15 +120,5 @@
 
         <input type="submit" id="submit" value="Post" />
     </form>
-
-    <script type="application/javascript">
-        jQuery(document).ready(function($) {
-            $('#form').on('submit', function(e) {
-                e.preventDefault();
-
-                publishPost();
-            });
-        });
-    </script>
 </body>
 </html>

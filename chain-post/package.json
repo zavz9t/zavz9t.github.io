@@ -3,14 +3,27 @@
   "version": "0.1.0",
   "description": "Tool to publish posts to several blockchains",
   "main": "",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "author": "Serhiy Walker <zavzyat@gmail.com>",
-  "license": "?",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com:zavz9t/zavz9t.github.io.git"
+  },
   "dependencies": {
+    "jquery": "^3.3.1",
     "golos-js": "^0.7.3",
     "@steemit/steem-js": "^0.7.1",
     "wlsjs-staging": "^0.1.4"
+  },
+  "devDependencies": {
+    "browserify": "latest",
+    "watchify": "latest",
+    "uglify-js-es6": "latest"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build-js": "browserify js/app.js > js/main.js",
+    "build-js-prod": "browserify js/app.js | uglifyjs --compress --mangle > js/main.min.js",
+    "watch-js": "watchify js/app.js -o js/main.js"
   }
 }

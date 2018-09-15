@@ -1,3 +1,9 @@
+var jQuery = require('jquery'),
+    steem = require('@steemit/steem-js'),
+    vox = require('@steemit/steem-js'),
+    golos = require('golos-js'),
+    wlsjs = require('wlsjs-staging');
+
 const placeholders = {
     '{f_zavz9t}': `---
 <center>
@@ -272,22 +278,25 @@ function publishToVox(
     jsonMetadata,
     declinePayout,
     allInPower,
-    beneficiaries
+    beneficiaries,
+    forDs
 ) {
     let placeholdersLocal = {};
 
-    steem.api.setOptions({ url: 'wss://vox.community/ws' });
-    steem.config.set('address_prefix', 'VOX');
-    steem.config.set('chain_id', '88a13f63de69c3a927594e07d991691c20e4cf1f34f83ae9bd26441db42a8acd');
+    vox.api.setOptions({ url: 'wss://vox.community/ws' });
+    vox.config.set('address_prefix', 'VOX');
+    vox.config.set('chain_id', '88a13f63de69c3a927594e07d991691c20e4cf1f34f83ae9bd26441db42a8acd');
 
-    if (false === isTest() && false === steem.auth.isWif(wif)) {
+    if (false === isTest() && false === vox.auth.isWif(wif)) {
         return alert('Вы допустили ошибку в поле ввода постинг ключа. Будьте внимательны! Неправильное использование ключей влечет потерю аккаунта!');
     }
 
     let beneficiariesLocal = JSON.parse(JSON.stringify(beneficiaries));
-    beneficiariesLocal.push({"account": "denis-skripnik", "weight": 100});
+    if (forDs) {
+        beneficiariesLocal.push({"account": "denis-skripnik", "weight": 100});
 
-    jsonMetadata['tags'].push('dpos-post');
+        jsonMetadata['tags'].push('dpos-post');
+    }
 
     for (let key in placeholdersLocal) {
         postBody = postBody.replace(key, placeholdersLocal[key]);
@@ -335,7 +344,7 @@ function publishToVox(
         return false;
     }
 
-    steem.broadcast.send(
+    vox.broadcast.send(
         {'extensions': [], 'operations': operations},
         {'posting': wif},
         function (err, result) {
@@ -363,9 +372,11 @@ function publishToSteem(
         '{img_p_8}': `https://steemitimages.com/800x0/`
     };
 
-    steem.api.setOptions({ url: 'wss://gtg.steem.house:8090' });
-    steem.config.set('address_prefix','STM');
-    steem.config.set('chain_id','0000000000000000000000000000000000000000000000000000000000000000');
+    steem.api.setOptions({ url: "https://api.steemit.com" });
+
+    // steem.api.setOptions({ url: 'wss://gtg.steem.house:8090' });
+    // steem.config.set('address_prefix','STM');
+    // steem.config.set('chain_id','0000000000000000000000000000000000000000000000000000000000000000');
 
     if (false === isTest() && false === steem.auth.isWif(wif)) {
         return alert('Вы допустили ошибку в поле ввода постинг ключа. Будьте внимательны! Неправильное использование ключей влечет потерю аккаунта!');
@@ -525,6 +536,7 @@ function publishPost() {
         golosForVik = document.getElementById('golos-for-vik').value,
         voxAuthor = stripAccount(document.getElementById('account-vox').value),
         voxWif = stripWif(document.getElementById('wif-vox').value),
+        voxForDs = document.getElementById('vox-for-ds').checked,
         wlsAuthor = stripAccount(document.getElementById('account-wls').value),
         wlsWif = stripWif(document.getElementById('wif-wls').value),
 //                    appname = (document.getElementById("appname").value)?document.getElementById("appname").value:'@vik',
@@ -666,7 +678,16 @@ function publishPost() {
             jsonMetadataVox,
             declinePayout,
             allInPower,
-            beneficiaries
+            beneficiaries,
+            voxForDs
         );
     }
 }
+
+jQuery(document).ready(function($) {
+    $('#form').on('submit', function(e) {
+        e.preventDefault();
+
+        publishPost();
+    });
+});
