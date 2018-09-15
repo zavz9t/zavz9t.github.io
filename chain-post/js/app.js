@@ -1,4 +1,5 @@
 var jQuery = require('jquery'),
+    sprintf = require("sprintf-js").sprintf,
     steem = require('@steemit/steem-js'),
     vox = require('@steemit/steem-js'),
     golos = require('golos-js'),
@@ -178,6 +179,49 @@ function stripPlaceholders(body) {
     return body.replace(/{.*}/g, '');
 }
 
+function handleSuccessfulPost(section, result) {
+    let sectionToHost = {
+            'golos': `https://golos.io`,
+            'steem': `https://steemit.com`,
+            'vox': `https://vox.community`,
+            'wls': `https://whaleshares.io`
+        },
+        urlFormat = `%s/%s/@%s/%s`,
+        operation = undefined
+    ;
+
+    if (!(section in sectionToHost)) {
+        console.warn(sprintf(`Received section "%s" is not implemented yet!`, section));
+
+        return
+    }
+
+    for (let key in result.operations) {
+        if (`comment` === result.operations[key][0]) {
+            operation = result.operations[key][1];
+            break;
+        }
+    }
+
+    if (!operation) {
+        console.warn(sprintf(`Operation "comment" for section "%s" was not found in result.`, section));
+
+        return;
+    }
+
+    let url = sprintf(
+        urlFormat,
+        sectionToHost[section],
+        operation['parent_permlink'],
+        operation['author'],
+        operation['permlink']
+    );
+
+    jQuery(`#result`).append(
+        sprintf(`<p>%s: <a href="%s" target="_blank" rel="noopener noreferrer">%s</a></p>`, section, url, url)
+    )
+}
+
 function publishToGolos(
     wif,
     author,
@@ -263,6 +307,9 @@ function publishToGolos(
         {'posting': wif},
         function (err, result) {
             console.log('golos', err, result);
+            if (!err) {
+                handleSuccessfulPost('golos', result);
+            }
         }
     );
 }
@@ -349,6 +396,9 @@ function publishToVox(
         {'posting': wif},
         function (err, result) {
             console.log('vox', err, result);
+            if (!err) {
+                handleSuccessfulPost('vox', result);
+            }
         }
     );
 }
@@ -434,6 +484,9 @@ function publishToSteem(
         {'posting': wif},
         function (err, result) {
             console.log('steem', err, result);
+            if (!err) {
+                handleSuccessfulPost('steem', result);
+            }
         }
     );
 }
@@ -519,6 +572,9 @@ https://discord.gg/JAW8fBt
         {'posting': wif},
         function (err, result) {
             console.log('wls', err, result);
+            if (!err) {
+                handleSuccessfulPost('wls', result);
+            }
         }
     );
 }
