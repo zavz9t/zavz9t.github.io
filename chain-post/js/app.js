@@ -1,9 +1,13 @@
-var jQuery = require('jquery'),
-    sprintf = require("sprintf-js").sprintf,
-    steem = require('@steemit/steem-js'),
-    vox = require('@steemit/steem-js'),
-    golos = require('golos-js'),
-    wlsjs = require('wlsjs-staging');
+var jQuery = require(`jquery`),
+    sprintf = require(`sprintf-js`).sprintf,
+    ls = require(`local-storage`),
+    ss = require(`sessionstorage`),
+    Fingerprint2 = require(`fingerprintjs2`),
+    AES = require(`crypto-js/aes`),
+    steem = require(`@steemit/steem-js`),
+    vox = require(`@steemit/steem-js`),
+    golos = require(`golos-js`),
+    wlsjs = require(`wlsjs-staging`);
 
 const placeholders = {
     '{f_zavz9t}': `---
@@ -180,6 +184,8 @@ function stripPlaceholders(body) {
 }
 
 function handleSuccessfulPost(section, result) {
+    console.log(section, result);
+
     let sectionToHost = {
             'golos': `https://golos.io`,
             'steem': `https://steemit.com`,
@@ -222,6 +228,13 @@ function handleSuccessfulPost(section, result) {
     )
 }
 
+function handlePublishError(section, error) {
+    console.error('section', error);
+    jQuery(`#errors`).append(
+        sprintf(`<p>%s: %s</p>`, section, error)
+    )
+}
+
 function publishToGolos(
     wif,
     author,
@@ -237,7 +250,8 @@ function publishToGolos(
     publishAsGolosio,
     publishForVik
 ) {
-    let placeholdersLocal = {
+    let section = 'golos',
+        placeholdersLocal = {
         '{img_p_4}': `https://imgp.golos.io/400x0/`,
         '{img_p_8}': `https://imgp.golos.io/800x0/`
     };
@@ -297,7 +311,7 @@ function publishToGolos(
     ];
 
     if (isTest()) {
-        console.log('golos', operations);
+        console.log(section, operations);
 
         return false;
     }
@@ -306,9 +320,10 @@ function publishToGolos(
         {'extensions': [], 'operations': operations},
         {'posting': wif},
         function (err, result) {
-            console.log('golos', err, result);
             if (!err) {
-                handleSuccessfulPost('golos', result);
+                handleSuccessfulPost(section, result);
+            } else {
+                handlePublishError(section, err);
             }
         }
     );
@@ -328,7 +343,8 @@ function publishToVox(
     beneficiaries,
     forDs
 ) {
-    let placeholdersLocal = {};
+    let placeholdersLocal = {},
+        section = 'vox';
 
     vox.api.setOptions({ url: 'wss://vox.community/ws' });
     vox.config.set('address_prefix', 'VOX');
@@ -386,7 +402,7 @@ function publishToVox(
     ];
 
     if (isTest()) {
-        console.log(`vox`, operations);
+        console.log(section, operations);
 
         return false;
     }
@@ -395,9 +411,11 @@ function publishToVox(
         {'extensions': [], 'operations': operations},
         {'posting': wif},
         function (err, result) {
-            console.log('vox', err, result);
+            console.log(section, err, result);
             if (!err) {
-                handleSuccessfulPost('vox', result);
+                handleSuccessfulPost(section, result);
+            } else {
+                handlePublishError(section, err)
             }
         }
     );
@@ -417,7 +435,8 @@ function publishToSteem(
     beneficiaries
 ) {
 
-    let placeholdersLocal = {
+    let section = 'steem',
+        placeholdersLocal = {
         '{img_p_4}': `https://steemitimages.com/400x0/`,
         '{img_p_8}': `https://steemitimages.com/800x0/`
     };
@@ -474,7 +493,7 @@ function publishToSteem(
     ];
 
     if (isTest()) {
-        console.log(`steem`, operations);
+        console.log(section, operations);
 
         return false;
     }
@@ -483,9 +502,10 @@ function publishToSteem(
         {'extensions': [], 'operations': operations},
         {'posting': wif},
         function (err, result) {
-            console.log('steem', err, result);
             if (!err) {
-                handleSuccessfulPost('steem', result);
+                handleSuccessfulPost(section, result);
+            } else {
+                handlePublishError(section, err)
             }
         }
     );
@@ -504,7 +524,8 @@ function publishToWls(
     allInPower,
     beneficiaries
 ) {
-    let placeholdersLocal = {
+    let section = 'wls',
+        placeholdersLocal = {
         '{img_p_4}': `https://whaleshares.io/imageproxy/400x0/`,
         '{img_p_8}': `https://whaleshares.io/imageproxy/800x0/`,
         '{f_wls}': `---
@@ -562,7 +583,7 @@ https://discord.gg/JAW8fBt
     ];
 
     if (isTest()) {
-        console.log(`wls`, operations);
+        console.log(section, operations);
 
         return false;
     }
@@ -571,9 +592,10 @@ https://discord.gg/JAW8fBt
         {'extensions': [], 'operations': operations},
         {'posting': wif},
         function (err, result) {
-            console.log('wls', err, result);
             if (!err) {
-                handleSuccessfulPost('wls', result);
+                handleSuccessfulPost(section, result);
+            } else {
+                handlePublishError(section, err)
             }
         }
     );

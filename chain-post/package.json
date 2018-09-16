@@ -12,6 +12,10 @@
   "dependencies": {
     "jquery": "^3.3.1",
     "sprintf-js": "^1.1.1",
+    "fingerprintjs2": "^1.8.1",
+    "local-storage": "^1.4.2",
+    "sessionstorage": "^0.1.0",
+    "crypto-js": "^3.1.9-1",
     "golos-js": "^0.7.3",
     "@steemit/steem-js": "^0.7.1",
     "wlsjs-staging": "^0.1.4"
