@@ -1,4 +1,5 @@
-let constant = require('./constant');
+let constant = require('./constant'),
+    tool = require(`./tool`);
 
 function publishToGolos(
     wif,
@@ -20,7 +21,8 @@ function publishToGolos(
         placeholdersLocal = {
             '{img_p_4}': `https://imgp.golos.io/400x0/`,
             '{img_p_8}': `https://imgp.golos.io/800x0/`
-        };
+        }
+    ;
 
     if (false === tool.isTest() && false === golos.auth.isWif(wif)) {
         return alert('Вы допустили ошибку в поле ввода постинг ключа. Будьте внимательны! Неправильное использование ключей влечет потерю аккаунта!');
@@ -82,17 +84,7 @@ function publishToGolos(
         return false;
     }
 
-    golos.broadcast.send(
-        {'extensions': [], 'operations': operations},
-        {'posting': wif},
-        function (err, result) {
-            if (!err) {
-                tool.handleSuccessfulPost(section, result);
-            } else {
-                tool.handlePublishError(section, err);
-            }
-        }
-    );
+    broadcastSend(section, golos, wif, author, permlink, operations)
 }
 
 function publishToVox(
@@ -174,18 +166,7 @@ function publishToVox(
         return false;
     }
 
-    vox.broadcast.send(
-        {'extensions': [], 'operations': operations},
-        {'posting': wif},
-        function (err, result) {
-            console.log(section, err, result);
-            if (!err) {
-                tool.handleSuccessfulPost(section, result);
-            } else {
-                tool.handlePublishError(section, err)
-            }
-        }
-    );
+    broadcastSend(section, vox, wif, author, permlink, operations)
 }
 
 function publishToSteem(
@@ -265,17 +246,7 @@ function publishToSteem(
         return false;
     }
 
-    steem.broadcast.send(
-        {'extensions': [], 'operations': operations},
-        {'posting': wif},
-        function (err, result) {
-            if (!err) {
-                tool.handleSuccessfulPost(section, result);
-            } else {
-                tool.handlePublishError(section, err)
-            }
-        }
-    );
+    broadcastSend(section, steem, wif, author, permlink, operations)
 }
 
 function publishToWls(
@@ -356,17 +327,36 @@ https://discord.gg/JAW8fBt
         return false;
     }
 
-    wlsjs.broadcast.send(
-        {'extensions': [], 'operations': operations},
-        {'posting': wif},
-        function (err, result) {
-            if (!err) {
-                tool.handleSuccessfulPost(section, result);
-            } else {
-                tool.handlePublishError(section, err)
-            }
+    broadcastSend(section, wlsjs, wif, author, permlink, operations)
+}
+
+function broadcastSend(section, connection, wif, author, permlink, operations) {
+    connection.api.getContent(author, permlink, function(err, result) {
+        if (err) {
+            tool.handlePublishError(section, err);
+
+            return;
         }
-    );
+
+        if (result[`permlink`] === permlink) {
+            permlink = permlink + `-` + Math.floor(Date.now() / 1000);
+
+            operations[0][1][`permlink`] = permlink;
+            operations[1][1][`permlink`] = permlink;
+        }
+
+        connection.broadcast.send(
+            {'extensions': [], 'operations': operations},
+            {'posting': wif},
+            function (err, result) {
+                if (!err) {
+                    tool.handleSuccessfulPost(section, result);
+                } else {
+                    tool.handlePublishError(section, err);
+                }
+            }
+        );
+    });
 }
 
 module.exports = {

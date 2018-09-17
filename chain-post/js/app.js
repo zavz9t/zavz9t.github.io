@@ -1,4 +1,4 @@
-var jQuery = require(`jquery`),
+let jQuery = require(`jquery`),
     ls = require(`local-storage`),
     ss = require(`sessionstorage`),
     Fingerprint2 = require(`fingerprintjs2`),
