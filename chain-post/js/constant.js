@@ -14,7 +14,7 @@ const placeholders = {
 ### [![](https://s19.postimg.cc/855m162ab/27cb8858fa0dfe41d2b1190533c8af9a63-32x32.png) SteemIt](https://steemit.com/@v-mi) [![](https://s19.postimg.cc/6er6dbmyr/download-32x32.jpg) WhaleShares](https://whaleshares.io/@v-mi) [![](https://s19.postimg.cc/7tsr21vrn/1480-32x32.png) Golos](https://golos.io/@v-mi) [![VOX](https://s19.postimg.cc/fgjyfjt4j/vox-32.png)](https://vox.community/@v-mi)
 </center>
 `,
-    '{f_cp_ua}': `---
+    '{f_cc_ua}': `---
 
 ## Декілька слів про те, куди Ви попали
 
@@ -22,7 +22,7 @@ const placeholders = {
 
 <center>![](https://s19.postimg.cc/bw7u1jeyr/shutterstock_1012867498.jpg)</center>
 `,
-    '{f_cp_ru}': `---
+    '{f_cc_ru}': `---
 
 ## Несколько слов о том, куда Вы попали
 

@@ -76,6 +76,8 @@ function publishPost() {
         return alert('Не удалось конвертировать ваш заголовок в ссылку. Задайте ссылку отдельно. Поле permlink в расширенных настройках поста')
     }
 
+    let postHandler = new adapter.handler();
+
     // Steem section
     if (steemAuthor && steemWif) {
         let jsonMetadataSteem = JSON.parse(JSON.stringify(jsonMetadata));
@@ -83,18 +85,21 @@ function publishPost() {
             jsonMetadataSteem['tags'] = steemTags;
         }
 
-        adapter.publishToSteem(
-            steemWif,
-            steemAuthor,
-            (permlink) ? permlink : tool.buildDefaultPermlink(steemAuthor, appName),
-            parentAuthor,
-            (steemTags) ? steemTags[0] : parentPermlink,
-            postTitle,
-            postBody,
-            jsonMetadataSteem,
-            declinePayout,
-            allInPower,
-            beneficiaries
+        postHandler.addPost(
+            `steem`,
+            [
+                steemWif,
+                steemAuthor,
+                (permlink) ? permlink : tool.buildDefaultPermlink(steemAuthor, appName),
+                parentAuthor,
+                (steemTags) ? steemTags[0] : parentPermlink,
+                postTitle,
+                postBody,
+                jsonMetadataSteem,
+                declinePayout,
+                allInPower,
+                beneficiaries
+            ]
         );
     }
 
@@ -105,20 +110,23 @@ function publishPost() {
             jsonMetadataGolos['tags'] = golosTags;
         }
 
-        adapter.publishToGolos(
-            golosWif,
-            golosAuthor,
-            (permlink) ? permlink : tool.buildDefaultPermlink(golosAuthor, appName),
-            parentAuthor,
-            golosTags ? golosTags[0] : parentPermlink,
-            postTitle,
-            postBody,
-            jsonMetadataGolos,
-            declinePayout,
-            allInPower,
-            beneficiaries,
-            golosAsGolosio,
-            golosForVik
+        postHandler.addPost(
+            `golos`,
+            [
+                golosWif,
+                golosAuthor,
+                (permlink) ? permlink : tool.buildDefaultPermlink(golosAuthor, appName),
+                parentAuthor,
+                golosTags ? golosTags[0] : parentPermlink,
+                postTitle,
+                postBody,
+                jsonMetadataGolos,
+                declinePayout,
+                allInPower,
+                beneficiaries,
+                golosAsGolosio,
+                golosForVik
+            ]
         );
     }
 
@@ -129,18 +137,21 @@ function publishPost() {
             jsonMetadataWls['tags'] = wlsTags;
         }
 
-        adapter.publishToWls(
-            wlsWif,
-            wlsAuthor,
-            (permlink) ? permlink : tool.buildDefaultPermlink(wlsAuthor, appName),
-            parentAuthor,
-            (wlsTags) ? wlsTags[0] : parentPermlink,
-            postTitle,
-            postBody,
-            jsonMetadataWls,
-            declinePayout,
-            allInPower,
-            beneficiaries
+        postHandler.addPost(
+            `wls`,
+            [
+                wlsWif,
+                wlsAuthor,
+                (permlink) ? permlink : tool.buildDefaultPermlink(wlsAuthor, appName),
+                parentAuthor,
+                (wlsTags) ? wlsTags[0] : parentPermlink,
+                postTitle,
+                postBody,
+                jsonMetadataWls,
+                declinePayout,
+                allInPower,
+                beneficiaries
+            ]
         );
     }
 
@@ -151,21 +162,26 @@ function publishPost() {
             jsonMetadataVox['tags'] = voxTags;
         }
 
-        adapter.publishToVox(
-            voxWif,
-            voxAuthor,
-            (permlink) ? permlink : tool.buildDefaultPermlink(voxAuthor, appName),
-            parentAuthor,
-            (voxTags) ? voxTags[0] : parentPermlink,
-            postTitle,
-            postBody,
-            jsonMetadataVox,
-            declinePayout,
-            allInPower,
-            beneficiaries,
-            voxForDs
+        postHandler.addPost(
+            `vox`,
+            [
+                voxWif,
+                voxAuthor,
+                (permlink) ? permlink : tool.buildDefaultPermlink(voxAuthor, appName),
+                parentAuthor,
+                (voxTags) ? voxTags[0] : parentPermlink,
+                postTitle,
+                postBody,
+                jsonMetadataVox,
+                declinePayout,
+                allInPower,
+                beneficiaries,
+                voxForDs
+            ]
         );
     }
+
+    postHandler.publish();
 }
 
 jQuery(document).ready(function($) {

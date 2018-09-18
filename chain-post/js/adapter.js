@@ -14,7 +14,8 @@ function publishToGolos(
     allInPower,
     beneficiaries,
     publishAsGolosio,
-    publishForVik
+    publishForVik,
+    callback
 ) {
     let golos = require(`golos-js`),
         section = 'golos',
@@ -84,7 +85,7 @@ function publishToGolos(
         return false;
     }
 
-    broadcastSend(section, golos, wif, author, permlink, operations)
+    broadcastSend(section, golos, wif, author, permlink, operations, callback)
 }
 
 function publishToVox(
@@ -99,7 +100,8 @@ function publishToVox(
     declinePayout,
     allInPower,
     beneficiaries,
-    forDs
+    forDs,
+    callback
 ) {
     let vox = require(`@steemit/steem-js`),
         placeholdersLocal = {},
@@ -166,7 +168,7 @@ function publishToVox(
         return false;
     }
 
-    broadcastSend(section, vox, wif, author, permlink, operations)
+    broadcastSend(section, vox, wif, author, permlink, operations, callback)
 }
 
 function publishToSteem(
@@ -180,7 +182,8 @@ function publishToSteem(
     jsonMetadata,
     declinePayout,
     allInPower,
-    beneficiaries
+    beneficiaries,
+    callback
 ) {
     let steem = require(`@steemit/steem-js`),
         section = 'steem',
@@ -246,7 +249,7 @@ function publishToSteem(
         return false;
     }
 
-    broadcastSend(section, steem, wif, author, permlink, operations)
+    broadcastSend(section, steem, wif, author, permlink, operations, callback)
 }
 
 function publishToWls(
@@ -260,7 +263,8 @@ function publishToWls(
     jsonMetadata,
     declinePayout,
     allInPower,
-    beneficiaries
+    beneficiaries,
+    callback
 ) {
     let wlsjs = require(`wlsjs-staging`),
         section = 'wls',
@@ -327,10 +331,10 @@ https://discord.gg/JAW8fBt
         return false;
     }
 
-    broadcastSend(section, wlsjs, wif, author, permlink, operations)
+    broadcastSend(section, wlsjs, wif, author, permlink, operations, callback)
 }
 
-function broadcastSend(section, connection, wif, author, permlink, operations) {
+function broadcastSend(section, connection, wif, author, permlink, operations, callback) {
     connection.api.getContent(author, permlink, function(err, result) {
         if (err) {
             tool.handlePublishError(section, err);
@@ -345,6 +349,10 @@ function broadcastSend(section, connection, wif, author, permlink, operations) {
             operations[1][1][`permlink`] = permlink;
         }
 
+        if (callback) {
+            callback();
+        }
+
         connection.broadcast.send(
             {'extensions': [], 'operations': operations},
             {'posting': wif},
@@ -354,14 +362,65 @@ function broadcastSend(section, connection, wif, author, permlink, operations) {
                 } else {
                     tool.handlePublishError(section, err);
                 }
+                if (callback) {
+                    callback();
+                }
             }
         );
     });
 }
 
+function handlePublish(section, options) {
+    switch (section) {
+        case `steem`: publishToSteem.apply(null, options);
+            break;
+        case `golos`: publishToGolos.apply(null, options);
+            break;
+        case `vox`: publishToVox.apply(null, options);
+            break;
+        case `wls`: publishToWls.apply(null, options);
+            break;
+        default: tool.handlePublishError(section, `Section is not implemented yet!`);
+    }
+}
+
+function handler() {
+    return {
+        adapters: [`steem`, `golos`, `vox`, `wls`],
+        posts: [],
+        addPost: function (section, options) {
+            if (false === this.adapters.includes(section)) {
+                tool.handlePublishError(section, `Section is not implemented yet!`);
+
+                return;
+            }
+            // TODO: need to rewrite for several posts at one platform support
+            this.posts[section] = options;
+        },
+        publish: function () {
+            let steemKey = `steem`,
+                voxKey = `vox`;
+            if (steemKey in this.posts && voxKey in this.posts) {
+                let steemVars = this.posts[steemKey],
+                    voxVars = this.posts[voxKey];
+                steemVars.push(function () {
+                    publishToVox.apply(null, voxVars);
+                });
+                publishToSteem.apply(null, steemVars);
+
+                delete this.posts[steemKey];
+                delete this.posts[voxKey];
+            }
+
+            for (let key in this.posts) {
+                handlePublish(key, this.posts[key])
+            }
+
+            this.posts = [];
+        }
+    }
+}
+
 module.exports = {
-    publishToGolos: publishToGolos,
-    publishToVox: publishToVox,
-    publishToSteem: publishToSteem,
-    publishToWls: publishToWls
+    handler: handler
 }
