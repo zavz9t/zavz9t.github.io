@@ -2,127 +2,147 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Chain-Post</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <script src="js/main.min.js?i=4"></script>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/lib/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <title>Chain-Post</title>
 </head>
 <body>
-    <form action="#" method="POST" id="form">
-        <label for="title">Title</label>
-        <input type="text" name="title" id="title" size="50" />
+    <div class="container">
+        <h1 class="mx-auto" style="width: 200px;">𝒞𝒽𝒶𝒾𝓃 𝒫𝑜𝓈𝓉</h1>
 
-        <br />
+        <form action="#" method="POST" id="form">
+            <div class="form-group">
+                <input type="text" class="form-control" id="title" placeholder="Title" />
+            </div>
 
-        <label for="body">Body</label>
-        <textarea name="body" id="body" cols="100" rows="20"></textarea>
+            <div class="form-group">
+                <textarea class="form-control" id="body" rows="20" placeholder="Write your story..."></textarea>
+            </div>
 
-        <br />
+            <div class="form-group">
+                <input type="text" class="form-control" id="tags"  placeholder="Tags, the first tag is your main category."/>
+            </div>
 
-        <label for="tags">Tags</label>
-        <input type="text" name="tags" id="tags" size="50" />
+            <hr />
 
-        <br />
-        <hr />
+            <h3 class="mx-auto" style="width: 200px;">Steem Account</h3>
 
-        <h3>Steem Account</h3>
+            <div class="form-group">
+                <input type="text" class="form-control" id="tags-steem" placeholder="Steem specific Tags" />
+            </div>
 
-        <br />
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">@</div>
+                    </div>
+                    <input type="text" class="form-control" id="account-steem" placeholder="Enter your Steem username">
+                </div>
+            </div>
 
-        <label for="tags-steem">Steem Tags</label>
-        <input type="text" name="tags-steem" id="tags-steem" size="50" />
+            <div class="form-group">
+                <input type="password" class="form-control" id="wif-steem" placeholder="WIF (Posting key)" />
+            </div>
 
-        <br />
+            <hr />
 
-        <label for="account-steem">Account</label>
-        <input type="text" name="account-steem" id="account-steem" size="50" />
+            <h3 class="mx-auto" style="width: 200px;">Golos Account</h3>
 
-        <br />
+            <div class="form-group">
+                <input type="text" class="form-control" id="tags-golos" placeholder="Golos specific Tags" />
+            </div>
 
-        <label for="wif-steem">Post key</label>
-        <input type="password" name="wif-steem" id="wif-steem" size="50" />
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">@</div>
+                    </div>
+                    <input type="text" class="form-control" id="account-golos" placeholder="Enter your Golos username">
+                </div>
+            </div>
 
-        <br />
-        <hr />
+            <div class="form-group">
+                <input type="password" class="form-control" id="wif-golos" placeholder="WIF (Posting key)" />
+            </div>
 
-        <h3>Golos Account</h3>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="golos-as-golosio" />
+                <label class="form-check-label" for="golos-as-golosio">Publish as golos.io</label>
+            </div>
 
-        <br />
+            <div class="form-group">
+                <label for="golos-for-vik">Publish for VIK</label>
+                <input type="number" step="1" min="1" max="9000" class="form-control" id="golos-for-vik" />
+            </div>
 
-        <label for="tags-golos">Golos Tags</label>
-        <input type="text" name="tags-golos" id="tags-golos" size="50" />
+            <hr />
 
-        <br />
+            <h3 class="mx-auto" style="width: 200px;">VOX Account</h3>
 
-        <label for="account-golos">Account</label>
-        <input type="text" name="account-golos" id="account-golos" size="50" />
+            <div class="form-group">
+                <input type="text" class="form-control" id="tags-vox" placeholder="VOX specific Tags" />
+            </div>
 
-        <br />
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">@</div>
+                    </div>
+                    <input type="text" class="form-control" id="account-vox" placeholder="Enter your VOX username">
+                </div>
+            </div>
 
-        <label for="wif-golos">Post key</label>
-        <input type="password" name="wif-golos" id="wif-golos" size="50" />
+            <div class="form-group">
+                <input type="password" class="form-control" id="wif-vox" placeholder="WIF (Posting key)" />
+            </div>
 
-        <br />
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="vox-for-ds" />
+                <label class="form-check-label" for="vox-for-ds">Publish for Denis-Skripnik</label>
+            </div>
 
-        <label for="golos-as-golosio">Publish as golos.io</label>
-        <input type="checkbox" name="golos-as-golosio" id="golos-as-golosio" />
+            <hr />
 
-        <br />
+            <h3 class="mx-auto" style="width: 280px;">Whaleshares Account</h3>
 
-        <label for="golos-for-vik">Publish for VIK</label>
-        <input type="number" step="1" min="1" max="9000" name="golos-for-vik" id="golos-for-vik" />
+            <div class="form-group">
+                <input type="text" class="form-control" id="tags-wls" placeholder="Whaleshares specific Tags" />
+            </div>
 
-        <br />
-        <hr />
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">@</div>
+                    </div>
+                    <input type="text" class="form-control" id="account-wls" placeholder="Enter your Whaleshares username">
+                </div>
+            </div>
 
-        <h3>VOX Account</h3>
+            <div class="form-group">
+                <input type="password" class="form-control" id="wif-wls" placeholder="WIF (Posting key)" />
+            </div>
 
-        <br />
+            <hr />
 
-        <label for="tags-vox">VOX Tags</label>
-        <input type="text" name="tags-vox" id="tags-vox" size="50" />
+            <div class="mx-auto" style="width: 80px;">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
 
-        <br />
 
-        <label for="account-vox">Account</label>
-        <input type="text" name="account-vox" id="account-vox" size="50" />
+        <div id="result"></div>
 
-        <br />
+        <div id="errors" style="color: red"></div>
 
-        <label for="wif-vox">Post key</label>
-        <input type="password" name="wif-vox" id="wif-vox" size="50" />
+    </div>
 
-        <br />
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="js/lib/jquery.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>
+    <script src="js/lib/bootstrap.bundle.min.js" integrity="sha384-pjaaA8dDz/5BgdFUPX6M/9SUZv4d12SUPF0axWc+VRZkx5xU3daN+lYb49+Ax+Tl" crossorigin="anonymous"></script>
 
-        <label for="vox-for-ds">Publish for Denis-Skripnik</label>
-        <input type="checkbox" name="vox-for-ds" id="vox-for-ds" />
-
-        <br />
-        <hr />
-
-        <h3>WhaleShare Account</h3>
-
-        <br />
-
-        <label for="tags-wls">WhaleShare Tags</label>
-        <input type="text" name="tags-wls" id="tags-wls" size="50" />
-
-        <br />
-
-        <label for="account-wls">Account</label>
-        <input type="text" name="account-wls" id="account-wls" size="50" />
-
-        <br />
-
-        <label for="wif-wls">Post key</label>
-        <input type="password" name="wif-wls" id="wif-wls" size="50" />
-
-        <br />
-
-        <input type="submit" id="submit" value="Post" />
-    </form>
-
-    <div id="result"></div>
-
-    <div id="errors" style="color: red"></div>
+    <script src="js/main.min.js?t=1537378235"></script>
 </body>
 </html>

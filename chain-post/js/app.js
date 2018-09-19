@@ -1,5 +1,4 @@
-let jQuery = require(`jquery`),
-    ls = require(`local-storage`),
+let ls = require(`local-storage`),
     ss = require(`sessionstorage`),
     Fingerprint2 = require(`fingerprintjs2`),
     AES = require(`crypto-js/aes`),

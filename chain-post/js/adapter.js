@@ -349,10 +349,6 @@ function broadcastSend(section, connection, wif, author, permlink, operations, c
             operations[1][1][`permlink`] = permlink;
         }
 
-        if (callback) {
-            callback();
-        }
-
         connection.broadcast.send(
             {'extensions': [], 'operations': operations},
             {'posting': wif},

@@ -1,5 +1,4 @@
-let jQuery = require(`jquery`),
-    sprintf = require(`sprintf-js`).sprintf
+let sprintf = require(`sprintf-js`).sprintf
 ;
 
 function stripAndTransliterate(input, spaceReplacement, ruPrefix) {
