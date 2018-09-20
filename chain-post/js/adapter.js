@@ -21,7 +21,21 @@ function publishToGolos(
         section = 'golos',
         placeholdersLocal = {
             '{img_p_4}': `https://imgp.golos.io/400x0/`,
-            '{img_p_8}': `https://imgp.golos.io/800x0/`
+            '{img_p_8}': `https://imgp.golos.io/800x0/`,
+            '{f_bl_ru}': `*ваш @lego-cat*
+
+---
+
+### Несколько слов о том, куда Вы попали
+
+Однажды я обратил внимание, что прохожу мимо очень интересных вещей даже не обращая на них внимание...
+
+Тогда я решил это исправить, в результате открыл для себя много интересного! А когда открыл, то решил поделиться ☺️
+
+---
+
+<center>![](https://i.postimg.cc/05thg3rP/Ukraine-_Flag-16.png) Пости даного розділу можна прочитати українською мовою в блозі @lego-cat</center>
+`
         }
     ;
 
@@ -189,7 +203,21 @@ function publishToSteem(
         section = 'steem',
         placeholdersLocal = {
             '{img_p_4}': `https://steemitimages.com/400x0/`,
-            '{img_p_8}': `https://steemitimages.com/800x0/`
+            '{img_p_8}': `https://steemitimages.com/800x0/`,
+            '{f_bl_ru}': `*ваш @lego-cat*
+
+---
+
+### Несколько слов о том, куда Вы попали
+
+Однажды я обратил внимание, что прохожу мимо очень интересных вещей даже не обращая на них внимание...
+
+Тогда я решил это исправить, в результате открыл для себя много интересного! А когда открыл, то решил поделиться ☺️
+
+---
+
+<center>![](https://i.postimg.cc/05thg3rP/Ukraine-_Flag-16.png) Пости даного розділу можна прочитати українською мовою в блозі @lego-cat</center>
+`
         };
 
     // steem.api.setOptions({ url: "https://api.steemit.com" });
@@ -417,6 +445,71 @@ function handler() {
     }
 }
 
+function getConnectionBySection(section) {
+    switch (section) {
+        case `steem`:
+            return require(`@steemit/steem-js`);
+        case `golos`:
+            return require(`golos-js`);
+        case `vox`:
+            let vox = require(`@steemit/steem-js`);
+
+            vox.api.setOptions({ url: 'wss://vox.community/ws' });
+            vox.config.set('address_prefix', 'VOX');
+            vox.config.set('chain_id', '88a13f63de69c3a927594e07d991691c20e4cf1f34f83ae9bd26441db42a8acd');
+
+            return vox;
+        case `wls`:
+            return require(`wlsjs-staging`);
+        default:
+            throw sprintf(`Section "%s" is not implemented yet!`, section);
+    }
+}
+
+function isWif(wif) {
+    let golos = require(`golos-js`);
+
+    return golos.auth.isWif(wif);
+}
+
+function isWifValid(section, username, wif, successCallback, failCallback) {
+    let connection = null;
+    try {
+        connection = getConnectionBySection(section);
+    } catch (e) {
+        failCallback(e.toString());
+    }
+
+    connection.api.getAccounts([username], function (err, result) {
+        if (err) {
+            failCallback(err.toString());
+
+            return;
+        }
+        if (result.length < 1) {
+            failCallback(sprintf(`Account "%s" was not found at "%s" server.`, username, section));
+
+            return;
+        }
+
+        let pubWif = result[0].posting.key_auths[0][0]
+            , isValid = false;
+
+        try {
+            isValid = connection.auth.wifIsValid(wif, pubWif);
+        } catch(e) {
+            console.error(e);
+        }
+        if (isValid) {
+            successCallback(section, username, wif);
+        } else {
+            failCallback(sprintf(`Received WIF and username "%s" are not match at "%s" server.`, username, section));
+        }
+    });
+}
+
 module.exports = {
-    handler: handler
+    handler: handler,
+    isWif: isWif,
+    isWifValid: isWifValid
 }

@@ -184,9 +184,43 @@ function publishPost() {
 }
 
 jQuery(document).ready(function($) {
-    $('#form').on('submit', function(e) {
+    $(`#form`).on(`submit`, function(e) {
         e.preventDefault();
+        e.stopPropagation();
 
         publishPost();
+    });
+
+    $(`.btn-add-account`).on(`click`, function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        let section = $(this).attr(`id`).match(/[^-]+/).toString()
+            , usernameItem = $(sprintf(`#%s-username`, section))
+            , wifItem = $(sprintf(`#%s-wif`, section))
+        ;
+
+        usernameItem.removeClass(`is-invalid`);
+        wifItem.removeClass(`is-invalid`);
+
+        let dataValid = true
+            , username = usernameItem.val()
+            , wif = wifItem.val();
+
+        if (!username) {
+            usernameItem.addClass(`is-invalid`);
+            dataValid = false;
+        }
+        if (!wif || false === adapter.isWif(wif)) {
+            wifItem.addClass(`is-invalid`);
+            dataValid = false;
+        }
+        if (false === dataValid) {
+            return false;
+        }
+
+        adapter.isWifValid(section, username, wif, function(s, u, w) {
+            console.log(`success`, s, u, w);
+        }, function (msg) { console.error(msg) });
     });
 });

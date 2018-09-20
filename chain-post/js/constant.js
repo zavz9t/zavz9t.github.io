@@ -1,17 +1,17 @@
 const placeholders = {
     '{f_zavz9t}': `---
 <center>
-### [![](https://s19.postimg.cc/855m162ab/27cb8858fa0dfe41d2b1190533c8af9a63-32x32.png) SteemIt](https://steemit.com/@zavz9t) [![](https://s19.postimg.cc/6er6dbmyr/download-32x32.jpg) WhaleShares](https://whaleshares.io/@zavz9t) [![](https://s19.postimg.cc/7tsr21vrn/1480-32x32.png) Golos](https://golos.io/@zavz9t) [![VOX](https://s19.postimg.cc/fgjyfjt4j/vox-32.png)](https://vox.community/@zavz9t)
+### [![](https://s19.postimg.cc/855m162ab/27cb8858fa0dfe41d2b1190533c8af9a63-32x32.png) SteemIt](https://steemit.com/@zavz9t) [![](https://i.postimg.cc/FHPx155H/WLS-32.png) WhaleShares](https://whaleshares.io/@zavz9t) [![](https://s19.postimg.cc/7tsr21vrn/1480-32x32.png) Golos](https://golos.io/@zavz9t) [![VOX](https://s19.postimg.cc/fgjyfjt4j/vox-32.png)](https://vox.community/@zavz9t)
 </center>
 `,
     '{f_lego-cat}': `---
 <center>
-### [![](https://s19.postimg.cc/855m162ab/27cb8858fa0dfe41d2b1190533c8af9a63-32x32.png) SteemIt](https://steemit.com/@lego-cat) [![](https://s19.postimg.cc/6er6dbmyr/download-32x32.jpg) WhaleShares](https://whaleshares.io/@lego-cat) [![](https://s19.postimg.cc/7tsr21vrn/1480-32x32.png) Golos](https://golos.io/@lego-cat) [![VOX](https://s19.postimg.cc/fgjyfjt4j/vox-32.png)](https://vox.community/@lego-cat)
+### [![](https://s19.postimg.cc/855m162ab/27cb8858fa0dfe41d2b1190533c8af9a63-32x32.png) SteemIt](https://steemit.com/@lego-cat) [![](https://i.postimg.cc/FHPx155H/WLS-32.png) WhaleShares](https://whaleshares.io/@lego-cat) [![](https://s19.postimg.cc/7tsr21vrn/1480-32x32.png) Golos](https://golos.io/@lego-cat) [![VOX](https://s19.postimg.cc/fgjyfjt4j/vox-32.png)](https://vox.community/@lego-cat)
 </center>
 `,
     '{f_v-mi}': `---
 <center>
-### [![](https://s19.postimg.cc/855m162ab/27cb8858fa0dfe41d2b1190533c8af9a63-32x32.png) SteemIt](https://steemit.com/@v-mi) [![](https://s19.postimg.cc/6er6dbmyr/download-32x32.jpg) WhaleShares](https://whaleshares.io/@v-mi) [![](https://s19.postimg.cc/7tsr21vrn/1480-32x32.png) Golos](https://golos.io/@v-mi) [![VOX](https://s19.postimg.cc/fgjyfjt4j/vox-32.png)](https://vox.community/@v-mi)
+### [![](https://s19.postimg.cc/855m162ab/27cb8858fa0dfe41d2b1190533c8af9a63-32x32.png) SteemIt](https://steemit.com/@v-mi) [![](https://i.postimg.cc/FHPx155H/WLS-32.png) WhaleShares](https://whaleshares.io/@v-mi) [![](https://s19.postimg.cc/7tsr21vrn/1480-32x32.png) Golos](https://golos.io/@v-mi) [![VOX](https://s19.postimg.cc/fgjyfjt4j/vox-32.png)](https://vox.community/@v-mi)
 </center>
 `,
     '{f_cc_ua}': `---
@@ -32,7 +32,7 @@ const placeholders = {
 
 ---
 
-<center>Оригінальні пости українською в блозі @zavz9t</center>
+<center>![](https://i.postimg.cc/05thg3rP/Ukraine-_Flag-16.png) Оригінальні пости українською в блозі @zavz9t</center>
 `,
     '{f_ad_ua}': `---
 
@@ -45,6 +45,20 @@ const placeholders = {
 ---
 
 <center>[Джерело картинки](https://pixabay.com/en/list-icon-symbol-paper-sign-flat-2389219/)</center>
+`,
+    '{f_bl_ru}': `*ваш @zavz9t*
+
+---
+
+### Несколько слов о том, куда Вы попали
+
+Однажды я обратил внимание, что прохожу мимо очень интересных вещей даже не обращая на них внимание...
+
+Тогда я решил это исправить, в результате открыл для себя много интересного! А когда открыл, то решил поделиться ☺️
+
+---
+
+<center>![](https://i.postimg.cc/05thg3rP/Ukraine-_Flag-16.png) Пости даного розділу можна прочитати українською мовою в блозі @zavz9t</center>
 `
 };
 

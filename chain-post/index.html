@@ -11,9 +11,9 @@
 </head>
 <body>
     <div class="container">
-        <h1 class="mx-auto" style="width: 200px;">𝒞𝒽𝒶𝒾𝓃 𝒫𝑜𝓈𝓉</h1>
+        <div class="mx-auto" style="width: 400px;"><img src="img/chain-post-logo-m.png" alt="Chain Post"></div>
 
-        <form action="#" method="POST" id="form">
+        <form action="#" method="POST" id="form" class="needs-validation" novalidate>
             <div class="form-group">
                 <input type="text" class="form-control" id="title" placeholder="Title" />
             </div>
@@ -35,16 +35,34 @@
             </div>
 
             <div class="form-group">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <div class="input-group-text">@</div>
-                    </div>
-                    <input type="text" class="form-control" id="account-steem" placeholder="Enter your Steem username">
-                </div>
+                <select id="steem-account-list" class="form-control">
+                    <option selected>Choose or fill new one 👇</option>
+                    <option value="zavz9t">zavz9t</option>
+                    <option value="v-mi">v-mi</option>
+                </select>
             </div>
 
-            <div class="form-group">
-                <input type="password" class="form-control" id="wif-steem" placeholder="WIF (Posting key)" />
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">@</div>
+                        </div>
+                        <input type="text" class="form-control" id="steem-username" placeholder="Enter your Steem username">
+                        <div class="invalid-feedback">
+                            Username cannot be blank.
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <input type="password" class="form-control" id="steem-wif" placeholder="WIF (Posting key)" />
+                    <div class="invalid-feedback">
+                        WIF is empty or has invalid value.
+                    </div>
+                </div>
+                <div class="form-group col-md-2">
+                    <button id="steem-add-account" class="btn btn-primary btn-add-account">Add to list 👆</button>
+                </div>
             </div>
 
             <hr />
@@ -143,6 +161,6 @@
     <script src="js/lib/jquery.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>
     <script src="js/lib/bootstrap.bundle.min.js" integrity="sha384-pjaaA8dDz/5BgdFUPX6M/9SUZv4d12SUPF0axWc+VRZkx5xU3daN+lYb49+Ax+Tl" crossorigin="anonymous"></script>
 
-    <script src="js/main.min.js?t=1537378235"></script>
+    <script src="js/main.js?t=1537378235"></script>
 </body>
 </html>
