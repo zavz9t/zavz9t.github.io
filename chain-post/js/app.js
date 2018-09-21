@@ -1,7 +1,4 @@
-let ls = require(`local-storage`),
-    ss = require(`sessionstorage`),
-    Fingerprint2 = require(`fingerprintjs2`),
-    AES = require(`crypto-js/aes`),
+let Storage = require(`./storage`).Storage,
     tool = require(`./tool`),
     adapter = require(`./adapter`)
 ;
@@ -44,7 +41,8 @@ function publishPost() {
 //                        "image": (feature)?[feature]:featuredImage
             "image": []
         },
-//                    beneficiaries = document.getElementById("benics").value,
+//                    beneficiaries = document.getElementByI
+// d("benics").value,
 //         beneficiaries = "[{\"account\":\"chain-post\",\"weight\":500}]",
         beneficiaries = [{"account": "chain-post","weight":500}],
         parentPermlink = defaultTags[0],
@@ -219,8 +217,15 @@ jQuery(document).ready(function($) {
             return false;
         }
 
-        adapter.isWifValid(section, username, wif, function(s, u, w) {
-            console.log(`success`, s, u, w);
-        }, function (msg) { console.error(msg) });
+        adapter.AbstractAdapter.factory(section).isWifValid(
+            username,
+            wif,
+            Storage.addAccount,
+            function (msg) {
+                console.error(msg)
+            }
+        );
     });
+
+    console.log(Storage.getAccountWif(`steem`, `lego-cat`));
 });
