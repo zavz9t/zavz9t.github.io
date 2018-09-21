@@ -1,17 +1,17 @@
 const placeholders = {
     '{f_zavz9t}': `---
 <center>
-### [![](https://s19.postimg.cc/855m162ab/27cb8858fa0dfe41d2b1190533c8af9a63-32x32.png) SteemIt](https://steemit.com/@zavz9t) [![](https://s19.postimg.cc/6er6dbmyr/download-32x32.jpg) WhaleShares](https://whaleshares.io/@zavz9t) [![](https://s19.postimg.cc/7tsr21vrn/1480-32x32.png) Golos](https://golos.io/@zavz9t) [![VOX](https://s19.postimg.cc/fgjyfjt4j/vox-32.png)](https://vox.community/@zavz9t)
+### [![](https://s19.postimg.cc/855m162ab/27cb8858fa0dfe41d2b1190533c8af9a63-32x32.png) SteemIt](https://steemit.com/@zavz9t) [![](https://i.postimg.cc/FHPx155H/WLS-32.png) WhaleShares](https://whaleshares.io/@zavz9t) [![](https://s19.postimg.cc/7tsr21vrn/1480-32x32.png) Golos](https://golos.io/@zavz9t) [![VOX](https://s19.postimg.cc/fgjyfjt4j/vox-32.png)](https://vox.community/@zavz9t) [![Serey](https://i.postimg.cc/XNfxDkn4/serey-32.png) Serey](https://serey.io/@zavz9t)
 </center>
 `,
     '{f_lego-cat}': `---
 <center>
-### [![](https://s19.postimg.cc/855m162ab/27cb8858fa0dfe41d2b1190533c8af9a63-32x32.png) SteemIt](https://steemit.com/@lego-cat) [![](https://s19.postimg.cc/6er6dbmyr/download-32x32.jpg) WhaleShares](https://whaleshares.io/@lego-cat) [![](https://s19.postimg.cc/7tsr21vrn/1480-32x32.png) Golos](https://golos.io/@lego-cat) [![VOX](https://s19.postimg.cc/fgjyfjt4j/vox-32.png)](https://vox.community/@lego-cat)
+### [![](https://s19.postimg.cc/855m162ab/27cb8858fa0dfe41d2b1190533c8af9a63-32x32.png) SteemIt](https://steemit.com/@lego-cat) [![](https://i.postimg.cc/FHPx155H/WLS-32.png) WhaleShares](https://whaleshares.io/@lego-cat) [![](https://s19.postimg.cc/7tsr21vrn/1480-32x32.png) Golos](https://golos.io/@lego-cat) [![VOX](https://s19.postimg.cc/fgjyfjt4j/vox-32.png)](https://vox.community/@lego-cat) [![Serey](https://i.postimg.cc/XNfxDkn4/serey-32.png) Serey](https://serey.io/@lego-cat)
 </center>
 `,
     '{f_v-mi}': `---
 <center>
-### [![](https://s19.postimg.cc/855m162ab/27cb8858fa0dfe41d2b1190533c8af9a63-32x32.png) SteemIt](https://steemit.com/@v-mi) [![](https://s19.postimg.cc/6er6dbmyr/download-32x32.jpg) WhaleShares](https://whaleshares.io/@v-mi) [![](https://s19.postimg.cc/7tsr21vrn/1480-32x32.png) Golos](https://golos.io/@v-mi) [![VOX](https://s19.postimg.cc/fgjyfjt4j/vox-32.png)](https://vox.community/@v-mi)
+### [![](https://s19.postimg.cc/855m162ab/27cb8858fa0dfe41d2b1190533c8af9a63-32x32.png) SteemIt](https://steemit.com/@v-mi) [![](https://i.postimg.cc/FHPx155H/WLS-32.png) WhaleShares](https://whaleshares.io/@v-mi) [![](https://s19.postimg.cc/7tsr21vrn/1480-32x32.png) Golos](https://golos.io/@v-mi) [![VOX](https://s19.postimg.cc/fgjyfjt4j/vox-32.png)](https://vox.community/@v-mi) [![Serey](https://i.postimg.cc/XNfxDkn4/serey-32.png) Serey](https://serey.io/@v-mi)
 </center>
 `,
     '{f_cc_ua}': `---
