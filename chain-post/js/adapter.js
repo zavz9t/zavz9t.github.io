@@ -34,7 +34,7 @@ function publishToGolos(
 
 ---
 
-<center>![](https://i.postimg.cc/j5vJxsJY/Ukraine-16.png) Пости даного розділу можна прочитати українською мовою в блозі @lego-cat</center>
+<center>![](https://i.postimg.cc/05thg3rP/Ukraine-_Flag-16.png) Пости даного розділу можна прочитати українською мовою в блозі @lego-cat</center>
 `
         }
     ;
@@ -216,7 +216,7 @@ function publishToSteem(
 
 ---
 
-<center>![](https://i.postimg.cc/j5vJxsJY/Ukraine-16.png) Пости даного розділу можна прочитати українською мовою в блозі @lego-cat</center>
+<center>![](https://i.postimg.cc/05thg3rP/Ukraine-_Flag-16.png) Пости даного розділу можна прочитати українською мовою в блозі @lego-cat</center>
 `
         };
 
