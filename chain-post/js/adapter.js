@@ -21,7 +21,21 @@ function publishToGolos(
         section = 'golos',
         placeholdersLocal = {
             '{img_p_4}': `https://imgp.golos.io/400x0/`,
-            '{img_p_8}': `https://imgp.golos.io/800x0/`
+            '{img_p_8}': `https://imgp.golos.io/800x0/`,
+            '{f_bl_ru}': `*ваш @lego-cat*
+
+---
+
+### Несколько слов о том, куда Вы попали
+
+Однажды я обратил внимание, что прохожу мимо очень интересных вещей даже не обращая на них внимание...
+
+Тогда я решил это исправить, в результате открыл для себя много интересного! А когда открыл, то решил поделиться ☺️
+
+---
+
+<center>![](https://i.postimg.cc/j5vJxsJY/Ukraine-16.png) Пости даного розділу можна прочитати українською мовою в блозі @lego-cat</center>
+`
         }
     ;
 
@@ -189,7 +203,21 @@ function publishToSteem(
         section = 'steem',
         placeholdersLocal = {
             '{img_p_4}': `https://steemitimages.com/400x0/`,
-            '{img_p_8}': `https://steemitimages.com/800x0/`
+            '{img_p_8}': `https://steemitimages.com/800x0/`,
+            '{f_bl_ru}': `*ваш @lego-cat*
+
+---
+
+### Несколько слов о том, куда Вы попали
+
+Однажды я обратил внимание, что прохожу мимо очень интересных вещей даже не обращая на них внимание...
+
+Тогда я решил это исправить, в результате открыл для себя много интересного! А когда открыл, то решил поделиться ☺️
+
+---
+
+<center>![](https://i.postimg.cc/j5vJxsJY/Ukraine-16.png) Пости даного розділу можна прочитати українською мовою в блозі @lego-cat</center>
+`
         };
 
     // steem.api.setOptions({ url: "https://api.steemit.com" });
