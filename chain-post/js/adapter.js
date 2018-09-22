@@ -19,6 +19,8 @@ class AbstractAdapter
         this.connection = null;
     }
 
+    reconnect() {}
+
     static factory(section) {
         if (!(section in items)) {
             switch (section) {
@@ -50,6 +52,8 @@ class AbstractAdapter
     }
 
     isWifValid(username, wif, successCallback, failCallback) {
+        this.reconnect();
+
         let instance = this;
         this.connection.api.getAccounts([username], function (err, result) {
             if (err) {
@@ -91,7 +95,14 @@ class Steem extends AbstractAdapter
         super();
 
         this.name = nameSteem;
+        this.reconnect();
+    }
+
+    reconnect() {
         this.connection = require(`@steemit/steem-js`);
+        this.connection.api.setOptions({ url: `https://api.steemit.com` });
+        this.connection.config.set(`address_prefix`, `STM`);
+        this.connection.config.set(`chain_id`, `0000000000000000000000000000000000000000000000000000000000000000`);
     }
 }
 
@@ -111,7 +122,11 @@ class Vox extends AbstractAdapter
         super();
 
         this.name = nameVox;
-        this.connection = jQuery.extend(true, {}, require(`@steemit/steem-js`));
+        this.reconnect();
+    }
+
+    reconnect() {
+        this.connection = require(`@steemit/steem-js`);
         this.connection.api.setOptions({ url: `wss://vox.community/ws` });
         this.connection.config.set(`address_prefix`, `VOX`);
         this.connection.config.set(`chain_id`, `88a13f63de69c3a927594e07d991691c20e4cf1f34f83ae9bd26441db42a8acd`);

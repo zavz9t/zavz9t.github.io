@@ -23,11 +23,13 @@
   },
   "devDependencies": {
     "browserify": "latest",
-    "watchify": "latest",
-    "uglify-js-es6": "latest"
+    "mocha": "^5.2.0",
+    "mock-require": "^3.0.2",
+    "uglify-js-es6": "latest",
+    "watchify": "latest"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha",
     "postinstall": "./bin/post_install.sh",
     "build-js": "browserify js/app.js > js/main.js",
     "build-js-prod": "browserify js/app.js | uglifyjs --compress --mangle > js/main.min.js",

@@ -1,10 +1,9 @@
 const keyAccounts = `accounts`
-    , keySecret = `user_secret`
+    , keySecret = `u-s`
 ;
 
 let sprintf = require(`sprintf-js`).sprintf
     , ls = require(`local-storage`)
-    , ss = require(`sessionstorage`)
     , Fingerprint2 = require(`fingerprintjs2sync`)
     , CryptoJS = require(`crypto-js`)
 ;
@@ -36,12 +35,22 @@ class Storage
             .toString(CryptoJS.enc.Utf8);
     }
 
+    static getAccounts(section)
+    {
+        let accounts = ls.get(keyAccounts);
+        if (!accounts || !accounts[section]) {
+            return [];
+        } else {
+            return Object.keys(accounts[section])
+        }
+    }
+
     static getSecretKey()
     {
-        let secretValue = ss.getItem(keySecret);
+        let secretValue = ls.get(keySecret);
         if (!secretValue) {
             secretValue = (new Fingerprint2()).getSync().fprint;
-            ss.setItem(keySecret, secretValue)
+            ls.set(keySecret, secretValue)
         }
 
         return secretValue;

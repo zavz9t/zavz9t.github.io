@@ -1,6 +1,7 @@
-let Storage = require(`./storage`).Storage,
-    tool = require(`./tool`),
-    adapter = require(`./adapter`)
+let Storage = require(`./storage`).Storage
+    , tool = require(`./tool`)
+    , adapter = require(`./adapter`)
+    , doc = require(`./doc`)
 ;
 
 function publishPost() {
@@ -182,6 +183,11 @@ function publishPost() {
 }
 
 jQuery(document).ready(function($) {
+    doc.fillAccountsList();
+
+    doc.setHandlerAddAccount();
+    doc.setHandlerChangeAccount();
+
     $(`#form`).on(`submit`, function(e) {
         e.preventDefault();
         e.stopPropagation();
@@ -189,43 +195,5 @@ jQuery(document).ready(function($) {
         publishPost();
     });
 
-    $(`.btn-add-account`).on(`click`, function(e) {
-        e.preventDefault();
-        e.stopPropagation();
 
-        let section = $(this).attr(`id`).match(/[^-]+/).toString()
-            , usernameItem = $(sprintf(`#%s-username`, section))
-            , wifItem = $(sprintf(`#%s-wif`, section))
-        ;
-
-        usernameItem.removeClass(`is-invalid`);
-        wifItem.removeClass(`is-invalid`);
-
-        let dataValid = true
-            , username = usernameItem.val()
-            , wif = wifItem.val();
-
-        if (!username) {
-            usernameItem.addClass(`is-invalid`);
-            dataValid = false;
-        }
-        if (!wif || false === adapter.isWif(wif)) {
-            wifItem.addClass(`is-invalid`);
-            dataValid = false;
-        }
-        if (false === dataValid) {
-            return false;
-        }
-
-        adapter.AbstractAdapter.factory(section).isWifValid(
-            username,
-            wif,
-            Storage.addAccount,
-            function (msg) {
-                console.error(msg)
-            }
-        );
-    });
-
-    console.log(Storage.getAccountWif(`steem`, `lego-cat`));
 });

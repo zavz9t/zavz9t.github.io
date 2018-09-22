@@ -31,14 +31,12 @@
             <h3 class="mx-auto" style="width: 200px;">Steem Account</h3>
 
             <div class="form-group">
-                <input type="text" class="form-control" id="tags-steem" placeholder="Steem specific Tags" />
+                <input type="text" class="form-control" id="tags-steem" placeholder="Steem specific Tags (optional)" />
             </div>
 
             <div class="form-group">
-                <select id="steem-account-list" class="form-control">
-                    <option selected>Choose or fill new one 👇</option>
-                    <option value="zavz9t">zavz9t</option>
-                    <option value="v-mi">v-mi</option>
+                <select id="steem-accounts-list" class="form-control accounts-list">
+                    <option value="" selected>Choose or fill new one 👇</option>
                 </select>
             </div>
 
@@ -70,20 +68,36 @@
             <h3 class="mx-auto" style="width: 200px;">Golos Account</h3>
 
             <div class="form-group">
-                <input type="text" class="form-control" id="tags-golos" placeholder="Golos specific Tags" />
+                <input type="text" class="form-control" id="tags-golos" placeholder="Golos specific Tags (optional)" />
             </div>
 
             <div class="form-group">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <div class="input-group-text">@</div>
+                <select id="golos-accounts-list" class="form-control accounts-list">
+                    <option value="" selected>Choose or fill new one 👇</option>
+                </select>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">@</div>
+                        </div>
+                        <input type="text" class="form-control" id="golos-username" placeholder="Enter your Golos username">
+                        <div class="invalid-feedback">
+                            Username cannot be blank.
+                        </div>
                     </div>
-                    <input type="text" class="form-control" id="account-golos" placeholder="Enter your Golos username">
                 </div>
-            </div>
-
-            <div class="form-group">
-                <input type="password" class="form-control" id="wif-golos" placeholder="WIF (Posting key)" />
+                <div class="form-group col-md-6">
+                    <input type="password" class="form-control" id="golos-wif" placeholder="WIF (Posting key)" />
+                    <div class="invalid-feedback">
+                        WIF is empty or has invalid value.
+                    </div>
+                </div>
+                <div class="form-group col-md-2">
+                    <button id="golos-add-account" class="btn btn-primary btn-add-account">Add to list 👆</button>
+                </div>
             </div>
 
             <div class="form-check">
@@ -101,20 +115,36 @@
             <h3 class="mx-auto" style="width: 200px;">VOX Account</h3>
 
             <div class="form-group">
-                <input type="text" class="form-control" id="tags-vox" placeholder="VOX specific Tags" />
+                <input type="text" class="form-control" id="tags-vox" placeholder="VOX specific Tags (optional)" />
             </div>
 
             <div class="form-group">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <div class="input-group-text">@</div>
+                <select id="vox-accounts-list" class="form-control accounts-list">
+                    <option value="" selected>Choose or fill new one 👇</option>
+                </select>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">@</div>
+                        </div>
+                        <input type="text" class="form-control" id="vox-username" placeholder="Enter your VOX username">
+                        <div class="invalid-feedback">
+                            Username cannot be blank.
+                        </div>
                     </div>
-                    <input type="text" class="form-control" id="account-vox" placeholder="Enter your VOX username">
                 </div>
-            </div>
-
-            <div class="form-group">
-                <input type="password" class="form-control" id="wif-vox" placeholder="WIF (Posting key)" />
+                <div class="form-group col-md-6">
+                    <input type="password" class="form-control" id="vox-wif" placeholder="WIF (Posting key)" />
+                    <div class="invalid-feedback">
+                        WIF is empty or has invalid value.
+                    </div>
+                </div>
+                <div class="form-group col-md-2">
+                    <button id="vox-add-account" class="btn btn-primary btn-add-account">Add to list 👆</button>
+                </div>
             </div>
 
             <div class="form-check">
@@ -127,20 +157,36 @@
             <h3 class="mx-auto" style="width: 280px;">Whaleshares Account</h3>
 
             <div class="form-group">
-                <input type="text" class="form-control" id="tags-wls" placeholder="Whaleshares specific Tags" />
+                <input type="text" class="form-control" id="tags-wls" placeholder="Whaleshares specific Tags (optional)" />
             </div>
 
             <div class="form-group">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <div class="input-group-text">@</div>
+                <select id="wls-accounts-list" class="form-control accounts-list">
+                    <option value="" selected>Choose or fill new one 👇</option>
+                </select>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">@</div>
+                        </div>
+                        <input type="text" class="form-control" id="wls-username" placeholder="Enter your WLS username">
+                        <div class="invalid-feedback">
+                            Username cannot be blank.
+                        </div>
                     </div>
-                    <input type="text" class="form-control" id="account-wls" placeholder="Enter your Whaleshares username">
                 </div>
-            </div>
-
-            <div class="form-group">
-                <input type="password" class="form-control" id="wif-wls" placeholder="WIF (Posting key)" />
+                <div class="form-group col-md-6">
+                    <input type="password" class="form-control" id="wls-wif" placeholder="WIF (Posting key)" />
+                    <div class="invalid-feedback">
+                        WIF is empty or has invalid value.
+                    </div>
+                </div>
+                <div class="form-group col-md-2">
+                    <button id="wls-add-account" class="btn btn-primary btn-add-account">Add to list 👆</button>
+                </div>
             </div>
 
             <hr />

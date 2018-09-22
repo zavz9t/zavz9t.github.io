@@ -1,4 +1,5 @@
 let sprintf = require(`sprintf-js`).sprintf
+    , jQuery = require(`jquery`)
 ;
 
 function stripAndTransliterate(input, spaceReplacement, ruPrefix) {
@@ -177,6 +178,10 @@ function handlePublishError(section, error) {
     )
 }
 
+function getElementSection(element) {
+    return jQuery(element).attr(`id`).match(/[^-]+/).toString()
+}
+
 module.exports = {
     stripAndTransliterate: stripAndTransliterate,
     stripAccount: stripAccount,
@@ -186,5 +191,6 @@ module.exports = {
     handleTags: handleTags,
     stripPlaceholders: stripPlaceholders,
     handleSuccessfulPost: handleSuccessfulPost,
-    handlePublishError: handlePublishError
+    handlePublishError: handlePublishError,
+    getElementSection: getElementSection
 }
