@@ -32,7 +32,19 @@ const placeholders = {
 
 ---
 
-<center>![](https://i.postimg.cc/05thg3rP/Ukraine-_Flag-16.png) Оригінальні пости українською в блозі @zavz9t</center>
+<center>![](https://i.postimg.cc/05thg3rP/Ukraine-_Flag-16.png) Український варіант постів можна знайти в блозі @zavz9t</center>
+`,
+    '{f_cc_en}': `---
+
+## Several words about this section
+
+This section started from cups with coffee which I saw in different places. They were funny and interesting so I decided share them with you. Afterwards I saw many interesting mugs and cups without coffee, but decided share them too. But section name remained the same 😉
+
+<center>![](https://s19.postimg.cc/bw7u1jeyr/shutterstock_1012867498.jpg)</center>
+
+---
+
+<center>![](https://i.postimg.cc/05thg3rP/Ukraine-_Flag-16.png) Український варіант постів можна знайти в блозі @zavz9t</center>
 `,
     '{f_ad_ua}': `---
 
@@ -46,6 +58,14 @@ const placeholders = {
 
 <center>[Джерело картинки](https://pixabay.com/en/list-icon-symbol-paper-sign-flat-2389219/)</center>
 `,
+    '{f_bl_ua}': `---
+
+### Декілька слів про те, де ви є 😉
+
+В якийсь момент я усвідомив, що проходжу повз цікаві речі і навіть їх не помічаю. Враження, що працює автопілот...
+
+Це мені не сподобалося, тому я вирішив щось змінити! Тому почав уважніше ставитися до того, що знаходиться і відбувається навколо мене. Завдяки цьому, я відкрив для себе новий світ, яким і ділюся з вами 😊
+`,
     '{f_bl_ru}': `*ваш @zavz9t*
 
 ---
@@ -58,15 +78,21 @@ const placeholders = {
 
 ---
 
-<center>![](https://i.postimg.cc/05thg3rP/Ukraine-_Flag-16.png) Пости даного розділу можна прочитати українською мовою в блозі @zavz9t</center>
+<center>![](https://i.postimg.cc/05thg3rP/Ukraine-_Flag-16.png) Український варіант постів можна знайти в блозі @zavz9t</center>
 `,
-    '{f_bl_ua}': `---
+    '{f_bl_en}': `*best regards, @zavz9t*
 
-### Декілька слів про те, де ви є 😉
+---
 
-В якийсь момент я усвідомив, що проходжу повз цікаві речі і навіть їх не помічаю. Враження, що працює автопілот...
+### Several words about this section
 
-Це мені не сподобалося, тому я вирішив щось змінити! Тому почав уважніше ставитися до того, що знаходиться і відбувається навколо мене. Завдяки цьому, я відкрив для себе новий світ, яким і ділюся з вами 😊
+Once I noticed that I do not saw many interesting things when I walking outside...
+
+I decided to change this and discovered a new world that surrounds me! Today I share it with you ☺️
+
+---
+
+<center>![](https://i.postimg.cc/05thg3rP/Ukraine-_Flag-16.png) Український варіант постів можна знайти в блозі @zavz9t</center>
 `
 };
 
