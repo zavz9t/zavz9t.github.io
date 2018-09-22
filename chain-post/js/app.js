@@ -1,6 +1,5 @@
 let ls = require(`local-storage`),
     ss = require(`sessionstorage`),
-    Fingerprint2 = require(`fingerprintjs2`),
     AES = require(`crypto-js/aes`),
     tool = require(`./tool`),
     adapter = require(`./adapter`)
