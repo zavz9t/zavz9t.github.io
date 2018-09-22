@@ -1,8 +1,6 @@
-let ls = require(`local-storage`),
-    ss = require(`sessionstorage`),
-    AES = require(`crypto-js/aes`),
-    tool = require(`./tool`),
-    adapter = require(`./adapter`)
+let tool = require(`./tool`)
+    , adapter = require(`./adapter`)
+    , doc = require(`./doc`)
 ;
 
 function publishPost() {
@@ -10,17 +8,17 @@ function publishPost() {
 //                    wssgolos = (document.getElementById("golosnode").value)?document.getElementById("golosnode").value:'wss://ws.golos.io',
         postBody = document.getElementById('body').value, //MD.value(),
 //                    feature = document.getElementById("feature").value.replace(/ /g, ''),
-        steemAuthor = tool.stripAccount(document.getElementById('account-steem').value),
-        steemWif = tool.stripWif(document.getElementById('wif-steem').value),
-        golosAuthor = tool.stripAccount(document.getElementById('account-golos').value),
-        golosWif = tool.stripWif(document.getElementById('wif-golos').value),
+        steemAuthor = tool.stripAccount(document.getElementById('steem-username').value),
+        steemWif = tool.stripWif(document.getElementById('steem-wif').value),
+        golosAuthor = tool.stripAccount(document.getElementById('golos-username').value),
+        golosWif = tool.stripWif(document.getElementById('golos-wif').value),
         golosAsGolosio = document.getElementById('golos-as-golosio').checked,
         golosForVik = document.getElementById('golos-for-vik').value,
-        voxAuthor = tool.stripAccount(document.getElementById('account-vox').value),
-        voxWif = tool.stripWif(document.getElementById('wif-vox').value),
+        voxAuthor = tool.stripAccount(document.getElementById('vox-username').value),
+        voxWif = tool.stripWif(document.getElementById('vox-wif').value),
         voxForDs = document.getElementById('vox-for-ds').checked,
-        wlsAuthor = tool.stripAccount(document.getElementById('account-wls').value),
-        wlsWif = tool.stripWif(document.getElementById('wif-wls').value),
+        wlsAuthor = tool.stripAccount(document.getElementById('wls-username').value),
+        wlsWif = tool.stripWif(document.getElementById('wls-wif').value),
 //                    appname = (document.getElementById("appname").value)?document.getElementById("appname").value:'@vik',
         appName = '@chain-post';
 
@@ -43,7 +41,8 @@ function publishPost() {
 //                        "image": (feature)?[feature]:featuredImage
             "image": []
         },
-//                    beneficiaries = document.getElementById("benics").value,
+//                    beneficiaries = document.getElementByI
+// d("benics").value,
 //         beneficiaries = "[{\"account\":\"chain-post\",\"weight\":500}]",
         beneficiaries = [{"account": "chain-post","weight":500}],
         parentPermlink = defaultTags[0],
@@ -183,9 +182,17 @@ function publishPost() {
 }
 
 jQuery(document).ready(function($) {
-    $('#form').on('submit', function(e) {
+    doc.fillAccountsList();
+
+    doc.setHandlerAddAccount();
+    doc.setHandlerChangeAccount();
+
+    $(`#form`).on(`submit`, function(e) {
         e.preventDefault();
+        e.stopPropagation();
 
         publishPost();
     });
+
+
 });

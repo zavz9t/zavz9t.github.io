@@ -1,5 +1,161 @@
-let constant = require('./constant'),
-    tool = require(`./tool`);
+const nameSteem = `steem`
+    , nameGolos = `golos`
+    , nameVox = `vox`
+    , nameWls = `wls`
+    , nameSerey = `serey`
+;
+
+let items = []
+    , constant = require(`./constant`)
+    , sprintf = require(`sprintf-js`).sprintf
+    , jQuery = require(`jquery`)
+    , tool = require(`./tool`)
+;
+
+class AbstractAdapter
+{
+    constructor() {
+        this.name = null;
+        this.connection = null;
+    }
+
+    reconnect() {}
+
+    static factory(section) {
+        if (!(section in items)) {
+            switch (section) {
+                case nameSteem:
+                    items[section] = new Steem();
+                    break;
+                case nameGolos:
+                    items[section] = new Golos();
+                    break;
+                case nameVox:
+                    items[section] = new Vox();
+                    break;
+                case nameWls:
+                    items[section] = new Wls();
+                    break;
+                case nameSerey:
+                    items[section] = new Serey();
+                    break;
+                default:
+                    throw sprintf(`Section "%s" is not implemented yet!`, section);
+            }
+        }
+
+        return items[section];
+    }
+
+    isWif(wif) {
+        return this.connection.auth.isWif(wif);
+    }
+
+    isWifValid(username, wif, successCallback, failCallback) {
+        this.reconnect();
+
+        let instance = this;
+        this.connection.api.getAccounts([username], function (err, result) {
+            if (err) {
+                failCallback(err.toString());
+
+                return;
+            }
+            if (result.length < 1) {
+                failCallback(sprintf(`Account "%s" was not found at "%s" server.`, username, instance.name));
+
+                return;
+            }
+
+            let pubWif = result[0].posting.key_auths[0][0]
+                , isValid = false;
+
+            try {
+                isValid = instance.connection.auth.wifIsValid(wif, pubWif);
+            } catch(e) {
+                console.error(instance.name, e);
+            }
+
+            if (isValid) {
+                successCallback(instance.name, username, wif);
+            } else {
+                failCallback(sprintf(
+                    `Received WIF and username "%s" are not match at "%s" server.`,
+                    username,
+                    instance.name
+                ));
+            }
+        });
+    }
+}
+
+class Steem extends AbstractAdapter
+{
+    constructor() {
+        super();
+
+        this.name = nameSteem;
+        this.reconnect();
+    }
+
+    reconnect() {
+        this.connection = require(`@steemit/steem-js`);
+        this.connection.api.setOptions({ url: `https://api.steemit.com` });
+        this.connection.config.set(`address_prefix`, `STM`);
+        this.connection.config.set(`chain_id`, `0000000000000000000000000000000000000000000000000000000000000000`);
+    }
+}
+
+class Golos extends AbstractAdapter
+{
+    constructor() {
+        super();
+
+        this.name = nameGolos;
+        this.connection = require(`golos-js`);
+    }
+}
+
+class Vox extends AbstractAdapter
+{
+    constructor() {
+        super();
+
+        this.name = nameVox;
+        this.reconnect();
+    }
+
+    reconnect() {
+        this.connection = require(`@steemit/steem-js`);
+        this.connection.api.setOptions({ url: `wss://vox.community/ws` });
+        this.connection.config.set(`address_prefix`, `VOX`);
+        this.connection.config.set(`chain_id`, `88a13f63de69c3a927594e07d991691c20e4cf1f34f83ae9bd26441db42a8acd`);
+    }
+}
+
+class Wls extends AbstractAdapter
+{
+    constructor() {
+        super();
+
+        this.name = nameWls;
+        this.connection = require(`wlsjs-staging`);
+    }
+}
+
+class Serey extends AbstractAdapter
+{
+    constructor() {
+        super();
+
+        this.name = nameSerey;
+        this.connection = require(`@steemit/steem-js`);
+        this.connection = jQuery.extend(true, {}, require(`@steemit/steem-js`));
+        this.connection.api.setOptions({ url: `wss://serey.io/wss` });
+        this.connection.config.set(`address_prefix`, `SRY`);
+        this.connection.config.set(`chain_id`, `3b9a062c4c1f4338f6932ec8bfc083d99369df7479467bbab1811976181b0daf`);
+    }
+}
 
 function publishToGolos(
     wif,
@@ -445,6 +601,71 @@ function handler() {
     }
 }
 
+function getConnectionBySection(section) {
+    switch (section) {
+        case `steem`:
+            return require(`@steemit/steem-js`);
+        case `golos`:
+            return require(`golos-js`);
+        case `vox`:
+            let vox = require(`@steemit/steem-js`);
+
+            vox.api.setOptions({ url: 'wss://vox.community/ws' });
+            vox.config.set('address_prefix', 'VOX');
+            vox.config.set('chain_id', '88a13f63de69c3a927594e07d991691c20e4cf1f34f83ae9bd26441db42a8acd');
+
+            return vox;
+        case `wls`:
+            return require(`wlsjs-staging`);
+        default:
+            throw sprintf(`Section "%s" is not implemented yet!`, section);
+    }
+}
+
+function isWif(wif) {
+    let golos = require(`golos-js`);
+
+    return golos.auth.isWif(wif);
+}
+
+function isWifValid(section, username, wif, successCallback, failCallback) {
+    let connection = null;
+    try {
+        connection = getConnectionBySection(section);
+    } catch (e) {
+        failCallback(e.toString());
+    }
+
+    connection.api.getAccounts([username], function (err, result) {
+        if (err) {
+            failCallback(err.toString());
+
+            return;
+        }
+        if (result.length < 1) {
+            failCallback(sprintf(`Account "%s" was not found at "%s" server.`, username, section));
+
+            return;
+        }
+
+        let pubWif = result[0].posting.key_auths[0][0]
+            , isValid = false;
+
+        try {
+            isValid = connection.auth.wifIsValid(wif, pubWif);
+        } catch(e) {
+            console.error(e);
+        }
+        if (isValid) {
+            successCallback(section, username, wif);
+        } else {
+            failCallback(sprintf(`Received WIF and username "%s" are not match at "%s" server.`, username, section));
+        }
+    });
+}
+
 module.exports = {
-    handler: handler
+    handler: handler,
+    isWif: isWif,
+    AbstractAdapter: AbstractAdapter
 }
