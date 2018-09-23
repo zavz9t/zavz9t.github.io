@@ -191,6 +191,43 @@
 
             <hr />
 
+            <h3 class="mx-auto" style="width: 280px;">Serey Account</h3>
+
+            <div class="form-group">
+                <input type="text" class="form-control" id="tags-serey" placeholder="Serey specific Tags (optional)" />
+            </div>
+
+            <div class="form-group">
+                <select id="serey-accounts-list" class="form-control accounts-list">
+                    <option value="" selected>Choose or fill new one 👇</option>
+                </select>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">@</div>
+                        </div>
+                        <input type="text" class="form-control" id="serey-username" placeholder="Enter your Serey username">
+                        <div class="invalid-feedback">
+                            Username cannot be blank.
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <input type="password" class="form-control" id="serey-wif" placeholder="WIF (Posting key)" />
+                    <div class="invalid-feedback">
+                        WIF is empty or has invalid value.
+                    </div>
+                </div>
+                <div class="form-group col-md-2">
+                    <button id="serey-add-account" class="btn btn-primary btn-add-account">Add to list 👆</button>
+                </div>
+            </div>
+
+            <hr />
+
             <div class="mx-auto" style="width: 80px;">
                 <button type="submit" class="btn btn-primary">Submit</button>
             </div>

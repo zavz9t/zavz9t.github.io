@@ -69,6 +69,9 @@ function stripAndTransliterate(input, spaceReplacement, ruPrefix) {
     if (result[0] === spaceReplacement) {
         result = result.substring(1);
     }
+    if (result[result.length - 1] === spaceReplacement) {
+        result = result.substring(0, result.length - 1);
+    }
 
     // If string include ru character it should be prefixed by special prefix to roll back
     if (containRu) {

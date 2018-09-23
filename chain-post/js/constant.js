@@ -34,7 +34,9 @@ const placeholders = {
 
 <center>![](https://i.postimg.cc/05thg3rP/Ukraine-_Flag-16.png) Український варіант постів можна знайти в блозі @zavz9t</center>
 `,
-    '{f_cc_en}': `---
+    '{f_cc_en}': `*best regards, @zavz9t*
+
+---
 
 ## Several words about this section
 

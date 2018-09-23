@@ -1,4 +1,5 @@
-const nameSteem = `steem`
+const appName = `@chain-post`
+    , nameSteem = `steem`
     , nameGolos = `golos`
     , nameVox = `vox`
     , nameWls = `wls`
@@ -8,7 +9,6 @@ const nameSteem = `steem`
 let items = []
     , constant = require(`./constant`)
     , sprintf = require(`sprintf-js`).sprintf
-    , jQuery = require(`jquery`)
     , tool = require(`./tool`)
 ;
 
@@ -45,6 +45,16 @@ class AbstractAdapter
         }
 
         return items[section];
+    }
+
+    static buildJsonMetadata(tags)
+    {
+        return {
+            app: `@chain-post`,
+            format: `markdown`,
+            tags: tags,
+            image: []
+        }
     }
 
     isWif(wif) {
@@ -86,6 +96,46 @@ class AbstractAdapter
                 ));
             }
         });
+    }
+
+    publish(wif, author, postTitle, postBody, tags, options)
+    {
+
+    }
+
+    buildOperations(author, postTitle, postBody, tags, options)
+    {
+        return [
+            [
+                `comment`,
+                {
+                    parent_author: parentAuthor,
+                    parent_permlink: parentPermlink,
+                    author: author,
+                    permlink: permlink,
+                    title: postTitle,
+                    body: postBody,
+                    json_metadata: JSON.stringify(this.buildJsonMetadata(tags))
+                }
+            ],
+            [
+                `comment_options`,
+                {
+                    author: author,
+                    permlink: permlink,
+                    max_accepted_payout: '1000000.000 GOLD',
+                    percent_steem_dollars: 10000,
+                    allow_votes: true,
+                    allow_curation_rewards: true,
+                    extensions: [[
+                        0,
+                        {
+                            beneficiaries: beneficiariesLocal
+                        }
+                    ]]
+                }
+            ]
+        ];
     }
 }
 
@@ -149,8 +199,11 @@ class Serey extends AbstractAdapter
         super();
 
         this.name = nameSerey;
+        this.reconnect();
+    }
+
+    reconnect() {
         this.connection = require(`@steemit/steem-js`);
-        this.connection = jQuery.extend(true, {}, require(`@steemit/steem-js`));
         this.connection.api.setOptions({ url: `wss://serey.io/wss` });
         this.connection.config.set(`address_prefix`, `SRY`);
         this.connection.config.set(`chain_id`, `3b9a062c4c1f4338f6932ec8bfc083d99369df7479467bbab1811976181b0daf`);
