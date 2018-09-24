@@ -133,10 +133,11 @@ function handleSuccessfulPost(section, result) {
     console.log(section, result);
 
     let sectionToHost = {
-            'golos': `https://golos.io`,
-            'steem': `https://steemit.com`,
-            'vox': `https://vox.community`,
-            'wls': `https://whaleshares.io`
+            golos: `https://golos.io`
+            , steem: `https://steemit.com`
+            , vox: `https://vox.community`
+            , wls: `https://whaleshares.io`
+            , serey: `https://serey.io`
         },
         urlFormat = `%s/%s/@%s/%s`,
         operation = undefined
@@ -175,7 +176,7 @@ function handleSuccessfulPost(section, result) {
 }
 
 function handlePublishError(section, error) {
-    console.error('section', error);
+    console.error(section, error);
     jQuery(`#errors`).append(
         sprintf(`<p>%s: %s</p>`, section, error)
     )

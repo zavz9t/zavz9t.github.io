@@ -21,6 +21,11 @@ class AbstractAdapter
 
     reconnect() {}
 
+    static getCurrency()
+    {
+        return ``;
+    }
+
     static factory(section) {
         if (!(section in items)) {
             switch (section) {
@@ -55,6 +60,35 @@ class AbstractAdapter
             tags: tags,
             image: []
         }
+    }
+
+    static buildBeneficiaries(options)
+    {
+        return [ {account: `chain-post`, weight: 500} ]
+    }
+
+    static buildPermlink(postTitle)
+    {
+        return tool.stripAndTransliterate(postTitle);
+    }
+
+    static buildPostBody(postBody, placeholders)
+    {
+        for (let key in placeholders) {
+            postBody = postBody.replace(new RegExp(key, 'g'), placeholders[key]);
+        }
+
+        return tool.stripPlaceholders(postBody);
+    }
+
+    static getPlaceholders()
+    {
+        return constant.placeholders;
+    }
+
+    static getPercentSteemDollars()
+    {
+        return 10000;
     }
 
     isWif(wif) {
@@ -100,42 +134,86 @@ class AbstractAdapter
 
     publish(wif, author, postTitle, postBody, tags, options)
     {
+        let operations = this.buildOperations(author, postTitle, postBody, tags, options);
 
+        if (tool.isTest()) {
+            console.log(this.name, operations);
+        } else {
+            this.broadcastSend(wif, author, this.constructor.buildPermlink(postTitle), operations);
+        }
     }
 
     buildOperations(author, postTitle, postBody, tags, options)
     {
-        return [
-            [
-                `comment`,
-                {
-                    parent_author: parentAuthor,
-                    parent_permlink: parentPermlink,
-                    author: author,
-                    permlink: permlink,
-                    title: postTitle,
-                    body: postBody,
-                    json_metadata: JSON.stringify(this.buildJsonMetadata(tags))
-                }
-            ],
-            [
-                `comment_options`,
-                {
-                    author: author,
-                    permlink: permlink,
-                    max_accepted_payout: '1000000.000 GOLD',
-                    percent_steem_dollars: 10000,
-                    allow_votes: true,
-                    allow_curation_rewards: true,
-                    extensions: [[
-                        0,
-                        {
-                            beneficiaries: beneficiariesLocal
-                        }
-                    ]]
-                }
+        let permlink = tool.stripAndTransliterate(postTitle)
+            , beneficiaries = this.constructor.buildBeneficiaries(options)
+            , operations = [
+                [
+                    `comment`,
+                    {
+                        parent_author: ``,
+                        parent_permlink: tags[0],
+                        author: author,
+                        permlink: permlink,
+                        title: postTitle,
+                        body: this.constructor.buildPostBody(postBody, this.constructor.getPlaceholders()),
+                        json_metadata: JSON.stringify(this.constructor.buildJsonMetadata(tags))
+                    }
+                ],
+                [
+                    `comment_options`,
+                    {
+                        author: author,
+                        permlink: permlink,
+                        max_accepted_payout: '1000000.000 ' + this.constructor.getCurrency(),
+                        percent_steem_dollars: this.constructor.getPercentSteemDollars(),
+                        allow_votes: true,
+                        allow_curation_rewards: true
+                    }
+                ]
             ]
-        ];
+        ;
+        if (beneficiaries && beneficiaries.length > 0) {
+            operations[1][1][`extensions`] = [[
+                0,
+                {
+                    beneficiaries: beneficiaries
+                }
+            ]];
+        }
+        return operations;
+    }
+
+    broadcastSend(wif, author, permlink, operations) {
+        this.reconnect();
+        let objInstance = this;
+        this.connection.api.getContent(author, permlink, function(err, result) {
+            if (err) {
+                tool.handlePublishError(objInstance.name, err);
+
+                return;
+            }
+
+            if (result[`permlink`] === permlink) {
+                permlink = permlink + `-` + Math.floor(Date.now() / 1000);
+
+                operations[0][1][`permlink`] = permlink;
+                operations[1][1][`permlink`] = permlink;
+            }
+
+            objInstance.reconnect();
+            objInstance.connection.broadcast.send(
+                {'extensions': [], 'operations': operations},
+                {'posting': wif},
+                function (err, result) {
+                    if (!err) {
+                        tool.handleSuccessfulPost(objInstance.name, result);
+                    } else {
+                        tool.handlePublishError(objInstance.name, err);
+                    }
+                }
+            );
+        });
     }
 }
 
@@ -146,6 +224,21 @@ class Steem extends AbstractAdapter
 
         this.name = nameSteem;
         this.reconnect();
+    }
+
+    static getCurrency()
+    {
+        return `SBD`;
+    }
+
+    static getPlaceholders()
+    {
+        return Object.assign({}, super.getPlaceholders(), constant.steemPlaceholders);
+    }
+
+    static buildBeneficiaries(options)
+    {
+        return []
     }
 
     reconnect() {
@@ -164,6 +257,34 @@ class Golos extends AbstractAdapter
         this.name = nameGolos;
         this.connection = require(`golos-js`);
     }
+
+    static getCurrency()
+    {
+        return `GBG`;
+    }
+
+    static getPlaceholders()
+    {
+        return Object.assign({}, super.getPlaceholders(), constant.golosPlaceholders);
+    }
+
+    static buildBeneficiaries(options)
+    {
+        let beneficiaries = super.buildBeneficiaries(options)
+            , keyGolosIo = `as_golosio`
+            , keyVik = `for_vik`
+        ;
+
+        if (keyGolosIo in options && options[keyGolosIo]) {
+            beneficiaries.push({ account: `golosio`, weight: 1000 });
+        }
+        if (keyVik in options && options[keyVik]) {
+            beneficiaries.push({ account: `vik`, weight: options[keyVik] });
+            beneficiaries.push({ account: `netfriend`, weight: 1000 });
+        }
+
+        return beneficiaries;
+    }
 }
 
 class Vox extends AbstractAdapter
@@ -173,6 +294,29 @@ class Vox extends AbstractAdapter
 
         this.name = nameVox;
         this.reconnect();
+    }
+
+    static getCurrency()
+    {
+        return `GOLD`;
+    }
+
+    static getPlaceholders()
+    {
+        return Object.assign({}, super.getPlaceholders(), constant.voxPlaceholders);
+    }
+
+    static buildBeneficiaries(options)
+    {
+        let beneficiaries = super.buildBeneficiaries(options)
+            , keyDs = `for_ds`
+        ;
+
+        if (keyDs in options && options[keyDs]) {
+            beneficiaries.push({ account: `denis-skripnik`, weight: 100 });
+        }
+
+        return beneficiaries;
     }
 
     reconnect() {
@@ -191,6 +335,16 @@ class Wls extends AbstractAdapter
         this.name = nameWls;
         this.connection = require(`wlsjs-staging`);
     }
+
+    static getCurrency()
+    {
+        return `WLS`;
+    }
+
+    static getPlaceholders()
+    {
+        return Object.assign({}, super.getPlaceholders(), constant.wlsPlaceholders);
+    }
 }
 
 class Serey extends AbstractAdapter
@@ -200,6 +354,26 @@ class Serey extends AbstractAdapter
 
         this.name = nameSerey;
         this.reconnect();
+    }
+
+    static getCurrency()
+    {
+        return `SRD`;
+    }
+
+    static getPlaceholders()
+    {
+        return Object.assign({}, super.getPlaceholders(), constant.sereyPlaceholders);
+    }
+
+    static getPercentSteemDollars()
+    {
+        return 0;
+    }
+
+    static buildBeneficiaries(options)
+    {
+        return []
     }
 
     reconnect() {
@@ -681,44 +855,13 @@ function isWif(wif) {
     return golos.auth.isWif(wif);
 }
 
-function isWifValid(section, username, wif, successCallback, failCallback) {
-    let connection = null;
-    try {
-        connection = getConnectionBySection(section);
-    } catch (e) {
-        failCallback(e.toString());
-    }
-
-    connection.api.getAccounts([username], function (err, result) {
-        if (err) {
-            failCallback(err.toString());
-
-            return;
-        }
-        if (result.length < 1) {
-            failCallback(sprintf(`Account "%s" was not found at "%s" server.`, username, section));
-
-            return;
-        }
-
-        let pubWif = result[0].posting.key_auths[0][0]
-            , isValid = false;
-
-        try {
-            isValid = connection.auth.wifIsValid(wif, pubWif);
-        } catch(e) {
-            console.error(e);
-        }
-        if (isValid) {
-            successCallback(section, username, wif);
-        } else {
-            failCallback(sprintf(`Received WIF and username "%s" are not match at "%s" server.`, username, section));
-        }
-    });
-}
-
 module.exports = {
-    handler: handler,
-    isWif: isWif,
-    AbstractAdapter: AbstractAdapter
+    nameSteem: nameSteem
+    , nameGolos: nameGolos
+    , nameWls: nameWls
+    , nameVox: nameVox
+    , nameSerey: nameSerey
+    , handler: handler
+    , isWif: isWif
+    , AbstractAdapter: AbstractAdapter
 }

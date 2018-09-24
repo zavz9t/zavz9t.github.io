@@ -96,8 +96,59 @@ I decided to change this and discovered a new world that surrounds me! Today I s
 
 <center>![](https://i.postimg.cc/05thg3rP/Ukraine-_Flag-16.png) Український варіант постів можна знайти в блозі @zavz9t</center>
 `
-};
+}
+    , steemPlaceholders = {
+        '{img_p_4}': `https://steemitimages.com/400x0/`,
+        '{img_p_8}': `https://steemitimages.com/800x0/`,
+        '{f_bl_ru}': `*ваш @lego-cat*
+
+---
+
+### Несколько слов о том, куда Вы попали
+
+Однажды я обратил внимание, что прохожу мимо очень интересных вещей даже не обращая на них внимание...
+
+Тогда я решил это исправить, в результате открыл для себя много интересного! А когда открыл, то решил поделиться ☺️
+
+---
+
+<center>![](https://i.postimg.cc/05thg3rP/Ukraine-_Flag-16.png) Пости даного розділу можна прочитати українською мовою в блозі @lego-cat</center>
+`
+    }
+    , golosPlaceholders = {
+        '{img_p_4}': `https://imgp.golos.io/400x0/`,
+        '{img_p_8}': `https://imgp.golos.io/800x0/`,
+        '{f_bl_ru}': `*ваш @lego-cat*
+
+---
+
+### Несколько слов о том, куда Вы попали
+
+Однажды я обратил внимание, что прохожу мимо очень интересных вещей даже не обращая на них внимание...
+
+Тогда я решил это исправить, в результате открыл для себя много интересного! А когда открыл, то решил поделиться ☺️
+
+---
+
+<center>![](https://i.postimg.cc/05thg3rP/Ukraine-_Flag-16.png) Пости даного розділу можна прочитати українською мовою в блозі @lego-cat</center>
+`
+    }
+    , wlsPlaceholders = {
+        '{img_p_4}': `https://whaleshares.io/imageproxy/400x0/`,
+        '{img_p_8}': `https://whaleshares.io/imageproxy/800x0/`
+    }
+    , voxPlaceholders = {}
+    , sereyPlaceholders = {
+        '{img_p_4}': `https://serey.io/imageproxy/400x0/`,
+        '{img_p_8}': `https://serey.io/imageproxy/800x0/`
+    }
+;
 
 module.exports = {
     placeholders: placeholders
+    , steemPlaceholders: steemPlaceholders
+    , golosPlaceholders: golosPlaceholders
+    , wlsPlaceholders: wlsPlaceholders
+    , voxPlaceholders: voxPlaceholders
+    , sereyPlaceholders: sereyPlaceholders
 }

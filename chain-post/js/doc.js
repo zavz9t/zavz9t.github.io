@@ -125,8 +125,114 @@ function setHandlerChangeAccount() {
     });
 }
 
+function setHandlerPostPublish() {
+    jQuery(`#form`).on(`submit`, function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        let usernamePattern = `#%s-username`
+            , wifPattern = `#%s-wif`
+            , postTitle = jQuery(`#title`).val()
+            , postBody = jQuery(`#body`).val()
+            , steemAuthor = tool.stripAccount(jQuery(sprintf(usernamePattern, adapter.nameSteem)).val())
+            , steemWif = tool.stripWif(jQuery(sprintf(wifPattern, adapter.nameSteem)).val())
+            , golosAuthor = tool.stripAccount(jQuery(sprintf(usernamePattern, adapter.nameGolos)).val())
+            , golosWif = tool.stripWif(jQuery(sprintf(wifPattern, adapter.nameGolos)).val())
+            , golosAsGolosio = jQuery(sprintf(`#%s-as-golosio`, adapter.nameGolos)).is(`:checked`)
+            , golosForVik = jQuery(sprintf(`#%s-for-vik`, adapter.nameGolos)).val()
+            , voxAuthor = tool.stripAccount(jQuery(sprintf(usernamePattern, adapter.nameVox)).val())
+            , voxWif = tool.stripWif(jQuery(sprintf(wifPattern, adapter.nameVox)).val())
+            , voxForDs = jQuery(sprintf(`#%s-for-ds`, adapter.nameVox)).is(`:checked`)
+            , wlsAuthor = tool.stripAccount(jQuery(sprintf(usernamePattern, adapter.nameWls)).val())
+            , wlsWif = tool.stripWif(jQuery(sprintf(wifPattern, adapter.nameWls)).val())
+            , sereyAuthor = tool.stripAccount(jQuery(sprintf(usernamePattern, adapter.nameSerey)).val())
+            , sereyWif = tool.stripWif(jQuery(sprintf(wifPattern, adapter.nameSerey)).val())
+        ;
+
+        let tagsPattern = `#%s-tags`
+            , defaultTags = tool.handleTags(jQuery(`#tags`).val())
+            , steemTags = tool.handleTags(jQuery(sprintf(tagsPattern, adapter.nameSteem)).val())
+            , golosTags = tool.handleTags(jQuery(sprintf(tagsPattern, adapter.nameGolos)).val())
+            , voxTags = tool.handleTags(jQuery(sprintf(tagsPattern, adapter.nameVox)).val())
+            , wlsTags = tool.handleTags(jQuery(sprintf(tagsPattern, adapter.nameWls)).val())
+            , sereyTags = tool.handleTags(jQuery(sprintf(tagsPattern, adapter.nameSerey)).val())
+        ;
+
+        // Steem section
+        if (steemAuthor && steemWif) {
+            let adapterObj = adapter.AbstractAdapter.factory(adapter.nameSteem);
+
+            adapterObj.publish(
+                steemWif,
+                steemAuthor,
+                postTitle,
+                postBody,
+                steemTags ? steemTags : defaultTags
+            );
+        }
+
+        // GOLOS section
+        if (golosAuthor && golosWif) {
+            let adapterObj = adapter.AbstractAdapter.factory(adapter.nameGolos);
+
+            adapterObj.publish(
+                golosWif,
+                golosAuthor,
+                postTitle,
+                postBody,
+                golosTags ? golosTags : defaultTags,
+                {
+                    as_golosio: golosAsGolosio,
+                    for_vik: golosForVik
+                }
+            );
+        }
+
+        // WhaleShare section
+        if (wlsAuthor && wlsWif) {
+            let adapterObj = adapter.AbstractAdapter.factory(adapter.nameWls);
+
+            adapterObj.publish(
+                wlsWif,
+                wlsAuthor,
+                postTitle,
+                postBody,
+                wlsTags ? wlsTags : defaultTags
+            );
+        }
+
+        // VOX section
+        if (voxAuthor && voxWif) {
+            let adapterObj = adapter.AbstractAdapter.factory(adapter.nameVox);
+
+            adapterObj.publish(
+                voxWif,
+                voxAuthor,
+                postTitle,
+                postBody,
+                voxTags ? voxTags : defaultTags,
+                { for_ds: voxForDs }
+            );
+        }
+
+        // Serey section
+        if (sereyAuthor && sereyWif) {
+            let adapterObj = adapter.AbstractAdapter.factory(adapter.nameSerey);
+
+            adapterObj.publish(
+                sereyWif,
+                sereyAuthor,
+                postTitle,
+                postBody,
+                sereyTags ? sereyTags : defaultTags
+            );
+        }
+    });
+}
+
 module.exports = {
     fillAccountsList: fillAccountsList
     , setHandlerAddAccount: setHandlerAddAccount
     , setHandlerChangeAccount: setHandlerChangeAccount
+    , setHandlerPostPublish: setHandlerPostPublish
 }
