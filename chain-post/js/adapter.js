@@ -1,4 +1,5 @@
 const appName = `@chain-post`
+    , keyConnBusy = `busy`
     , nameSteem = `steem`
     , nameGolos = `golos`
     , nameVox = `vox`
@@ -9,6 +10,7 @@ const appName = `@chain-post`
 let items = []
     , constant = require(`./constant`)
     , sprintf = require(`sprintf-js`).sprintf
+    , sleep = require(`sleep-promise`)
     , tool = require(`./tool`)
 ;
 
@@ -55,7 +57,7 @@ class AbstractAdapter
     static buildJsonMetadata(tags)
     {
         return {
-            app: `@chain-post`,
+            app: appName,
             format: `markdown`,
             tags: tags,
             image: []
@@ -95,18 +97,29 @@ class AbstractAdapter
         return this.connection.auth.isWif(wif);
     }
 
-    isWifValid(username, wif, successCallback, failCallback) {
-        this.reconnect();
+    async isWifValid(username, wif, successCallback, failCallback) {
+        while (true === this.connection.config.get(keyConnBusy)) {
+            console.log(this.name + `:isWifValid: wait execution for 1 sec`);
 
+            await sleep(1000);
+        }
+
+        this.reconnect();
         let instance = this;
-        this.connection.api.getAccounts([username], function (err, result) {
+
+        instance.connection.config.set(keyConnBusy, true);
+        instance.connection.api.getAccounts([username], function (err, result) {
             if (err) {
                 failCallback(err.toString());
+
+                instance.connection.config.set(keyConnBusy, false);
 
                 return;
             }
             if (result.length < 1) {
                 failCallback(sprintf(`Account "%s" was not found at "%s" server.`, username, instance.name));
+
+                instance.connection.config.set(keyConnBusy, false);
 
                 return;
             }
@@ -119,6 +132,8 @@ class AbstractAdapter
             } catch(e) {
                 console.error(instance.name, e);
             }
+
+            instance.connection.config.set(keyConnBusy, false);
 
             if (isValid) {
                 successCallback(instance.name, username, wif);
@@ -184,12 +199,21 @@ class AbstractAdapter
         return operations;
     }
 
-    broadcastSend(wif, author, permlink, operations) {
+    async broadcastSend(wif, author, permlink, operations) {
+        while (true === this.connection.config.get(keyConnBusy)) {
+            console.log(this.name + `:broadcastSend: wait execution for 1 sec`);
+
+            await sleep(1000);
+        }
+
         this.reconnect();
         let objInstance = this;
-        this.connection.api.getContent(author, permlink, function(err, result) {
+
+        objInstance.connection.config.set(keyConnBusy, true);
+        objInstance.connection.api.getContent(author, permlink, function(err, result) {
             if (err) {
                 tool.handlePublishError(objInstance.name, err);
+                objInstance.connection.config.set(keyConnBusy, false);
 
                 return;
             }
@@ -201,11 +225,11 @@ class AbstractAdapter
                 operations[1][1][`permlink`] = permlink;
             }
 
-            objInstance.reconnect();
             objInstance.connection.broadcast.send(
                 {'extensions': [], 'operations': operations},
                 {'posting': wif},
                 function (err, result) {
+                    objInstance.connection.config.set(keyConnBusy, false);
                     if (!err) {
                         tool.handleSuccessfulPost(objInstance.name, result);
                     } else {
@@ -223,7 +247,11 @@ class Steem extends AbstractAdapter
         super();
 
         this.name = nameSteem;
-        this.reconnect();
+        this.connection = require(`@steemit/steem-js`);
+
+        if (false === this.connection.config.get(keyConnBusy)) {
+            this.reconnect();
+        }
     }
 
     static getCurrency()
@@ -242,7 +270,6 @@ class Steem extends AbstractAdapter
     }
 
     reconnect() {
-        this.connection = require(`@steemit/steem-js`);
         this.connection.api.setOptions({ url: `https://api.steemit.com` });
         this.connection.config.set(`address_prefix`, `STM`);
         this.connection.config.set(`chain_id`, `0000000000000000000000000000000000000000000000000000000000000000`);
@@ -279,7 +306,7 @@ class Golos extends AbstractAdapter
             beneficiaries.push({ account: `golosio`, weight: 1000 });
         }
         if (keyVik in options && options[keyVik]) {
-            beneficiaries.push({ account: `vik`, weight: options[keyVik] });
+            beneficiaries.push({ account: `vik`, weight: options[keyVik] * 1 });
             beneficiaries.push({ account: `netfriend`, weight: 1000 });
         }
 
@@ -293,7 +320,11 @@ class Vox extends AbstractAdapter
         super();
 
         this.name = nameVox;
-        this.reconnect();
+        this.connection = require(`@steemit/steem-js`);
+
+        if (false === this.connection.config.get(keyConnBusy)) {
+            this.reconnect();
+        }
     }
 
     static getCurrency()
@@ -320,7 +351,6 @@ class Vox extends AbstractAdapter
     }
 
     reconnect() {
-        this.connection = require(`@steemit/steem-js`);
         this.connection.api.setOptions({ url: `wss://vox.community/ws` });
         this.connection.config.set(`address_prefix`, `VOX`);
         this.connection.config.set(`chain_id`, `88a13f63de69c3a927594e07d991691c20e4cf1f34f83ae9bd26441db42a8acd`);
@@ -353,7 +383,11 @@ class Serey extends AbstractAdapter
         super();
 
         this.name = nameSerey;
-        this.reconnect();
+        this.connection = require(`@steemit/steem-js`);
+
+        if (false === this.connection.config.get(keyConnBusy)) {
+            this.reconnect();
+        }
     }
 
     static getCurrency()
@@ -377,7 +411,6 @@ class Serey extends AbstractAdapter
     }
 
     reconnect() {
-        this.connection = require(`@steemit/steem-js`);
         this.connection.api.setOptions({ url: `wss://serey.io/wss` });
         this.connection.config.set(`address_prefix`, `SRY`);
         this.connection.config.set(`chain_id`, `3b9a062c4c1f4338f6932ec8bfc083d99369df7479467bbab1811976181b0daf`);

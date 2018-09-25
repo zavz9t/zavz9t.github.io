@@ -86,6 +86,8 @@ function setHandlerAddAccount() {
                 Storage.addAccount(section, username, wif);
 
                 addAccountToList(section, username, true);
+
+                console.log(section, `User WIF is correct.`);
             },
             function (msg) {
                 console.error(msg);
