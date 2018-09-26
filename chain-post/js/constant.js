@@ -142,6 +142,11 @@ I decided to change this and discovered a new world that surrounds me! Today I s
         '{img_p_4}': `https://serey.io/imageproxy/400x0/`,
         '{img_p_8}': `https://serey.io/imageproxy/800x0/`
     }
+    , postBodySign = `
+---
+
+###### <center>*published by @chain-post* &nbsp; [![Steem](https://i.postimg.cc/MpFVhrVH/steem-16.png) ![Golos](https://i.postimg.cc/rpRxcCNJ/golos-16.png) ![WLS](https://i.postimg.cc/h4yw3Khq/WLS-16.png) ![Serey](https://i.postimg.cc/TwSs1cz3/serey-16.png)](https://zavz9t.github.io/chain-post/)</center>
+`
 ;
 
 module.exports = {
@@ -151,4 +156,5 @@ module.exports = {
     , wlsPlaceholders: wlsPlaceholders
     , voxPlaceholders: voxPlaceholders
     , sereyPlaceholders: sereyPlaceholders
+    , postBodySign: postBodySign
 }

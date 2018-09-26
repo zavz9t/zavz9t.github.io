@@ -74,15 +74,6 @@ class AbstractAdapter
         return tool.stripAndTransliterate(postTitle);
     }
 
-    static buildPostBody(postBody, placeholders)
-    {
-        for (let key in placeholders) {
-            postBody = postBody.replace(new RegExp(key, 'g'), placeholders[key]);
-        }
-
-        return tool.stripPlaceholders(postBody);
-    }
-
     static getPlaceholders()
     {
         return constant.placeholders;
@@ -171,7 +162,7 @@ class AbstractAdapter
                         author: author,
                         permlink: permlink,
                         title: postTitle,
-                        body: this.constructor.buildPostBody(postBody, this.constructor.getPlaceholders()),
+                        body: this.buildPostBody(postBody),
                         json_metadata: JSON.stringify(this.constructor.buildJsonMetadata(tags))
                     }
                 ],
@@ -197,6 +188,16 @@ class AbstractAdapter
             ]];
         }
         return operations;
+    }
+
+    buildPostBody(postBody)
+    {
+        let placeholders = this.constructor.getPlaceholders();
+        for (let key in placeholders) {
+            postBody = postBody.replace(new RegExp(key, 'g'), placeholders[key]);
+        }
+
+        return tool.stripPlaceholders(postBody) + constant.postBodySign;
     }
 
     async broadcastSend(wif, author, permlink, operations) {
