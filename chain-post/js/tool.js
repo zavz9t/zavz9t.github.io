@@ -186,15 +186,22 @@ function getElementSection(element) {
     return jQuery(element).attr(`id`).match(/[^-]+/).toString()
 }
 
+function parseFunctionName(rawName) {
+    let name = rawName.substr('function '.length); // trim off "function "
+
+    return name.substr(0, name.indexOf('(')); // trim off everything after the function name
+}
+
 module.exports = {
-    stripAndTransliterate: stripAndTransliterate,
-    stripAccount: stripAccount,
-    stripWif: stripWif,
-    buildDefaultPermlink: buildDefaultPermlink,
-    isTest: isTest,
-    handleTags: handleTags,
-    stripPlaceholders: stripPlaceholders,
-    handleSuccessfulPost: handleSuccessfulPost,
-    handlePublishError: handlePublishError,
-    getElementSection: getElementSection
+    stripAndTransliterate: stripAndTransliterate
+    , stripAccount: stripAccount
+    , stripWif: stripWif
+    , buildDefaultPermlink: buildDefaultPermlink
+    , isTest: isTest
+    , handleTags: handleTags
+    , stripPlaceholders: stripPlaceholders
+    , handleSuccessfulPost: handleSuccessfulPost
+    , handlePublishError: handlePublishError
+    , getElementSection: getElementSection
+    , parseFunctionName: parseFunctionName
 }

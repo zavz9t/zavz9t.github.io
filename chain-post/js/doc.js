@@ -10,6 +10,75 @@ let sprintf = require(`sprintf-js`).sprintf
     , adapter = require(`./adapter`)
 ;
 
+function addSections(sections) {
+    let funcName = tool.parseFunctionName(arguments.callee.toString());
+    if (!sections || sections.length < 1) {
+        console.log(funcName + `: No sections was received.`);
+
+        return;
+    }
+    let containerId = `form`
+        , container = jQuery(`#` + containerId)
+        , htmlSection = `
+            <hr />
+
+            <h3 class="mx-auto" style="%3$s">%2$s Account</h3>
+
+            <div class="form-group">
+                <input type="text" class="form-control" id="%1$s-tags" placeholder="%2$s specific Tags (optional)" />
+            </div>
+
+            <div class="form-group">
+                <select id="%1$s-accounts-list" class="form-control accounts-list">
+                    <option value="" selected>Choose or fill new one 👇</option>
+                </select>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">@</div>
+                        </div>
+                        <input type="text" class="form-control" id="%1$s-username" placeholder="Enter your %2$s username">
+                        <div class="invalid-feedback">
+                            Username cannot be blank.
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <input type="password" class="form-control" id="%1$s-wif" placeholder="WIF (Posting key)" />
+                    <div class="invalid-feedback">
+                        WIF is empty or has invalid value.
+                    </div>
+                </div>
+                <div class="form-group col-md-2">
+                    <button id="%1$s-add-account" class="btn btn-primary btn-add-account">Add to list 👆</button>
+                </div>
+            </div>
+        `;
+    ;
+    if (!container || container.length < 1) {
+        console.log(sprintf(`%s: Container by id "%s" was not found.`, funcName, containerId));
+
+        return;
+    }
+    for (let k in sections) {
+        let html = sprintf(
+                htmlSection,
+                k,
+                sections[k][`title`],
+                sections[k][`title_style`]
+            )
+            , appendKey = `append_html`
+        ;
+        if (appendKey in sections[k]) {
+            html += sections[k][appendKey];
+        }
+        jQuery(container).append(html);
+    }
+}
+
 function fillAccountsList() {
     jQuery(sprintf(`.%s`, htmlAccountsList)).each(function() {
         let section = tool.getElementSection(this)
@@ -233,7 +302,8 @@ function setHandlerPostPublish() {
 }
 
 module.exports = {
-    fillAccountsList: fillAccountsList
+    addSections: addSections
+    , fillAccountsList: fillAccountsList
     , setHandlerAddAccount: setHandlerAddAccount
     , setHandlerChangeAccount: setHandlerChangeAccount
     , setHandlerPostPublish: setHandlerPostPublish
