@@ -53,7 +53,7 @@ function addSections(sections) {
                     </div>
                 </div>
                 <div class="form-group col-md-2">
-                    <button id="%1$s-add-account" class="btn btn-primary btn-add-account">Add to list 👆</button>
+                    <button id="%1$s-add-account" class="btn btn-add-account btn-outline-success">Add to list 👆</button>
                 </div>
             </div>
         `;
