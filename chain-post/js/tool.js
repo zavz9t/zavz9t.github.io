@@ -1,5 +1,6 @@
 let sprintf = require(`sprintf-js`).sprintf
     , jQuery = require(`jquery`)
+    , constant = require(`./constant`)
 ;
 
 function stripAndTransliterate(input, spaceReplacement, ruPrefix) {
@@ -132,19 +133,21 @@ function stripPlaceholders(body) {
 function handleSuccessfulPost(section, result) {
     console.log(section, result);
 
-    let sectionToHost = {
-            golos: `https://golos.io`
-            , steem: `https://steemit.com`
-            , vox: `https://vox.community`
-            , wls: `https://whaleshares.io`
-            , serey: `https://serey.io`
-        },
-        urlFormat = `%s/%s/@%s/%s`,
-        operation = undefined
+    let funcName = parseFunctionName(arguments.callee.toString())
+        , sectionToHost = {}
+        , urlFormat = `%s/%s/@%s/%s`
+        , operation = undefined
     ;
 
+    sectionToHost[constant.adapterGolos] = `https://golos.io`;
+    sectionToHost[constant.adapterSteem] = `https://steemit.com`;
+    sectionToHost[constant.adapterVox] = `https://vox.community`;
+    sectionToHost[constant.adapterWls] = `https://whaleshares.io`;
+    sectionToHost[constant.adapterSerey] = `https://serey.io`;
+    sectionToHost[constant.adapterWeku] = `https://deals.weku.io`;
+
     if (!(section in sectionToHost)) {
-        console.warn(sprintf(`Received section "%s" is not implemented yet!`, section));
+        console.warn(sprintf(`%s: Received section "%s" is not implemented yet!`, funcName, section));
 
         return
     }
@@ -157,7 +160,7 @@ function handleSuccessfulPost(section, result) {
     }
 
     if (!operation) {
-        console.warn(sprintf(`Operation "comment" for section "%s" was not found in result.`, section));
+        console.warn(sprintf(`%s: Operation "comment" for section "%s" was not found in result.`, funcName, section));
 
         return;
     }

@@ -1,11 +1,5 @@
 const appName = `@chain-post`
     , keyConnBusy = `busy`
-    , nameSteem = `steem`
-    , nameGolos = `golos`
-    , nameVox = `vox`
-    , nameWls = `wls`
-    , nameWeku = `weku`
-    , nameSerey = `serey`
 ;
 
 let items = []
@@ -32,26 +26,29 @@ class AbstractAdapter
     static factory(section) {
         if (!(section in items)) {
             switch (section) {
-                case nameSteem:
+                case constant.adapterSteem:
                     items[section] = new Steem();
                     break;
-                case nameGolos:
+                case constant.adapterGolos:
                     items[section] = new Golos();
                     break;
-                case nameVox:
+                case constant.adapterVox:
                     items[section] = new Vox();
                     break;
-                case nameWls:
+                case constant.adapterWls:
                     items[section] = new Wls();
                     break;
-                case nameSerey:
+                case constant.adapterSerey:
                     items[section] = new Serey();
                     break;
-                case nameWeku:
+                case constant.adapterWeku:
                     items[section] = new Weku();
                     break;
                 default:
-                    throw sprintf(`Section "%s" is not implemented yet!`, section);
+                    throw sprintf(
+                        `factory: Section "%s" is not implemented yet!`,
+                        section
+                    );
             }
         }
 
@@ -251,7 +248,7 @@ class Steem extends AbstractAdapter
     constructor() {
         super();
 
-        this.name = nameSteem;
+        this.name = constant.adapterSteem;
         this.connection = require(`@steemit/steem-js`);
 
         if (false === this.connection.config.get(keyConnBusy)) {
@@ -286,7 +283,7 @@ class Golos extends AbstractAdapter
     constructor() {
         super();
 
-        this.name = nameGolos;
+        this.name = constant.adapterGolos;
         this.connection = require(`golos-js`);
     }
 
@@ -324,7 +321,7 @@ class Vox extends AbstractAdapter
     constructor() {
         super();
 
-        this.name = nameVox;
+        this.name = constant.adapterVox;
         this.connection = require(`@steemit/steem-js`);
 
         if (false === this.connection.config.get(keyConnBusy)) {
@@ -367,7 +364,7 @@ class Wls extends AbstractAdapter
     constructor() {
         super();
 
-        this.name = nameWls;
+        this.name = constant.adapterWls;
         this.connection = require(`wlsjs-staging`);
     }
 
@@ -387,7 +384,7 @@ class Serey extends AbstractAdapter
     constructor() {
         super();
 
-        this.name = nameSerey;
+        this.name = constant.adapterSerey;
         this.connection = require(`@steemit/steem-js`);
 
         if (false === this.connection.config.get(keyConnBusy)) {
@@ -427,7 +424,7 @@ class Weku extends AbstractAdapter
     constructor() {
         super();
 
-        this.name = nameWeku;
+        this.name = constant.adapterWeku;
         this.connection = require(`@steemit/steem-js`);
 
         if (false === this.connection.config.get(keyConnBusy)) {
@@ -450,6 +447,14 @@ class Weku extends AbstractAdapter
         return []
     }
 
+    static buildJsonMetadata(tags)
+    {
+        let metadata = super.buildJsonMetadata(tags);
+        metadata[`tags`] = [`community-deals`].concat(tags);
+
+        return metadata;
+    }
+
     reconnect() {
         this.connection.api.setOptions({ url: `wss://news.weku.io:8190` });
         this.connection.config.set(`address_prefix`, `WKA`);
@@ -464,12 +469,6 @@ function isWif(wif) {
 }
 
 module.exports = {
-    nameSteem: nameSteem
-    , nameGolos: nameGolos
-    , nameWls: nameWls
-    , nameVox: nameVox
-    , nameSerey: nameSerey
-    , nameWeku: nameWeku
-    , isWif: isWif
+    isWif: isWif
     , AbstractAdapter: AbstractAdapter
 }

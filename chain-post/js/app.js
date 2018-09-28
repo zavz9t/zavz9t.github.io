@@ -1,14 +1,15 @@
 let tool = require(`./tool`)
     , adapter = require(`./adapter`)
     , doc = require(`./doc`)
+    , constant = require(`./constant`)
 ;
 
 jQuery(document).ready(function() {
 
     // view section
     let sectionsView = {};
-    sectionsView[adapter.nameSteem] = { title: `Steem`, title_style: `width: 200px;` };
-    sectionsView[adapter.nameGolos] = {
+    sectionsView[constant.adapterSteem] = { title: `Steem`, title_style: `width: 200px;` };
+    sectionsView[constant.adapterGolos] = {
         title: `Golos`,
         title_style: `width: 190px;`,
         append_html: `
@@ -23,10 +24,10 @@ jQuery(document).ready(function() {
             </div>
         `
     };
-    sectionsView[adapter.nameWls] = { title: `Whaleshares`, title_style: `width: 280px;` };
-    sectionsView[adapter.nameSerey] = { title: `Serey`, title_style: `width: 200px;` };
-    sectionsView[adapter.nameWeku] = { title: `Weku`, title_style: `width: 190px;` };
-    sectionsView[adapter.nameVox] = {
+    sectionsView[constant.adapterWls] = { title: `Whaleshares`, title_style: `width: 280px;` };
+    sectionsView[constant.adapterSerey] = { title: `Serey`, title_style: `width: 200px;` };
+    sectionsView[constant.adapterWeku] = { title: `Weku`, title_style: `width: 190px;` };
+    sectionsView[constant.adapterVox] = {
         title: `Vox`,
         title_style: `width: 170px;`,
         append_html: `
@@ -40,15 +41,15 @@ jQuery(document).ready(function() {
     let sectionsSubmit = {}
         , defaultOptions = []
     ;
-    sectionsSubmit[adapter.nameSteem] = defaultOptions;
-    sectionsSubmit[adapter.nameGolos] = [
-        { type: `checkbox`, html_id: adapter.nameGolos + `-as-golosio`, key: `as_golosio` }
-        , { type: `int`, html_id: adapter.nameGolos + `-for-vik`, key: `for_vik` }
+    sectionsSubmit[constant.adapterSteem] = defaultOptions;
+    sectionsSubmit[constant.adapterGolos] = [
+        { type: `checkbox`, html_id: constant.adapterGolos + `-as-golosio`, key: `as_golosio` }
+        , { type: `int`, html_id: constant.adapterGolos + `-for-vik`, key: `for_vik` }
     ];
-    sectionsSubmit[adapter.nameWls] = defaultOptions;
-    sectionsSubmit[adapter.nameSerey] = defaultOptions;
-    sectionsSubmit[adapter.nameWeku] = defaultOptions;
-    sectionsSubmit[adapter.nameVox] = [ { type: `checkbox`, html_id: adapter.nameVox + `-for-ds`, key: `for_ds` } ];
+    sectionsSubmit[constant.adapterWls] = defaultOptions;
+    sectionsSubmit[constant.adapterSerey] = defaultOptions;
+    sectionsSubmit[constant.adapterWeku] = defaultOptions;
+    sectionsSubmit[constant.adapterVox] = [ { type: `checkbox`, html_id: constant.adapterVox + `-for-ds`, key: `for_ds` } ];
 
     doc.addSections(sectionsView);
     doc.fillAccountsList();

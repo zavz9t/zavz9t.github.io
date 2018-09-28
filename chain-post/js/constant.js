@@ -1,12 +1,12 @@
 const placeholders = {
     '{f_zavz9t}': `---
 <center>
-### [![](https://s19.postimg.cc/855m162ab/27cb8858fa0dfe41d2b1190533c8af9a63-32x32.png) SteemIt](https://steemit.com/@zavz9t) [![](https://i.postimg.cc/FHPx155H/WLS-32.png) WhaleShares](https://whaleshares.io/@zavz9t) [![](https://s19.postimg.cc/7tsr21vrn/1480-32x32.png) Golos](https://golos.io/@zavz9t) [![VOX](https://s19.postimg.cc/fgjyfjt4j/vox-32.png)](https://vox.community/@zavz9t) [![Serey](https://i.postimg.cc/XNfxDkn4/serey-32.png) Serey](https://serey.io/@zavz9t) [![Weku](https://i.postimg.cc/RNg1y58G/weku-32.png) Weku](https://deals.weku.io/@zavz9t)
+### [![](https://s19.postimg.cc/855m162ab/27cb8858fa0dfe41d2b1190533c8af9a63-32x32.png) SteemIt](https://steemit.com/@zavz9t) [![](https://i.postimg.cc/FHPx155H/WLS-32.png) WhaleShares](https://whaleshares.io/@zavz9t) [![](https://s19.postimg.cc/7tsr21vrn/1480-32x32.png) Golos](https://golos.io/@zavz9t) [![VOX](https://s19.postimg.cc/fgjyfjt4j/vox-32.png)](https://vox.community/@zavz9t) [![Serey](https://i.postimg.cc/XNfxDkn4/serey-32.png) Serey](https://serey.io/@zavz9t) [![Weku](https://i.postimg.cc/P5j6LdMG/weku-32.png) Weku](https://deals.weku.io/@zavz9t)
 </center>
 `,
     '{f_lego-cat}': `---
 <center>
-### [![](https://s19.postimg.cc/855m162ab/27cb8858fa0dfe41d2b1190533c8af9a63-32x32.png) SteemIt](https://steemit.com/@lego-cat) [![](https://i.postimg.cc/FHPx155H/WLS-32.png) WhaleShares](https://whaleshares.io/@lego-cat) [![](https://s19.postimg.cc/7tsr21vrn/1480-32x32.png) Golos](https://golos.io/@lego-cat) [![VOX](https://s19.postimg.cc/fgjyfjt4j/vox-32.png)](https://vox.community/@lego-cat) [![Serey](https://i.postimg.cc/XNfxDkn4/serey-32.png) Serey](https://serey.io/@lego-cat) [![Weku](https://i.postimg.cc/RNg1y58G/weku-32.png) Weku](https://deals.weku.io/@lego-cat)
+### [![](https://s19.postimg.cc/855m162ab/27cb8858fa0dfe41d2b1190533c8af9a63-32x32.png) SteemIt](https://steemit.com/@lego-cat) [![](https://i.postimg.cc/FHPx155H/WLS-32.png) WhaleShares](https://whaleshares.io/@lego-cat) [![](https://s19.postimg.cc/7tsr21vrn/1480-32x32.png) Golos](https://golos.io/@lego-cat) [![VOX](https://s19.postimg.cc/fgjyfjt4j/vox-32.png)](https://vox.community/@lego-cat) [![Serey](https://i.postimg.cc/XNfxDkn4/serey-32.png) Serey](https://serey.io/@lego-cat) [![Weku](https://i.postimg.cc/P5j6LdMG/weku-32.png) Weku](https://deals.weku.io/@lego-cat)
 </center>
 `,
     '{f_v-mi}': `---
@@ -147,8 +147,14 @@ I decided to change this and discovered a new world that surrounds me! Today I s
 
 ---
 
-###### <center>*published by @chain-post* &nbsp; [![Steem](https://i.postimg.cc/MpFVhrVH/steem-16.png) ![Golos](https://i.postimg.cc/rpRxcCNJ/golos-16.png) ![WLS](https://i.postimg.cc/h4yw3Khq/WLS-16.png) ![Serey](https://i.postimg.cc/TwSs1cz3/serey-16.png) ![Weku](https://i.postimg.cc/zVzSxXdV/weku-16.png)](https://zavz9t.github.io/chain-post/)</center>
+###### <center>*published by @chain-post* &nbsp; [![Steem](https://i.postimg.cc/MpFVhrVH/steem-16.png) ![Golos](https://i.postimg.cc/rpRxcCNJ/golos-16.png) ![WLS](https://i.postimg.cc/h4yw3Khq/WLS-16.png) ![Serey](https://i.postimg.cc/TwSs1cz3/serey-16.png) ![Weku](https://i.postimg.cc/wTJfT1Lc/weku-16.png)](https://zavz9t.github.io/chain-post/)</center>
 `
+    , adapterSteem = `steem`
+    , adapterGolos = `golos`
+    , adapterVox = `vox`
+    , adapterWls = `wls`
+    , adapterWeku = `weku`
+    , adapterSerey = `serey`
 ;
 
 module.exports = {
@@ -160,4 +166,10 @@ module.exports = {
     , sereyPlaceholders: sereyPlaceholders
     , wekuPlaceholders: wekuPlaceholders
     , postBodySign: postBodySign
+    , adapterSteem: adapterSteem
+    , adapterGolos: adapterGolos
+    , adapterWls: adapterWls
+    , adapterVox: adapterVox
+    , adapterSerey: adapterSerey
+    , adapterWeku: adapterWeku
 }

@@ -43,7 +43,7 @@ describe(`adapter`, function () {
     describe(`golos`, function() {
 
         it(`should build simple operations`, function() {
-            let adapterObj = adapter.AbstractAdapter.factory(adapter.nameGolos)
+            let adapterObj = adapter.AbstractAdapter.factory(constant.adapterGolos)
                 , author = `test-user`
                 , postTitle = `some test title`
                 , postBody = `Very important text`
@@ -91,7 +91,7 @@ describe(`adapter`, function () {
         });
 
         it(`should use specific placeholders`, function() {
-            let adapterObj = adapter.AbstractAdapter.factory(adapter.nameGolos)
+            let adapterObj = adapter.AbstractAdapter.factory(constant.adapterGolos)
                 , author = `test-user`
                 , postTitle = `some test title`
                 , postBody = `Very important text {img_p_4}bbb.png`
@@ -139,7 +139,7 @@ describe(`adapter`, function () {
         });
 
         it(`should remove unknown placeholders`, function() {
-            let adapterObj = adapter.AbstractAdapter.factory(adapter.nameGolos)
+            let adapterObj = adapter.AbstractAdapter.factory(constant.adapterGolos)
                 , author = `test-user`
                 , postTitle = `some test title`
                 , postBody = `Very important text {some-ph}bbb.png`
@@ -187,7 +187,7 @@ describe(`adapter`, function () {
         });
 
         it(`should build operations as golos.io`, function() {
-            let adapterObj = adapter.AbstractAdapter.factory(adapter.nameGolos)
+            let adapterObj = adapter.AbstractAdapter.factory(constant.adapterGolos)
                 , author = `test-user`
                 , postTitle = `some test title`
                 , postBody = `Very important text`
@@ -238,7 +238,7 @@ describe(`adapter`, function () {
         });
 
         it(`should build operations for VIK`, function() {
-            let adapterObj = adapter.AbstractAdapter.factory(adapter.nameGolos)
+            let adapterObj = adapter.AbstractAdapter.factory(constant.adapterGolos)
                 , author = `test-user`
                 , postTitle = `some test title`
                 , postBody = `Very important text`
@@ -295,7 +295,7 @@ describe(`adapter`, function () {
     describe(`steem`, function() {
 
         it(`should build simple operations`, function() {
-            let adapterObj = adapter.AbstractAdapter.factory(adapter.nameSteem)
+            let adapterObj = adapter.AbstractAdapter.factory(constant.adapterSteem)
                 , author = `test-user`
                 , postTitle = `some test title`
                 , postBody = `Very important text`
@@ -343,7 +343,7 @@ describe(`adapter`, function () {
         });
 
         it(`should replace placeholders`, function() {
-            let adapterObj = adapter.AbstractAdapter.factory(adapter.nameSteem)
+            let adapterObj = adapter.AbstractAdapter.factory(constant.adapterSteem)
                 , author = `test-user`
                 , postTitle = `some test title`
                 , postBody = `Very important text {img_p_8}http://img.png`
@@ -395,7 +395,7 @@ describe(`adapter`, function () {
     describe(`wls`, function() {
 
         it(`should build simple operations`, function() {
-            let adapterObj = adapter.AbstractAdapter.factory(adapter.nameWls)
+            let adapterObj = adapter.AbstractAdapter.factory(constant.adapterWls)
                 , author = `test-user`
                 , postTitle = `some test title`
                 , postBody = `Very important text`
@@ -443,7 +443,7 @@ describe(`adapter`, function () {
         });
 
         it(`should replace placeholders`, function() {
-            let adapterObj = adapter.AbstractAdapter.factory(adapter.nameWls)
+            let adapterObj = adapter.AbstractAdapter.factory(constant.adapterWls)
                 , author = `test-user`
                 , postTitle = `some test title`
                 , postBody = `Very important text {img_p_4}some-image`
@@ -495,7 +495,7 @@ describe(`adapter`, function () {
     describe(`vox`, function() {
 
         it(`should build simple operations`, function() {
-            let adapterObj = adapter.AbstractAdapter.factory(adapter.nameVox)
+            let adapterObj = adapter.AbstractAdapter.factory(constant.adapterVox)
                 , author = `test-user`
                 , postTitle = `some test title`
                 , postBody = `Very important text`
@@ -543,7 +543,7 @@ describe(`adapter`, function () {
         });
 
         it(`should build operations for denis-skripnik`, function() {
-            let adapterObj = adapter.AbstractAdapter.factory(adapter.nameVox)
+            let adapterObj = adapter.AbstractAdapter.factory(constant.adapterVox)
                 , author = `test-user`
                 , postTitle = `some test title`
                 , postBody = `Very important text`
@@ -598,7 +598,7 @@ describe(`adapter`, function () {
     describe(`serey`, function() {
 
         it(`should build simple operations`, function() {
-            let adapterObj = adapter.AbstractAdapter.factory(adapter.nameSerey)
+            let adapterObj = adapter.AbstractAdapter.factory(constant.adapterSerey)
                 , author = `test-user`
                 , postTitle = `some test title`
                 , postBody = `Very important text`
@@ -646,7 +646,7 @@ describe(`adapter`, function () {
         });
 
         it(`should replace placeholders`, function() {
-            let adapterObj = adapter.AbstractAdapter.factory(adapter.nameSerey)
+            let adapterObj = adapter.AbstractAdapter.factory(constant.adapterSerey)
                 , author = `test-user`
                 , postTitle = `some test title`
                 , postBody = `Very important text {img_p_4}some-image`
@@ -698,11 +698,12 @@ describe(`adapter`, function () {
     describe(`weku`, function() {
 
         it(`should build simple operations`, function() {
-            let adapterObj = adapter.AbstractAdapter.factory(adapter.nameWeku)
+            let adapterObj = adapter.AbstractAdapter.factory(constant.adapterWeku)
                 , author = `test-user`
                 , postTitle = `some test title`
                 , postBody = `Very important text`
                 , tags = [`first-tag`, `second-tag`, `third-one`]
+                , wekuTags = [`community-deals`].concat(tags)
                 , options = []
                 , permlink = tool.stripAndTransliterate(postTitle, `-`, `ru-`)
                 , expectedOperations = [
@@ -715,7 +716,7 @@ describe(`adapter`, function () {
                             permlink: permlink,
                             title: postTitle,
                             body: postBody + constant.postBodySign,
-                            json_metadata: JSON.stringify(adapter.AbstractAdapter.buildJsonMetadata(tags))
+                            json_metadata: JSON.stringify(adapter.AbstractAdapter.buildJsonMetadata(wekuTags))
                         }
                     ],
                     [
@@ -746,11 +747,12 @@ describe(`adapter`, function () {
         });
 
         it(`should replace placeholders`, function() {
-            let adapterObj = adapter.AbstractAdapter.factory(adapter.nameWeku)
+            let adapterObj = adapter.AbstractAdapter.factory(constant.adapterWeku)
                 , author = `test-user`
                 , postTitle = `some test title`
                 , postBody = `Very important text {img_p_4}some-image`
                 , tags = [`first-tag`, `second-tag`, `third-one`]
+                , wekuTags = [`community-deals`].concat(tags)
                 , options = []
                 , permlink = tool.stripAndTransliterate(postTitle, `-`, `ru-`)
                 , expectedOperations = [
@@ -763,7 +765,7 @@ describe(`adapter`, function () {
                             permlink: permlink,
                             title: postTitle,
                             body: `Very important text some-image` + constant.postBodySign,
-                            json_metadata: JSON.stringify(adapter.AbstractAdapter.buildJsonMetadata(tags))
+                            json_metadata: JSON.stringify(adapter.AbstractAdapter.buildJsonMetadata(wekuTags))
                         }
                     ],
                     [
