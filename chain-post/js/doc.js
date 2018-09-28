@@ -196,7 +196,7 @@ function setHandlerChangeAccount() {
     });
 }
 
-function setHandlerPostPublish() {
+function setHandlerPostPublish(sections) {
     jQuery(`#form`).on(`submit`, function(e) {
         e.preventDefault();
         e.stopPropagation();
@@ -205,98 +205,52 @@ function setHandlerPostPublish() {
             , wifPattern = `#%s-wif`
             , postTitle = jQuery(`#title`).val()
             , postBody = jQuery(`#body`).val()
-            , steemAuthor = tool.stripAccount(jQuery(sprintf(usernamePattern, adapter.nameSteem)).val())
-            , steemWif = tool.stripWif(jQuery(sprintf(wifPattern, adapter.nameSteem)).val())
-            , golosAuthor = tool.stripAccount(jQuery(sprintf(usernamePattern, adapter.nameGolos)).val())
-            , golosWif = tool.stripWif(jQuery(sprintf(wifPattern, adapter.nameGolos)).val())
-            , golosAsGolosio = jQuery(sprintf(`#%s-as-golosio`, adapter.nameGolos)).is(`:checked`)
-            , golosForVik = jQuery(sprintf(`#%s-for-vik`, adapter.nameGolos)).val()
-            , voxAuthor = tool.stripAccount(jQuery(sprintf(usernamePattern, adapter.nameVox)).val())
-            , voxWif = tool.stripWif(jQuery(sprintf(wifPattern, adapter.nameVox)).val())
-            , voxForDs = jQuery(sprintf(`#%s-for-ds`, adapter.nameVox)).is(`:checked`)
-            , wlsAuthor = tool.stripAccount(jQuery(sprintf(usernamePattern, adapter.nameWls)).val())
-            , wlsWif = tool.stripWif(jQuery(sprintf(wifPattern, adapter.nameWls)).val())
-            , sereyAuthor = tool.stripAccount(jQuery(sprintf(usernamePattern, adapter.nameSerey)).val())
-            , sereyWif = tool.stripWif(jQuery(sprintf(wifPattern, adapter.nameSerey)).val())
-        ;
-
-        let tagsPattern = `#%s-tags`
+            , tagsPattern = `#%s-tags`
             , defaultTags = tool.handleTags(jQuery(`#tags`).val())
-            , steemTags = tool.handleTags(jQuery(sprintf(tagsPattern, adapter.nameSteem)).val())
-            , golosTags = tool.handleTags(jQuery(sprintf(tagsPattern, adapter.nameGolos)).val())
-            , voxTags = tool.handleTags(jQuery(sprintf(tagsPattern, adapter.nameVox)).val())
-            , wlsTags = tool.handleTags(jQuery(sprintf(tagsPattern, adapter.nameWls)).val())
-            , sereyTags = tool.handleTags(jQuery(sprintf(tagsPattern, adapter.nameSerey)).val())
         ;
 
-        // Steem section
-        if (steemAuthor && steemWif) {
-            let adapterObj = adapter.AbstractAdapter.factory(adapter.nameSteem);
+        for (let section in sections) {
+            let sectionAuthor = tool.stripAccount(jQuery(sprintf(usernamePattern, section)).val())
+                , sectionWif = tool.stripWif(jQuery(sprintf(wifPattern, section)).val())
+                , sectionTags = tool.handleTags(jQuery(sprintf(tagsPattern, section)).val())
+            ;
 
-            adapterObj.publish(
-                steemWif,
-                steemAuthor,
-                postTitle,
-                postBody,
-                steemTags ? steemTags : defaultTags
-            );
-        }
+            if (sectionAuthor && sectionWif) {
+                let adapterObj = adapter.AbstractAdapter.factory(section)
+                    , sectionOptions = {}
+                ;
 
-        // GOLOS section
-        if (golosAuthor && golosWif) {
-            let adapterObj = adapter.AbstractAdapter.factory(adapter.nameGolos);
-
-            adapterObj.publish(
-                golosWif,
-                golosAuthor,
-                postTitle,
-                postBody,
-                golosTags ? golosTags : defaultTags,
-                {
-                    as_golosio: golosAsGolosio,
-                    for_vik: golosForVik
+                if (sections[section] && sections[section].length > 0) {
+                    for (let i in sections[section]) {
+                        let optionValue = null
+                            , optionElement = jQuery(`#` + sections[section][i][`html_id`])
+                        ;
+                        switch (sections[section][i][`type`]) {
+                            case `checkbox`:
+                                optionValue = optionElement.is(`:checked`);
+                                break;
+                            case `int`:
+                                optionValue = optionElement.val() * 1;
+                                break;
+                            case `text`:
+                                optionValue = optionElement.val();
+                                break;
+                            default:
+                                throw sprintf(`Option type "%s" is not implemented yet...`, sections[section][i][`type`]);
+                        }
+                        sectionOptions[sections[section][i][`key`]] = optionValue;
+                    }
                 }
-            );
-        }
 
-        // WhaleShare section
-        if (wlsAuthor && wlsWif) {
-            let adapterObj = adapter.AbstractAdapter.factory(adapter.nameWls);
-
-            adapterObj.publish(
-                wlsWif,
-                wlsAuthor,
-                postTitle,
-                postBody,
-                wlsTags ? wlsTags : defaultTags
-            );
-        }
-
-        // VOX section
-        if (voxAuthor && voxWif) {
-            let adapterObj = adapter.AbstractAdapter.factory(adapter.nameVox);
-
-            adapterObj.publish(
-                voxWif,
-                voxAuthor,
-                postTitle,
-                postBody,
-                voxTags ? voxTags : defaultTags,
-                { for_ds: voxForDs }
-            );
-        }
-
-        // Serey section
-        if (sereyAuthor && sereyWif) {
-            let adapterObj = adapter.AbstractAdapter.factory(adapter.nameSerey);
-
-            adapterObj.publish(
-                sereyWif,
-                sereyAuthor,
-                postTitle,
-                postBody,
-                sereyTags ? sereyTags : defaultTags
-            );
+                adapterObj.publish(
+                    sectionWif,
+                    sectionAuthor,
+                    postTitle,
+                    postBody,
+                    sectionTags ? sectionTags : defaultTags,
+                    sectionOptions
+                );
+            }
         }
     });
 }

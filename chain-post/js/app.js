@@ -5,9 +5,8 @@ let tool = require(`./tool`)
 
 jQuery(document).ready(function() {
 
-    let sectionsView = {}
-        , sectionsSubmit = {}
-    ;
+    // view section
+    let sectionsView = {};
     sectionsView[adapter.nameSteem] = { title: `Steem`, title_style: `width: 200px;` };
     sectionsView[adapter.nameGolos] = {
         title: `Golos`,
@@ -37,12 +36,25 @@ jQuery(document).ready(function() {
             </div>
         `
     };
+    // submit section
+    let sectionsSubmit = {}
+        , defaultOptions = []
+    ;
+    sectionsSubmit[adapter.nameSteem] = defaultOptions;
+    sectionsSubmit[adapter.nameGolos] = [
+        { type: `checkbox`, html_id: adapter.nameGolos + `-as-golosio`, key: `as_golosio` }
+        , { type: `int`, html_id: adapter.nameGolos + `-for-vik`, key: `for_vik` }
+    ];
+    sectionsSubmit[adapter.nameWls] = defaultOptions;
+    sectionsSubmit[adapter.nameSerey] = defaultOptions;
+    sectionsSubmit[adapter.nameWeku] = defaultOptions;
+    sectionsSubmit[adapter.nameVox] = [ { type: `checkbox`, html_id: adapter.nameVox + `-for-ds`, key: `for_ds` } ];
 
     doc.addSections(sectionsView);
     doc.fillAccountsList();
 
     doc.setHandlerAddAccount();
     doc.setHandlerChangeAccount();
-    doc.setHandlerPostPublish();
+    doc.setHandlerPostPublish(sectionsSubmit);
 
 });
