@@ -36,14 +36,23 @@
         <form action="#" method="POST" id="form" class="needs-validation" novalidate>
             <div class="form-group">
                 <input type="text" class="form-control" id="title" placeholder="Title" />
+                <div class="invalid-feedback">
+                    Title cannot be blank.
+                </div>
             </div>
 
             <div class="form-group">
                 <textarea class="form-control" id="body" rows="20" placeholder="Write your story..."></textarea>
+                <div class="invalid-feedback">
+                    Post body cannot be blank.
+                </div>
             </div>
 
             <div class="form-group">
                 <input type="text" class="form-control" id="tags"  placeholder="Tags, the first tag is your main category."/>
+                <div class="invalid-feedback">
+                    You need to write at least one tag.
+                </div>
             </div>
 
             <hr />
@@ -63,6 +72,6 @@
     <script src="js/lib/jquery.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>
     <script src="js/lib/bootstrap.bundle.min.js" integrity="sha384-pjaaA8dDz/5BgdFUPX6M/9SUZv4d12SUPF0axWc+VRZkx5xU3daN+lYb49+Ax+Tl" crossorigin="anonymous"></script>
 
-    <script src="js/main.min.js?t=1538164459"></script>
+    <script src="js/main.js?t=1538164459"></script>
 </body>
 </html>

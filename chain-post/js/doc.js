@@ -8,6 +8,7 @@ let sprintf = require(`sprintf-js`).sprintf
     , tool = require(`./tool`)
     , Storage = require(`./storage`).Storage
     , adapter = require(`./adapter`)
+    , constant = require(`./constant`)
 ;
 
 function addSections(sections) {
@@ -25,7 +26,7 @@ function addSections(sections) {
             <h3 class="mx-auto" style="%3$s">%2$s Account</h3>
 
             <div class="form-group">
-                <input type="text" class="form-control" id="%1$s-tags" placeholder="%2$s specific Tags (optional)" />
+                <input type="text" class="form-control" id="%1$s-tags" placeholder="Optional: Specify tags for %2$s (will replace previous)" />
             </div>
 
             <div class="form-group">
@@ -123,28 +124,32 @@ function setHandlerAddAccount() {
         e.preventDefault();
         e.stopPropagation();
 
-        let invalidClass = `is-invalid`
+        let element = jQuery(this)
             , section = tool.getElementSection(this)
             , usernameItem = jQuery(sprintf(`#%s-%s`, section, htmlUsername))
             , wifItem = jQuery(sprintf(`#%s-%s`, section, htmlWif))
         ;
 
-        usernameItem.removeClass(invalidClass);
-        wifItem.removeClass(invalidClass);
+        element.prop(constant.htmlDisabledPropName, true);
+
+        usernameItem.removeClass(constant.htmlInvalidClass);
+        wifItem.removeClass(constant.htmlInvalidClass);
 
         let dataValid = true
             , username = usernameItem.val()
             , wif = wifItem.val();
 
         if (!username) {
-            usernameItem.addClass(invalidClass);
+            usernameItem.addClass(constant.htmlInvalidClass);
             dataValid = false;
         }
         if (!wif || false === adapter.isWif(wif)) {
-            wifItem.addClass(invalidClass);
+            wifItem.addClass(constant.htmlInvalidClass);
             dataValid = false;
         }
         if (false === dataValid) {
+            element.prop(constant.htmlDisabledPropName, false);
+
             return false;
         }
 
@@ -156,12 +161,14 @@ function setHandlerAddAccount() {
 
                 addAccountToList(section, username, true);
 
+                element.prop(constant.htmlDisabledPropName, false);
                 console.log(section, `User WIF is correct.`);
             },
             function (msg) {
                 console.error(msg);
 
-                wifItem.addClass(invalidClass);
+                element.prop(constant.htmlDisabledPropName, false);
+                wifItem.addClass(constant.htmlInvalidClass);
             }
         );
     });
@@ -172,14 +179,13 @@ function setHandlerChangeAccount() {
         e.preventDefault();
         e.stopPropagation();
 
-        let invalidClass = `is-invalid`
-            , section = tool.getElementSection(this)
+        let section = tool.getElementSection(this)
             , usernameItem = jQuery(sprintf(`#%s-%s`, section, htmlUsername))
             , wifItem = jQuery(sprintf(`#%s-%s`, section, htmlWif))
         ;
 
-        usernameItem.removeClass(invalidClass);
-        wifItem.removeClass(invalidClass);
+        usernameItem.removeClass(constant.htmlInvalidClass);
+        wifItem.removeClass(constant.htmlInvalidClass);
 
         let username = jQuery(this).val();
 
@@ -201,14 +207,45 @@ function setHandlerPostPublish(sections) {
         e.preventDefault();
         e.stopPropagation();
 
-        let usernamePattern = `#%s-username`
+        let buttonElement = jQuery(this).find(`.btn-primary`)
+            , dataValid = true
+            , usernamePattern = `#%s-username`
             , wifPattern = `#%s-wif`
-            , postTitle = jQuery(`#title`).val()
-            , postBody = jQuery(`#body`).val()
+            , postTitleElement = jQuery(`#title`)
+            , postTitle = postTitleElement.val().trim()
+            , postBodyElement = jQuery(`#body`)
+            , postBody = postBodyElement.val()
             , tagsPattern = `#%s-tags`
-            , defaultTags = tool.handleTags(jQuery(`#tags`).val())
+            , postTagsElement = jQuery(`#tags`)
+            , defaultTags = tool.handleTags(postTagsElement.val().trim())
         ;
 
+        buttonElement.prop(constant.htmlDisabledPropName, true);
+
+        postTitleElement.removeClass(constant.htmlInvalidClass);
+        postBodyElement.removeClass(constant.htmlInvalidClass);
+        postTagsElement.removeClass(constant.htmlInvalidClass);
+
+        // validation
+        if (!postTitle) {
+            jQuery(postTitleElement).addClass(constant.htmlInvalidClass);
+            dataValid = false;
+        }
+        if (!postBody) {
+            postBodyElement.addClass(constant.htmlInvalidClass);
+            dataValid = false;
+        }
+        if (!defaultTags || defaultTags.length < 1) {
+            postTagsElement.addClass(constant.htmlInvalidClass);
+            dataValid = false;
+        }
+        if (false === dataValid) {
+            buttonElement.prop(constant.htmlDisabledPropName, false);
+
+            return;
+        }
+
+        // publishing
         for (let section in sections) {
             let sectionAuthor = tool.stripAccount(jQuery(sprintf(usernamePattern, section)).val())
                 , sectionWif = tool.stripWif(jQuery(sprintf(wifPattern, section)).val())
@@ -252,6 +289,8 @@ function setHandlerPostPublish(sections) {
                 );
             }
         }
+
+        buttonElement.prop(constant.htmlDisabledPropName, false);
     });
 }
 

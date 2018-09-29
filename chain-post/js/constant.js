@@ -155,6 +155,8 @@ I decided to change this and discovered a new world that surrounds me! Today I s
     , adapterWls = `wls`
     , adapterWeku = `weku`
     , adapterSerey = `serey`
+    , htmlDisabledPropName = `disabled`
+    , htmlInvalidClass = `is-invalid`
 ;
 
 module.exports = {
@@ -172,4 +174,6 @@ module.exports = {
     , adapterVox: adapterVox
     , adapterSerey: adapterSerey
     , adapterWeku: adapterWeku
+    , htmlDisabledPropName: htmlDisabledPropName
+    , htmlInvalidClass: htmlInvalidClass
 }
