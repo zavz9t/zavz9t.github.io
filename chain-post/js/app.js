@@ -1,10 +1,10 @@
-let tool = require(`./tool`)
-    , adapter = require(`./adapter`)
-    , doc = require(`./doc`)
+let doc = require(`./doc`)
     , constant = require(`./constant`)
 ;
 
-jQuery(document).ready(function() {
+jQuery(document).ready(function($) {
+
+    $(`[data-toggle="tooltip"]`).tooltip();
 
     // view section
     let sectionsView = {};
