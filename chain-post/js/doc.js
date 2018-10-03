@@ -130,25 +130,25 @@ function setHandlerAddAccount() {
             , wifItem = jQuery(sprintf(`#%s-%s`, section, htmlWif))
         ;
 
-        element.prop(constant.htmlDisabledPropName, true);
+        element.prop(constant.htmlNames.disabledPropName, true);
 
-        usernameItem.removeClass(constant.htmlInvalidClass);
-        wifItem.removeClass(constant.htmlInvalidClass);
+        usernameItem.removeClass(constant.htmlNames.invalidClassName);
+        wifItem.removeClass(constant.htmlNames.invalidClassName);
 
         let dataValid = true
             , username = usernameItem.val()
             , wif = wifItem.val();
 
         if (!username) {
-            usernameItem.addClass(constant.htmlInvalidClass);
+            usernameItem.addClass(constant.htmlNames.invalidClassName);
             dataValid = false;
         }
         if (!wif || false === adapter.isWif(wif)) {
-            wifItem.addClass(constant.htmlInvalidClass);
+            wifItem.addClass(constant.htmlNames.invalidClassName);
             dataValid = false;
         }
         if (false === dataValid) {
-            element.prop(constant.htmlDisabledPropName, false);
+            element.prop(constant.htmlNames.disabledPropName, false);
 
             return false;
         }
@@ -161,14 +161,14 @@ function setHandlerAddAccount() {
 
                 addAccountToList(section, username, true);
 
-                element.prop(constant.htmlDisabledPropName, false);
+                element.prop(constant.htmlNames.disabledPropName, false);
                 console.log(section, `User WIF is correct.`);
             },
             function (msg) {
                 console.error(msg);
 
-                element.prop(constant.htmlDisabledPropName, false);
-                wifItem.addClass(constant.htmlInvalidClass);
+                element.prop(constant.htmlNames.disabledPropName, false);
+                wifItem.addClass(constant.htmlNames.invalidClassName);
             }
         );
     });
@@ -184,8 +184,8 @@ function setHandlerChangeAccount() {
             , wifItem = jQuery(sprintf(`#%s-%s`, section, htmlWif))
         ;
 
-        usernameItem.removeClass(constant.htmlInvalidClass);
-        wifItem.removeClass(constant.htmlInvalidClass);
+        usernameItem.removeClass(constant.htmlNames.invalidClassName);
+        wifItem.removeClass(constant.htmlNames.invalidClassName);
 
         let username = jQuery(this).val();
 
@@ -220,27 +220,27 @@ function setHandlerPostPublish(sections) {
             , defaultTags = tool.handleTags(postTagsElement.val().trim())
         ;
 
-        buttonElement.prop(constant.htmlDisabledPropName, true);
+        buttonElement.prop(constant.htmlNames.disabledPropName, true);
 
-        postTitleElement.removeClass(constant.htmlInvalidClass);
-        postBodyElement.removeClass(constant.htmlInvalidClass);
-        postTagsElement.removeClass(constant.htmlInvalidClass);
+        postTitleElement.removeClass(constant.htmlNames.invalidClassName);
+        postBodyElement.removeClass(constant.htmlNames.invalidClassName);
+        postTagsElement.removeClass(constant.htmlNames.invalidClassName);
 
         // validation
         if (!postTitle) {
-            jQuery(postTitleElement).addClass(constant.htmlInvalidClass);
+            jQuery(postTitleElement).addClass(constant.htmlNames.invalidClassName);
             dataValid = false;
         }
         if (!postBody) {
-            postBodyElement.addClass(constant.htmlInvalidClass);
+            postBodyElement.addClass(constant.htmlNames.invalidClassName);
             dataValid = false;
         }
         if (!defaultTags || defaultTags.length < 1) {
-            postTagsElement.addClass(constant.htmlInvalidClass);
+            postTagsElement.addClass(constant.htmlNames.invalidClassName);
             dataValid = false;
         }
         if (false === dataValid) {
-            buttonElement.prop(constant.htmlDisabledPropName, false);
+            buttonElement.prop(constant.htmlNames.disabledPropName, false);
 
             return;
         }
@@ -290,7 +290,7 @@ function setHandlerPostPublish(sections) {
             }
         }
 
-        buttonElement.prop(constant.htmlDisabledPropName, false);
+        buttonElement.prop(constant.htmlNames.disabledPropName, false);
     });
 }
 

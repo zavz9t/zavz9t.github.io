@@ -134,19 +134,11 @@ function handleSuccessfulPost(section, result) {
     console.log(section, result);
 
     let funcName = parseFunctionName(arguments.callee.toString())
-        , sectionToHost = {}
         , urlFormat = `%s/%s/@%s/%s`
         , operation = undefined
     ;
 
-    sectionToHost[constant.adapterGolos] = `https://golos.io`;
-    sectionToHost[constant.adapterSteem] = `https://steemit.com`;
-    sectionToHost[constant.adapterVox] = `https://vox.community`;
-    sectionToHost[constant.adapterWls] = `https://whaleshares.io`;
-    sectionToHost[constant.adapterSerey] = `https://serey.io`;
-    sectionToHost[constant.adapterWeku] = `https://deals.weku.io`;
-
-    if (!(section in sectionToHost)) {
+    if (!(section in constant.adapterToHost)) {
         console.warn(sprintf(`%s: Received section "%s" is not implemented yet!`, funcName, section));
 
         return
@@ -167,22 +159,35 @@ function handleSuccessfulPost(section, result) {
 
     let url = sprintf(
         urlFormat,
-        sectionToHost[section],
+        constant.adapterToHost[section],
         operation['parent_permlink'],
         operation['author'],
         operation['permlink']
     );
 
-    jQuery(`#result`).append(
-        sprintf(`<p>%s: <a href="%s" target="_blank" rel="noopener noreferrer">%s</a></p>`, section, url, url)
-    )
+    jQuery(constant.htmlNavigation.resultBlock).append(
+        sprintf(constant.htmlPieces.publishSuccess, section, url)
+    );
+
+    scrollTo(constant.htmlNavigation.resultBlock);
 }
 
 function handlePublishError(section, error) {
     console.error(section, error);
-    jQuery(`#errors`).append(
-        sprintf(`<p>%s: %s</p>`, section, error)
-    )
+    jQuery(constant.htmlNavigation.resultBlock).append(
+        sprintf(constant.htmlPieces.publishError, section, error)
+    );
+
+    scrollTo(constant.htmlNavigation.resultBlock);
+}
+
+function scrollTo(selector) {
+    jQuery(`html, body`).stop().animate(
+        {
+            scrollTop: jQuery(selector).offset().top - 160
+        },
+        1000
+    );
 }
 
 function getElementSection(element) {

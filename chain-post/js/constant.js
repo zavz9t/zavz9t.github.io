@@ -22,7 +22,10 @@ const placeholders = {
 
 <center>![](https://s19.postimg.cc/bw7u1jeyr/shutterstock_1012867498.jpg)</center>
 `,
-    '{f_cc_ru}': `---
+    '{f_cc_ru}': `
+*ваш @zavz9t*
+
+---
 
 ## Несколько слов о том, куда Вы попали
 
@@ -34,7 +37,8 @@ const placeholders = {
 
 <center>![](https://i.postimg.cc/05thg3rP/Ukraine-_Flag-16.png) Український варіант постів можна знайти в блозі @zavz9t</center>
 `,
-    '{f_cc_en}': `*best regards, @zavz9t*
+    '{f_cc_en}': `
+*best regards, @zavz9t*
 
 ---
 
@@ -68,7 +72,8 @@ This section started from cups with coffee which I saw in different places. They
 
 Це мені не сподобалося, тому я вирішив щось змінити! Тому почав уважніше ставитися до того, що знаходиться і відбувається навколо мене. Завдяки цьому, я відкрив для себе новий світ, яким і ділюся з вами 😊
 `,
-    '{f_bl_ru}': `*ваш @zavz9t*
+    '{f_bl_ru}': `
+*ваш @zavz9t*
 
 ---
 
@@ -82,7 +87,8 @@ This section started from cups with coffee which I saw in different places. They
 
 <center>![](https://i.postimg.cc/05thg3rP/Ukraine-_Flag-16.png) Український варіант постів можна знайти в блозі @zavz9t</center>
 `,
-    '{f_bl_en}': `*best regards, @zavz9t*
+    '{f_bl_en}': `
+*best regards, @zavz9t*
 
 ---
 
@@ -155,8 +161,37 @@ I decided to change this and discovered a new world that surrounds me! Today I s
     , adapterWls = `wls`
     , adapterWeku = `weku`
     , adapterSerey = `serey`
-    , htmlDisabledPropName = `disabled`
-    , htmlInvalidClass = `is-invalid`
+    , adapterToHost = {
+        golos: `https://golos.io`
+        , steem: `https://steemit.com`
+        , vox: `https://vox.community`
+        , wls: `https://whaleshares.io`
+        , serey: `https://serey.io`
+        , weku: `https://deals.weku.io`
+    }
+    , htmlNavigation = {
+        resultBlock: `#result`
+    }
+    , htmlNames = {
+        invalidClassName: `is-invalid`
+        , disabledPropName: `disabled`
+    }
+    , htmlPieces = {
+        publishSuccess: `
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <img src="img/logo/%1$s-16.png" alt="%1$s"> <a href="%2$s" target="_blank" rel="noopener noreferrer">%2$s</a>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>`
+        , publishError: `
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <img src="img/logo/%1$s-16.png" alt="%1$s"> %2$s
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>`
+    }
 ;
 
 module.exports = {
@@ -174,6 +209,8 @@ module.exports = {
     , adapterVox: adapterVox
     , adapterSerey: adapterSerey
     , adapterWeku: adapterWeku
-    , htmlDisabledPropName: htmlDisabledPropName
-    , htmlInvalidClass: htmlInvalidClass
+    , adapterToHost: adapterToHost
+    , htmlNavigation: htmlNavigation
+    , htmlNames: htmlNames
+    , htmlPieces: htmlPieces
 }
