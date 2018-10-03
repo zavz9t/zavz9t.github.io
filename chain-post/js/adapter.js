@@ -145,6 +145,7 @@ class AbstractAdapter
 
         if (tool.isTest()) {
             console.log(this.name, operations);
+            tool.handleSuccessfulPost(this.name, operations);
         } else {
             this.broadcastSend(wif, author, this.constructor.buildPermlink(postTitle), operations);
         }

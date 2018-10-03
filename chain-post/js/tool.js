@@ -1,6 +1,7 @@
 let sprintf = require(`sprintf-js`).sprintf
     , jQuery = require(`jquery`)
     , constant = require(`./constant`)
+    , ss = require(`sessionstorage`)
 ;
 
 function stripAndTransliterate(input, spaceReplacement, ruPrefix) {
@@ -130,7 +131,50 @@ function stripPlaceholders(body) {
     return body.replace(/{.*}/g, '');
 }
 
+function increasePublishAdapters() {
+    let number = ss.getItem(constant.storageKeys.publishAdaptersCount);
+    if (!number) {
+        number = 1;
+    } else {
+        number++;
+    }
+    ss.setItem(constant.storageKeys.publishAdaptersCount, number);
+}
+
+function decreasePublishAdapters() {
+    let number = ss.getItem(constant.storageKeys.publishAdaptersCount);
+    if (!number || 0 === number) {
+        number = 0;
+    } else {
+        number--;
+    }
+    ss.setItem(constant.storageKeys.publishAdaptersCount, number);
+}
+
+function areAdaptersPublishing() {
+    let number = ss.getItem(constant.storageKeys.publishAdaptersCount);
+    if (0 === (number * 1)) {
+        return false;
+    } else {
+        return true;
+    }
+}
+
+function startPublishing(buttonElement) {
+    jQuery(buttonElement).prop(constant.htmlNames.disabledPropName, true);
+    jQuery(buttonElement).addClass(constant.htmlNames.loadingClassName);
+}
+
+function finishPublishing() {
+    if (false === areAdaptersPublishing()) {
+        jQuery(constant.htmlNavigation.submitButton).prop(constant.htmlNames.disabledPropName, false);
+        jQuery(constant.htmlNavigation.submitButton).removeClass(constant.htmlNames.loadingClassName);
+    }
+}
+
 function handleSuccessfulPost(section, result) {
+    decreasePublishAdapters();
+
     console.log(section, result);
 
     let funcName = parseFunctionName(arguments.callee.toString())
@@ -139,7 +183,7 @@ function handleSuccessfulPost(section, result) {
     ;
 
     if (!(section in constant.adapterToHost)) {
-        console.warn(sprintf(`%s: Received section "%s" is not implemented yet!`, funcName, section));
+        handlePublishWarning(section, sprintf(`%s: Received section "%s" is not implemented yet!`, funcName, section));
 
         return
     }
@@ -152,7 +196,10 @@ function handleSuccessfulPost(section, result) {
     }
 
     if (!operation) {
-        console.warn(sprintf(`%s: Operation "comment" for section "%s" was not found in result.`, funcName, section));
+        handlePublishWarning(
+            section,
+            sprintf(`%s: Operation "comment" for section "%s" was not found in result.`, funcName, section)
+        );
 
         return;
     }
@@ -169,15 +216,29 @@ function handleSuccessfulPost(section, result) {
         sprintf(constant.htmlPieces.publishSuccess, section, url)
     );
 
+    finishPublishing();
     scrollTo(constant.htmlNavigation.resultBlock);
 }
 
 function handlePublishError(section, error) {
+    decreasePublishAdapters();
+
     console.error(section, error);
     jQuery(constant.htmlNavigation.resultBlock).append(
         sprintf(constant.htmlPieces.publishError, section, error)
     );
 
+    finishPublishing();
+    scrollTo(constant.htmlNavigation.resultBlock);
+}
+
+function handlePublishWarning(section, warn) {
+    console.warn(warn);
+    jQuery(constant.htmlNavigation.resultBlock).append(
+        sprintf(constant.htmlPieces.publishWarning, section, warn)
+    );
+
+    finishPublishing();
     scrollTo(constant.htmlNavigation.resultBlock);
 }
 
@@ -208,6 +269,12 @@ module.exports = {
     , isTest: isTest
     , handleTags: handleTags
     , stripPlaceholders: stripPlaceholders
+    , scrollTo: scrollTo
+    , increasePublishAdapters: increasePublishAdapters
+    , decreasePublishAdapters: decreasePublishAdapters
+    , areAdaptersPublishing: areAdaptersPublishing
+    , startPublishing: startPublishing
+    , finishPublishing: finishPublishing
     , handleSuccessfulPost: handleSuccessfulPost
     , handlePublishError: handlePublishError
     , getElementSection: getElementSection

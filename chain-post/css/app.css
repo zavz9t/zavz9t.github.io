@@ -36,3 +36,11 @@ body {
     right: 20px;
     z-index: 5;
 }
+
+.btn .loader {
+    display: none;
+}
+
+.btn.loading .loader {
+    display: inline-block;
+}

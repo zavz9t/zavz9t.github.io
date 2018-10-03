@@ -1,4 +1,7 @@
-const placeholders = {
+const storageKeys = {
+        publishAdaptersCount: `pac`
+    }
+    , placeholders = {
     '{f_zavz9t}': `---
 <center>
 ### [![](https://s19.postimg.cc/855m162ab/27cb8858fa0dfe41d2b1190533c8af9a63-32x32.png)](https://steemit.com/@zavz9t) &nbsp; [![](https://i.postimg.cc/FHPx155H/WLS-32.png)](https://whaleshares.io/@zavz9t) &nbsp; [![](https://s19.postimg.cc/7tsr21vrn/1480-32x32.png)](https://golos.io/@zavz9t) &nbsp; [![VOX](https://s19.postimg.cc/fgjyfjt4j/vox-32.png)](https://vox.community/@zavz9t) &nbsp; [![Serey](https://i.postimg.cc/XNfxDkn4/serey-32.png)](https://serey.io/@zavz9t) &nbsp; [![Weku](https://i.postimg.cc/P5j6LdMG/weku-32.png)](https://deals.weku.io/@zavz9t)
@@ -170,11 +173,16 @@ I decided to change this and discovered a new world that surrounds me! Today I s
         , weku: `https://deals.weku.io`
     }
     , htmlNavigation = {
-        resultBlock: `#result`
+        titleBlock: `#title`
+        , bodyBlock: `#body`
+        , tagsBlock: `#tags`
+        , submitButton: `#submit-btn`
+        , resultBlock: `#result`
     }
     , htmlNames = {
         invalidClassName: `is-invalid`
         , disabledPropName: `disabled`
+        , loadingClassName: `loading`
     }
     , htmlPieces = {
         publishSuccess: `
@@ -191,11 +199,19 @@ I decided to change this and discovered a new world that surrounds me! Today I s
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>`
+        , publishWarning: `
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <img src="img/logo/%1$s-16.png" alt="%1$s"> %2$s
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>`
     }
 ;
 
 module.exports = {
-    placeholders: placeholders
+    storageKeys: storageKeys
+    , placeholders: placeholders
     , steemPlaceholders: steemPlaceholders
     , golosPlaceholders: golosPlaceholders
     , wlsPlaceholders: wlsPlaceholders

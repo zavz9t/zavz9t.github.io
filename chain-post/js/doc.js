@@ -207,20 +207,20 @@ function setHandlerPostPublish(sections) {
         e.preventDefault();
         e.stopPropagation();
 
-        let buttonElement = jQuery(this).find(`.btn-primary`)
+        let buttonElement = jQuery(constant.htmlNavigation.submitButton)
             , dataValid = true
             , usernamePattern = `#%s-username`
             , wifPattern = `#%s-wif`
-            , postTitleElement = jQuery(`#title`)
+            , postTitleElement = jQuery(constant.htmlNavigation.titleBlock)
             , postTitle = postTitleElement.val().trim()
-            , postBodyElement = jQuery(`#body`)
+            , postBodyElement = jQuery(constant.htmlNavigation.bodyBlock)
             , postBody = postBodyElement.val()
             , tagsPattern = `#%s-tags`
-            , postTagsElement = jQuery(`#tags`)
+            , postTagsElement = jQuery(constant.htmlNavigation.tagsBlock)
             , defaultTags = tool.handleTags(postTagsElement.val().trim())
         ;
 
-        buttonElement.prop(constant.htmlNames.disabledPropName, true);
+        tool.startPublishing(buttonElement);
 
         postTitleElement.removeClass(constant.htmlNames.invalidClassName);
         postBodyElement.removeClass(constant.htmlNames.invalidClassName);
@@ -228,22 +228,31 @@ function setHandlerPostPublish(sections) {
 
         // validation
         if (!postTitle) {
-            jQuery(postTitleElement).addClass(constant.htmlNames.invalidClassName);
+            postTitleElement.addClass(constant.htmlNames.invalidClassName);
+            tool.scrollTo(constant.htmlNavigation.titleBlock);
             dataValid = false;
         }
         if (!postBody) {
             postBodyElement.addClass(constant.htmlNames.invalidClassName);
+            if (dataValid) {
+                tool.scrollTo(constant.htmlNavigation.bodyBlock);
+            }
             dataValid = false;
         }
         if (!defaultTags || defaultTags.length < 1) {
             postTagsElement.addClass(constant.htmlNames.invalidClassName);
+            if (dataValid) {
+                tool.scrollTo(constant.htmlNavigation.tagsBlock);
+            }
             dataValid = false;
         }
         if (false === dataValid) {
-            buttonElement.prop(constant.htmlNames.disabledPropName, false);
+            tool.finishPublishing();
 
             return;
         }
+
+        tool.scrollTo(constant.htmlNavigation.resultBlock);
 
         // publishing
         for (let section in sections) {
@@ -253,6 +262,8 @@ function setHandlerPostPublish(sections) {
             ;
 
             if (sectionAuthor && sectionWif) {
+                tool.increasePublishAdapters();
+
                 let adapterObj = adapter.AbstractAdapter.factory(section)
                     , sectionOptions = {}
                 ;
@@ -290,7 +301,7 @@ function setHandlerPostPublish(sections) {
             }
         }
 
-        buttonElement.prop(constant.htmlNames.disabledPropName, false);
+        tool.finishPublishing();
     });
 }
 
