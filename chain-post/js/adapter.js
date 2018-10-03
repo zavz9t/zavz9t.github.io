@@ -407,11 +407,6 @@ class Serey extends AbstractAdapter
         return 0;
     }
 
-    static buildBeneficiaries(options)
-    {
-        return []
-    }
-
     reconnect() {
         this.connection.api.setOptions({ url: `wss://serey.io/wss` });
         this.connection.config.set(`address_prefix`, `SRY`);
