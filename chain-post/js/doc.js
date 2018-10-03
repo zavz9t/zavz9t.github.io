@@ -90,6 +90,7 @@ function fillAccountsList() {
             return;
         }
 
+        accounts.sort();
         for (let k in accounts) {
             addAccountToList(section, accounts[k])
         }
