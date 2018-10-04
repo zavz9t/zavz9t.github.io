@@ -207,7 +207,45 @@ I decided to change this and discovered a new world that surrounds me! Today I s
         , loadingClassName: `loading`
     }
     , htmlPieces = {
-        publishSuccess: `
+        adapterSection: `
+            <hr />
+
+            <h3 class="mx-auto" style="%3$s"><a href="%4$s" target="_blank" rel="noopener noreferrer">%2$s</a> Account</h3>
+
+            <div class="form-group">
+                <input type="text" class="form-control" id="%1$s-tags" placeholder="Optional: Specify tags for %2$s (will replace previous)" />
+            </div>
+
+            <div class="form-group">
+                <select id="%1$s-accounts-list" class="form-control accounts-list">
+                    <option value="" selected>Choose or fill new one 👇</option>
+                </select>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">@</div>
+                        </div>
+                        <input type="text" class="form-control" id="%1$s-username" placeholder="Enter your %2$s username">
+                        <div class="invalid-feedback">
+                            Username cannot be blank.
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <input type="password" class="form-control" id="%1$s-wif" placeholder="WIF (Posting key)" />
+                    <div class="invalid-feedback">
+                        WIF is empty or has invalid value.
+                    </div>
+                </div>
+                <div class="form-group col-md-2">
+                    <button id="%1$s-add-account" class="btn btn-add-account btn-outline-success">Add to list 👆</button>
+                </div>
+            </div>
+        `
+        , publishSuccess: `
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 <img src="img/logo/%1$s-16.png" alt="%1$s"> <a href="%2$s" target="_blank" rel="noopener noreferrer">%2$s</a>
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
