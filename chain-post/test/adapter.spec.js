@@ -548,6 +548,7 @@ describe(`adapter`, function () {
                 , postTitle = `some test title`
                 , postBody = `Very important text`
                 , tags = [`first-tag`, `second-tag`, `third-one`]
+                , voxTags = tags.concat([`dpos-post`])
                 , options = { for_ds: true }
                 , permlink = tool.stripAndTransliterate(postTitle, `-`, `ru-`)
                 , expectedOperations = [
@@ -560,7 +561,7 @@ describe(`adapter`, function () {
                             permlink: permlink,
                             title: postTitle,
                             body: postBody + constant.postBodySign,
-                            json_metadata: JSON.stringify(adapter.AbstractAdapter.buildJsonMetadata(tags))
+                            json_metadata: JSON.stringify(adapter.AbstractAdapter.buildJsonMetadata(voxTags))
                         }
                     ],
                     [

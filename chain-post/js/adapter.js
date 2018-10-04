@@ -55,7 +55,7 @@ class AbstractAdapter
         return items[section];
     }
 
-    static buildJsonMetadata(tags)
+    static buildJsonMetadata(tags, options)
     {
         return {
             app: appName,
@@ -165,7 +165,7 @@ class AbstractAdapter
                         permlink: permlink,
                         title: postTitle,
                         body: this.buildPostBody(postBody),
-                        json_metadata: JSON.stringify(this.constructor.buildJsonMetadata(tags))
+                        json_metadata: JSON.stringify(this.constructor.buildJsonMetadata(tags, options))
                     }
                 ],
                 [
@@ -348,6 +348,19 @@ class Vox extends AbstractAdapter
         return beneficiaries;
     }
 
+    static buildJsonMetadata(tags, options)
+    {
+        let metadata = super.buildJsonMetadata(tags, options)
+            , keyDs = `for_ds`
+        ;
+
+        if (keyDs in options && options[keyDs]) {
+            metadata[`tags`] = tags.concat([`dpos-post`]);
+        }
+
+        return metadata;
+    }
+
     reconnect() {
         this.connection.api.setOptions({ url: `wss://vox.community/ws` });
         this.connection.config.set(`address_prefix`, `VOX`);
@@ -438,9 +451,9 @@ class Weku extends AbstractAdapter
         return []
     }
 
-    static buildJsonMetadata(tags)
+    static buildJsonMetadata(tags, options)
     {
-        let metadata = super.buildJsonMetadata(tags);
+        let metadata = super.buildJsonMetadata(tags, options);
         metadata[`tags`] = [`community-deals`].concat(tags);
 
         return metadata;
