@@ -323,13 +323,13 @@ describe(`adapter`, function () {
                             max_accepted_payout: `1000000.000 SBD`,
                             percent_steem_dollars: 10000,
                             allow_votes: true,
-                            allow_curation_rewards: true
-                            // extensions: [[
-                            //     0,
-                            //     {
-                            //         beneficiaries: [{account: `chain-post`, weight: 500}]
-                            //     }
-                            // ]]
+                            allow_curation_rewards: true,
+                            extensions: [[
+                                0,
+                                {
+                                    beneficiaries: [{account: `chain-post`, weight: 500}]
+                                }
+                            ]]
                         }
                     ]
                 ]
@@ -371,13 +371,13 @@ describe(`adapter`, function () {
                             max_accepted_payout: `1000000.000 SBD`,
                             percent_steem_dollars: 10000,
                             allow_votes: true,
-                            allow_curation_rewards: true
-                            // extensions: [[
-                            //     0,
-                            //     {
-                            //         beneficiaries: [{account: `chain-post`, weight: 500}]
-                            //     }
-                            // ]]
+                            allow_curation_rewards: true,
+                            extensions: [[
+                                0,
+                                {
+                                    beneficiaries: [{account: `chain-post`, weight: 500}]
+                                }
+                            ]]
                         }
                     ]
                 ]

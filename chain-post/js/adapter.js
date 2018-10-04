@@ -267,11 +267,6 @@ class Steem extends AbstractAdapter
         return Object.assign({}, super.getPlaceholders(), constant.steemPlaceholders);
     }
 
-    static buildBeneficiaries(options)
-    {
-        return []
-    }
-
     reconnect() {
         this.connection.api.setOptions({ url: `https://api.steemit.com` });
         this.connection.config.set(`address_prefix`, `STM`);
