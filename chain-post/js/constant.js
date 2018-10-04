@@ -109,7 +109,8 @@ I decided to change this and discovered a new world that surrounds me! Today I s
     , steemPlaceholders = {
         '{img_p_4}': `https://steemitimages.com/400x0/`,
         '{img_p_8}': `https://steemitimages.com/800x0/`,
-        '{f_bl_ru}': `*ваш @lego-cat*
+        '{f_bl_ru}': `
+*ваш @lego-cat*
 
 ---
 
@@ -122,6 +123,16 @@ I decided to change this and discovered a new world that surrounds me! Today I s
 ---
 
 <center>![](https://i.postimg.cc/05thg3rP/Ukraine-_Flag-16.png) Пости даного розділу можна прочитати українською мовою в блозі @lego-cat</center>
+`,
+        '{f_bl_en}': `
+
+---
+
+### Several words about this section
+
+Once I noticed that I do not saw many interesting things when I walking outside...
+
+I decided to change this and discovered a new world that surrounds me! Today I share it with you ☺️
 `
     }
     , golosPlaceholders = {
@@ -140,6 +151,17 @@ I decided to change this and discovered a new world that surrounds me! Today I s
 ---
 
 <center>![](https://i.postimg.cc/05thg3rP/Ukraine-_Flag-16.png) Пости даного розділу можна прочитати українською мовою в блозі @lego-cat</center>
+`,
+    '{f_bl_en}': `
+
+---
+
+### Several words about this section
+
+Once I noticed that I do not saw many interesting things when I walking outside...
+
+I decided to change this and discovered a new world that surrounds me! Today I share it with you ☺️
+
 `
     }
     , wlsPlaceholders = {
