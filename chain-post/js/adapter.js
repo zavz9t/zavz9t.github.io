@@ -304,7 +304,7 @@ class Golos extends AbstractAdapter
             beneficiaries.push({ account: `golosio`, weight: 1000 });
         }
         if (keyVik in options && options[keyVik]) {
-            beneficiaries.push({ account: `vik`, weight: options[keyVik] * 1 });
+            beneficiaries.push({ account: `vik`, weight: options[keyVik] * 100 });
             beneficiaries.push({ account: `netfriend`, weight: 1000 });
         }
 

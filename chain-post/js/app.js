@@ -18,9 +18,21 @@ jQuery(document).ready(function($) {
                 <label class="form-check-label" for="golos-as-golosio">Publish as golos.io</label>
             </div>
 
-            <div class="form-group">
-                <label for="golos-for-vik">Publish for VIK</label>
-                <input type="number" step="1" min="1" max="9000" class="form-control" id="golos-for-vik" />
+            <div class="form-row align-items-center">
+                <div class="form-group col-md-3">
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="golos-vik-enable" />
+                        <label class="form-check-label" for="golos-vik-enable">Publish for VIK</label>
+                    </div>
+                </div>
+                
+                <div class="form-group col-md-2 golos-vik-settings invisible">
+                    <input type="number" step="1" min="10" max="85" class="form-control" id="golos-for-vik" />
+                </div>
+                
+                <div class="form-group col-md-2 golos-vik-settings invisible">
+                    <strong>%</strong>
+                </div>
             </div>
         `
     };
@@ -56,6 +68,7 @@ jQuery(document).ready(function($) {
 
     doc.setHandlerAddAccount();
     doc.setHandlerChangeAccount();
+    doc.setHandlerChangeGolosVik();
     doc.setHandlerPostPublish(sectionsSubmit);
 
 });

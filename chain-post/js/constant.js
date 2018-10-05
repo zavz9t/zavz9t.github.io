@@ -200,11 +200,15 @@ I decided to change this and discovered a new world that surrounds me! Today I s
         , tagsBlock: `#tags`
         , submitButton: `#submit-btn`
         , resultBlock: `#result`
+        , golosVik: `#golos-vik-enable`
+        , golosVikValue: `#golos-for-vik`
+        , golosVikSettings: `.golos-vik-settings`
     }
     , htmlNames = {
         invalidClassName: `is-invalid`
         , disabledPropName: `disabled`
         , loadingClassName: `loading`
+        , invisibleClassName: `invisible`
     }
     , htmlPieces = {
         adapterSection: `

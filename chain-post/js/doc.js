@@ -166,6 +166,21 @@ function setHandlerChangeAccount() {
     });
 }
 
+function setHandlerChangeGolosVik() {
+    jQuery(constant.htmlNavigation.golosVik).on(`change`, function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        if (jQuery(this).is(`:checked`)) {
+            jQuery(constant.htmlNavigation.golosVikValue).val(10);
+            jQuery(constant.htmlNavigation.golosVikSettings).removeClass(constant.htmlNames.invisibleClassName);
+        } else {
+            jQuery(constant.htmlNavigation.golosVikValue).val(``);
+            jQuery(constant.htmlNavigation.golosVikSettings).addClass(constant.htmlNames.invisibleClassName);
+        }
+    });
+}
+
 function setHandlerPostPublish(sections) {
     jQuery(`#form`).on(`submit`, function(e) {
         e.preventDefault();
@@ -274,5 +289,6 @@ module.exports = {
     , fillAccountsList: fillAccountsList
     , setHandlerAddAccount: setHandlerAddAccount
     , setHandlerChangeAccount: setHandlerChangeAccount
+    , setHandlerChangeGolosVik: setHandlerChangeGolosVik
     , setHandlerPostPublish: setHandlerPostPublish
 }

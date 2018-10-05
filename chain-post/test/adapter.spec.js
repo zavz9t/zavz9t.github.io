@@ -243,7 +243,7 @@ describe(`adapter`, function () {
                 , postTitle = `some test title`
                 , postBody = `Very important text`
                 , tags = [`first-tag`, `second-tag`, `third-one`]
-                , vikValue = 1000
+                , vikValue = 10
                 , options = { for_vik: vikValue }
                 , permlink = tool.stripAndTransliterate(postTitle, `-`, `ru-`)
                 , expectedOperations = [
@@ -273,7 +273,7 @@ describe(`adapter`, function () {
                                 {
                                     beneficiaries: [
                                         { account: `chain-post`, weight: 500 },
-                                        { account: `vik`, weight: vikValue },
+                                        { account: `vik`, weight: vikValue * 100 },
                                         { account: `netfriend`, weight: 1000 }
                                     ]
                                 }
