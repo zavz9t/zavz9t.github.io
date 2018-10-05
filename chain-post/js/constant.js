@@ -178,7 +178,7 @@ I decided to change this and discovered a new world that surrounds me! Today I s
 
 ---
 
-###### <center>*published by @chain-post* &nbsp; [![Steem](https://i.postimg.cc/MpFVhrVH/steem-16.png) ![Golos](https://i.postimg.cc/rpRxcCNJ/golos-16.png) ![WLS](https://i.postimg.cc/h4yw3Khq/WLS-16.png) ![Serey](https://i.postimg.cc/TwSs1cz3/serey-16.png) ![Weku](https://i.postimg.cc/wTJfT1Lc/weku-16.png)](https://zavz9t.github.io/chain-post/)</center>
+###### <center>https://i.postimg.cc/Kzt4Myqq/chain-post-logo-32.png *published by @chain-post* &nbsp; [![Steem](https://i.postimg.cc/MpFVhrVH/steem-16.png) ![Golos](https://i.postimg.cc/rpRxcCNJ/golos-16.png) ![WLS](https://i.postimg.cc/h4yw3Khq/WLS-16.png) ![Serey](https://i.postimg.cc/TwSs1cz3/serey-16.png) ![Weku](https://i.postimg.cc/wTJfT1Lc/weku-16.png)](https://zavz9t.github.io/chain-post/)</center>
 `
     , adapterSteem = `steem`
     , adapterGolos = `golos`
