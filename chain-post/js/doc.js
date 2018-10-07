@@ -284,6 +284,81 @@ function setHandlerPostPublish(sections) {
     });
 }
 
+function setHandlerLoadFacebook() {
+    jQuery(constant.htmlNavigation.facebookLoadForm).on(`submit`, function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        let facebookUrl = jQuery(this).find(`input`).val().replace(`www.facebook.com`, `m.facebook.com`)
+            , photoUrl = null
+            , buttonElement = jQuery(this).find(`.btn-primary`)
+        ;
+
+        buttonElement.prop(constant.htmlNames.disabledPropName, true);
+
+        if (false === facebookUrl.startsWith(`https://m.facebook.com/photo.php`)) {
+            console.error(sprintf(`Only facebook photo supported, received: "%s".`, facebookUrl));
+            buttonElement.prop(constant.htmlNames.disabledPropName, false);
+
+            return false;
+        }
+        if (false === facebookUrl.includes(`locale=`)) {
+            facebookUrl += `&locale=ru_RU`;
+        }
+
+        function fbProcess(config) {
+            // console.log(config);
+
+            let el = jQuery( `<div></div>` );
+            el.html(config.content[`__html`]);
+
+            let voiceElement = jQuery(`#voice_replace_id`, el)
+                , postTitle = voiceElement.text().replace(`—`, ``).trim()
+            ;
+            voiceElement.remove();
+
+            let postBody = jQuery(`.msg div`, el).html().replace(/<br>/g, `<br /><br />`);
+            if (postBody) {
+                postBody = sprintf(
+                    constant.htmlPieces.facebookPostBodyPattern,
+                    postBody,
+                    photoUrl,
+                    facebookUrl.replace(`m.facebook.com`, `www.facebook.com`)
+                );
+            }
+
+            jQuery(constant.htmlNavigation.titleBlock).val(postTitle);
+            jQuery(constant.htmlNavigation.bodyBlock).val(postBody);
+            jQuery(constant.htmlNavigation.tagsBlock).val(`facebook`);
+
+            jQuery(`#facebookModal .close`).trigger(`click`);
+            buttonElement.prop(constant.htmlNames.disabledPropName, false);
+        }
+
+        jQuery.getJSON(
+            `https://allorigins.me/get?url=` + encodeURIComponent(facebookUrl) + `&callback=?`,
+            function(data) {
+                // console.log(data.contents);
+
+                let el = jQuery( `<div></div>` );
+                el.html(data.contents);
+
+                photoUrl = jQuery(`meta[property="og:image"]`, el).attr(`content`);
+
+                let fbData = jQuery(`script:contains('require("MRenderingScheduler").getInstance().schedule({"id":"MPhotoContent"')`, el)
+                    .text()
+                    .replace(
+                        `require("MRenderingScheduler").getInstance().schedule`,
+                        `fbProcess`
+                    )
+                ;
+
+                eval(fbData);
+            }
+        );
+    });
+}
+
 module.exports = {
     addSections: addSections
     , fillAccountsList: fillAccountsList
@@ -291,4 +366,5 @@ module.exports = {
     , setHandlerChangeAccount: setHandlerChangeAccount
     , setHandlerChangeGolosVik: setHandlerChangeGolosVik
     , setHandlerPostPublish: setHandlerPostPublish
+    , setHandlerLoadFacebook: setHandlerLoadFacebook
 }

@@ -203,6 +203,7 @@ I decided to change this and discovered a new world that surrounds me! Today I s
         , golosVik: `#golos-vik-enable`
         , golosVikValue: `#golos-for-vik`
         , golosVikSettings: `.golos-vik-settings`
+        , facebookLoadForm: `#facebook-load-form`
     }
     , htmlNames = {
         invalidClassName: `is-invalid`
@@ -270,6 +271,13 @@ I decided to change this and discovered a new world that surrounds me! Today I s
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>`
+        , facebookPostBodyPattern: `%s
+
+%s
+
+---
+
+<center>[Original Post at Facebook](%s)</center>`
     }
 ;
 

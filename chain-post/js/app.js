@@ -70,5 +70,5 @@ jQuery(document).ready(function($) {
     doc.setHandlerChangeAccount();
     doc.setHandlerChangeGolosVik();
     doc.setHandlerPostPublish(sectionsSubmit);
-
+    doc.setHandlerLoadFacebook();
 });

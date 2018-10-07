@@ -30,7 +30,8 @@ body {
     z-index: 5;
 }
 
-.info-tooltip {
+.tool-buttons {
+    width: 32px;
     position: fixed;
     top: 20px;
     right: 20px;
@@ -43,4 +44,8 @@ body {
 
 .btn.loading .loader {
     display: inline-block;
+}
+
+#facebook-load-btn {
+    cursor: pointer;
 }
