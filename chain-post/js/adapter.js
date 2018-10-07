@@ -72,7 +72,7 @@ class AbstractAdapter
 
     static buildPermlink(postTitle)
     {
-        return tool.stripAndTransliterate(postTitle);
+        return tool.stripAndTransliterate(postTitle, `-`, ``);
     }
 
     static getPlaceholders()
@@ -153,7 +153,7 @@ class AbstractAdapter
 
     buildOperations(author, postTitle, postBody, tags, options)
     {
-        let permlink = tool.stripAndTransliterate(postTitle)
+        let permlink = this.constructor.buildPermlink(postTitle)
             , beneficiaries = this.constructor.buildBeneficiaries(options)
             , operations = [
                 [

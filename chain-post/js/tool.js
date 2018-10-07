@@ -5,8 +5,8 @@ let sprintf = require(`sprintf-js`).sprintf
 ;
 
 function stripAndTransliterate(input, spaceReplacement, ruPrefix) {
-    spaceReplacement = spaceReplacement || '-';
-    ruPrefix = ruPrefix || 'ru--';
+    spaceReplacement = undefined === spaceReplacement ? '-' : spaceReplacement;
+    ruPrefix = undefined === ruPrefix ? 'ru--' : ruPrefix;
 
     let translitAssoc = {
         "ые": "yie",
