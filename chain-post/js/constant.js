@@ -17,6 +17,11 @@ const storageKeys = {
 ### [![](https://s19.postimg.cc/855m162ab/27cb8858fa0dfe41d2b1190533c8af9a63-32x32.png)](https://steemit.com/@v-mi) &nbsp; [![](https://i.postimg.cc/FHPx155H/WLS-32.png)](https://whaleshares.io/@v-mi) &nbsp; [![](https://s19.postimg.cc/7tsr21vrn/1480-32x32.png)](https://golos.io/@v-mi) &nbsp; [![VOX](https://s19.postimg.cc/fgjyfjt4j/vox-32.png)](https://vox.community/@v-mi) &nbsp; [![Serey](https://i.postimg.cc/XNfxDkn4/serey-32.png)](https://serey.io/@v-mi)
 </center>
 `,
+        '{f_a-s}': `---
+<center>
+### [![](https://i.postimg.cc/FHPx155H/WLS-32.png)](https://whaleshares.io/@alba-stories) &nbsp; [![](https://s19.postimg.cc/7tsr21vrn/1480-32x32.png)](https://golos.io/@alba-stories) &nbsp; [![VOX](https://s19.postimg.cc/fgjyfjt4j/vox-32.png)](https://vox.community/@alba-stories) &nbsp; [![Serey](https://i.postimg.cc/XNfxDkn4/serey-32.png)](https://serey.io/@alba-stories)
+</center>
+`,
     '{f_cc_ua}': `---
 
 ## Декілька слів про те, куди Ви попали
@@ -200,6 +205,7 @@ I decided to change this and discovered a new world that surrounds me! Today I s
         , tagsBlock: `#tags`
         , submitButton: `#submit-btn`
         , resultBlock: `#result`
+        , resultLastItem: `#result div:lat`
         , golosVik: `#golos-vik-enable`
         , golosVikValue: `#golos-for-vik`
         , golosVikSettings: `.golos-vik-settings`

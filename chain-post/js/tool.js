@@ -217,7 +217,7 @@ function handleSuccessfulPost(section, result) {
     );
 
     finishPublishing();
-    scrollTo(constant.htmlNavigation.resultBlock);
+    scrollTo(constant.htmlNavigation.resultLastItem);
 }
 
 function handlePublishError(section, error) {
@@ -229,7 +229,7 @@ function handlePublishError(section, error) {
     );
 
     finishPublishing();
-    scrollTo(constant.htmlNavigation.resultBlock);
+    scrollTo(constant.htmlNavigation.resultLastItem);
 }
 
 function handlePublishWarning(section, warn) {
@@ -239,7 +239,7 @@ function handlePublishWarning(section, warn) {
     );
 
     finishPublishing();
-    scrollTo(constant.htmlNavigation.resultBlock);
+    scrollTo(constant.htmlNavigation.resultLastItem);
 }
 
 function scrollTo(selector) {
