@@ -197,7 +197,11 @@ function setHandlerPostPublish(sections) {
             , tagsPattern = `#%s-tags`
             , postTagsElement = jQuery(constant.htmlNavigation.tagsBlock)
             , defaultTags = tool.handleTags(postTagsElement.val().trim())
+            , imagesValue = jQuery(constant.htmlNavigation.imagesBlock).val()
         ;
+        if (imagesValue) {
+            imagesValue = JSON.parse(imagesValue);
+        }
 
         tool.startPublishing(buttonElement);
 
@@ -244,7 +248,7 @@ function setHandlerPostPublish(sections) {
                 tool.increasePublishAdapters();
 
                 let adapterObj = adapter.AbstractAdapter.factory(section)
-                    , sectionOptions = {}
+                    , sectionOptions = {images: imagesValue}
                 ;
 
                 if (sections[section] && sections[section].length > 0) {
@@ -289,7 +293,8 @@ function setHandlerLoadFacebook() {
         e.preventDefault();
         e.stopPropagation();
 
-        let facebookUrl = jQuery(this).find(`input`).val().replace(`www.facebook.com`, `m.facebook.com`)
+        let inputElement = jQuery(this).find(`input`)
+            , facebookUrl = inputElement.val().replace(`www.facebook.com`, `m.facebook.com`)
             , photoUrl = null
             , buttonElement = jQuery(this).find(`.btn-primary`)
         ;
@@ -317,6 +322,11 @@ function setHandlerLoadFacebook() {
             ;
             voiceElement.remove();
 
+            // remove smiles images
+            jQuery(`img.img`, el).each(function() {
+                jQuery(this).remove();
+            });
+
             let postBody = jQuery(`.msg div`, el).html().replace(/<br>/g, `<br /><br />`);
             if (postBody) {
                 postBody = sprintf(
@@ -330,8 +340,10 @@ function setHandlerLoadFacebook() {
             jQuery(constant.htmlNavigation.titleBlock).val(postTitle);
             jQuery(constant.htmlNavigation.bodyBlock).val(postBody);
             jQuery(constant.htmlNavigation.tagsBlock).val(`facebook`);
+            jQuery(constant.htmlNavigation.imagesBlock).val(JSON.stringify([photoUrl.replace(/&amp;/g, `&`)]));
 
             jQuery(`#facebookModal .close`).trigger(`click`);
+            inputElement.val(``);
             buttonElement.prop(constant.htmlNames.disabledPropName, false);
         }
 
@@ -343,7 +355,7 @@ function setHandlerLoadFacebook() {
                 let el = jQuery( `<div></div>` );
                 el.html(data.contents);
 
-                photoUrl = jQuery(`meta[property="og:image"]`, el).attr(`content`);
+                photoUrl = jQuery(`meta[property="og:image"]`, el).attr(`content`).replace(/&/g, `&amp;`);
 
                 let fbData = jQuery(`script:contains('require("MRenderingScheduler").getInstance().schedule({"id":"MPhotoContent"')`, el)
                     .text()

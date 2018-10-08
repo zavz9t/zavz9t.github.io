@@ -57,11 +57,16 @@ class AbstractAdapter
 
     static buildJsonMetadata(tags, options)
     {
+        let imagesList = [];
+        if (options && `images` in options) {
+            imagesList = options.images;
+        }
+
         return {
             app: appName,
             format: `markdown`,
             tags: tags,
-            image: []
+            image: imagesList
         }
     }
 

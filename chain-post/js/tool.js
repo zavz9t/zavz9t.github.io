@@ -79,6 +79,7 @@ function stripAndTransliterate(input, spaceReplacement, ruPrefix) {
     if (containRu) {
         result = ruPrefix + result;
     }
+
     return result;
 }
 

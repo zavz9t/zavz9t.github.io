@@ -23,16 +23,18 @@ describe(`adapter`, function () {
 
         it(`should build JSON metadata`, function() {
             let tags = [`first-tag`, `second-tag`, `third-one`]
+                , images = [`https://some.host/some-image.png`]
+                , options = { images: images }
                 , expected = {
                     app: `@chain-post`,
                     format: `markdown`,
                     tags: tags,
-                    image: []
+                    image: images
                 }
             ;
 
             assert.deepEqual(
-                adapter.AbstractAdapter.buildJsonMetadata(tags),
+                adapter.AbstractAdapter.buildJsonMetadata(tags, options),
                 expected,
                 `JSON metadata should be build correctly`
             );
@@ -361,6 +363,55 @@ describe(`adapter`, function () {
                             title: postTitle,
                             body: postBody + constant.postBodySign,
                             json_metadata: JSON.stringify(adapter.AbstractAdapter.buildJsonMetadata(tags))
+                        }
+                    ],
+                    [
+                        `comment_options`,
+                        {
+                            author: author,
+                            permlink: permlink,
+                            max_accepted_payout: `1000000.000 SBD`,
+                            percent_steem_dollars: 10000,
+                            allow_votes: true,
+                            allow_curation_rewards: true,
+                            extensions: [[
+                                0,
+                                {
+                                    beneficiaries: [{account: `chain-post`, weight: 500}]
+                                }
+                            ]]
+                        }
+                    ]
+                ]
+            ;
+
+            assert.deepEqual(
+                adapterObj.buildOperations(author, postTitle, postBody, tags, options),
+                expectedOperations,
+                `Operations should be build correctly`
+            );
+        });
+
+        it(`should add images to metadata`, function() {
+            let adapterObj = adapter.AbstractAdapter.factory(constant.adapterSteem)
+                , author = `test-user`
+                , postTitle = `some test title`
+                , postBody = `Very important text`
+                , tags = [`first-tag`, `second-tag`, `third-one`]
+                , images = [`https://some.host/any-image.png`]
+                , options = { images: images }
+                , permlink = tool.stripAndTransliterate(postTitle, `-`, `ru-`)
+                , expectedOperations = [
+                    [
+                        `comment`,
+                        {
+                            parent_author: ``,
+                            parent_permlink: tags[0],
+                            author: author,
+                            permlink: permlink,
+                            title: postTitle,
+                            body: postBody + constant.postBodySign,
+                            json_metadata: JSON.stringify(adapter.AbstractAdapter.buildJsonMetadata(tags, options))
                         }
                     ],
                     [

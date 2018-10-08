@@ -203,6 +203,7 @@ I decided to change this and discovered a new world that surrounds me! Today I s
         titleBlock: `#title`
         , bodyBlock: `#body`
         , tagsBlock: `#tags`
+        , imagesBlock: `#images`
         , submitButton: `#submit-btn`
         , resultBlock: `#result`
         , resultLastItem: `#result div:last`
