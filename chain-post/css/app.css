@@ -38,6 +38,10 @@ body {
     z-index: 5;
 }
 
+.btn-container {
+    width: 100px;
+}
+
 .btn .loader {
     display: none;
 }

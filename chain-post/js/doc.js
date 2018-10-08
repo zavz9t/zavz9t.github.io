@@ -371,6 +371,15 @@ function setHandlerLoadFacebook() {
     });
 }
 
+function setHandlerResetButton() {
+    jQuery(constant.htmlNavigation.resetButton).on(`click`, function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        location.reload();
+    });
+}
+
 module.exports = {
     addSections: addSections
     , fillAccountsList: fillAccountsList
@@ -379,4 +388,5 @@ module.exports = {
     , setHandlerChangeGolosVik: setHandlerChangeGolosVik
     , setHandlerPostPublish: setHandlerPostPublish
     , setHandlerLoadFacebook: setHandlerLoadFacebook
+    , setHandlerResetButton: setHandlerResetButton
 }

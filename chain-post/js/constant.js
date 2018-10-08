@@ -205,6 +205,7 @@ I decided to change this and discovered a new world that surrounds me! Today I s
         , tagsBlock: `#tags`
         , imagesBlock: `#images`
         , submitButton: `#submit-btn`
+        , resetButton: `#reset-btn`
         , resultBlock: `#result`
         , resultLastItem: `#result div:last`
         , golosVik: `#golos-vik-enable`
