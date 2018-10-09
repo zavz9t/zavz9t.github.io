@@ -380,6 +380,7 @@ class Wls extends AbstractAdapter
 
         this.name = constant.adapterWls;
         this.connection = require(`wlsjs-staging`);
+        this.connection.api.setOptions({ url: `https://rpc.wls.services` })
     }
 
     static getCurrency()
