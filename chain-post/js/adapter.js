@@ -44,6 +44,9 @@ class AbstractAdapter
                 case constant.adapterWeku:
                     items[section] = new Weku();
                     break;
+                case constant.adapterSmoke:
+                    items[section] = new Smoke();
+                    break;
                 default:
                     throw sprintf(
                         `factory: Section "%s" is not implemented yet!`,
@@ -469,6 +472,45 @@ class Weku extends AbstractAdapter
         this.connection.api.setOptions({ url: `wss://news.weku.io:8190` });
         this.connection.config.set(`address_prefix`, `WKA`);
         this.connection.config.set(`chain_id`, `b24e09256ee14bab6d58bfa3a4e47b0474a73ef4d6c47eeea007848195fa085e`);
+    }
+}
+
+class Smoke extends AbstractAdapter
+{
+    constructor() {
+        super();
+
+        this.name = constant.adapterSmoke;
+        this.connection = require(`@steemit/steem-js`);
+
+        if (false === this.connection.config.get(keyConnBusy)) {
+            this.reconnect();
+        }
+    }
+
+    static getCurrency()
+    {
+        return `SMOKE`;
+    }
+
+    static getPlaceholders()
+    {
+        return Object.assign({}, super.getPlaceholders(), constant.smokePlaceholders);
+    }
+
+    reconnect() {
+        this.connection.api.setOptions({ url: `https://rpc.smoke.io` });
+        this.connection.config.set(`address_prefix`, `SMK`);
+        this.connection.config.set(`chain_id`, `1ce08345e61cd3bf91673a47fc507e7ed01550dab841fd9cdb0ab66ef576aaf0`);
+    }
+
+    buildOperations(author, postTitle, postBody, tags, options)
+    {
+        let operations = super.buildOperations(author, postTitle, postBody, tags, options);
+
+        operations.splice(1, 1);
+
+        return operations;
     }
 }
 

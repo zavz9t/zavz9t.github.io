@@ -17,7 +17,7 @@ const storageKeys = {
 ### [![](https://s19.postimg.cc/855m162ab/27cb8858fa0dfe41d2b1190533c8af9a63-32x32.png)](https://steemit.com/@v-mi) &nbsp; [![](https://i.postimg.cc/FHPx155H/WLS-32.png)](https://whaleshares.io/@v-mi) &nbsp; [![](https://s19.postimg.cc/7tsr21vrn/1480-32x32.png)](https://golos.io/@v-mi) &nbsp; [![VOX](https://s19.postimg.cc/fgjyfjt4j/vox-32.png)](https://vox.community/@v-mi) &nbsp; [![Serey](https://i.postimg.cc/XNfxDkn4/serey-32.png)](https://serey.io/@v-mi)
 </center>
 `,
-        '{f_a-s}': `---
+    '{f_a-s}': `---
 <center>
 ### [![](https://s19.postimg.cc/855m162ab/27cb8858fa0dfe41d2b1190533c8af9a63-32x32.png)](https://steemit.com/@alba-stories) &nbsp; [![](https://i.postimg.cc/FHPx155H/WLS-32.png)](https://whaleshares.io/@alba-stories) &nbsp; [![](https://s19.postimg.cc/7tsr21vrn/1480-32x32.png)](https://golos.io/@alba-stories) &nbsp; [![VOX](https://s19.postimg.cc/fgjyfjt4j/vox-32.png)](https://vox.community/@alba-stories) &nbsp; [![Serey](https://i.postimg.cc/XNfxDkn4/serey-32.png)](https://serey.io/@alba-stories)
 </center>
@@ -179,11 +179,15 @@ I decided to change this and discovered a new world that surrounds me! Today I s
         '{img_p_8}': `https://serey.io/imageproxy/800x0/`
     }
     , wekuPlaceholders = {}
+    , smokePlaceholders = {
+        '{img_p_4}': `https://smoke.io/smokeimageproxy/400x0/`,
+        '{img_p_8}': `https://smoke.io/smokeimageproxy/800x0/`
+    }
     , postBodySign = `
 
 ---
 
-###### <center>https://i.postimg.cc/Kzt4Myqq/chain-post-logo-32.png *published by @chain-post* &nbsp; [![Steem](https://i.postimg.cc/MpFVhrVH/steem-16.png) ![Golos](https://i.postimg.cc/rpRxcCNJ/golos-16.png) ![WLS](https://i.postimg.cc/h4yw3Khq/WLS-16.png) ![Serey](https://i.postimg.cc/TwSs1cz3/serey-16.png) ![Weku](https://i.postimg.cc/wTJfT1Lc/weku-16.png)](https://zavz9t.github.io/chain-post/)</center>
+###### <center>https://i.postimg.cc/Kzt4Myqq/chain-post-logo-32.png *published by @chain-post* &nbsp; [![Steem](https://i.postimg.cc/MpFVhrVH/steem-16.png) ![Golos](https://i.postimg.cc/rpRxcCNJ/golos-16.png) ![WLS](https://i.postimg.cc/h4yw3Khq/WLS-16.png) ![Serey](https://i.postimg.cc/TwSs1cz3/serey-16.png) ![Weku](https://i.postimg.cc/wTJfT1Lc/weku-16.png) ![Smoke](https://i.postimg.cc/1zsb19rP/smoke-16.png)](https://zavz9t.github.io/chain-post/)</center>
 `
     , adapterSteem = `steem`
     , adapterGolos = `golos`
@@ -191,6 +195,7 @@ I decided to change this and discovered a new world that surrounds me! Today I s
     , adapterWls = `wls`
     , adapterWeku = `weku`
     , adapterSerey = `serey`
+    , adapterSmoke = `smoke`
     , adapterToHost = {
         golos: `https://golos.io`
         , steem: `https://steemit.com`
@@ -198,6 +203,7 @@ I decided to change this and discovered a new world that surrounds me! Today I s
         , wls: `https://whaleshares.io`
         , serey: `https://serey.io`
         , weku: `https://deals.weku.io`
+        , smoke: `https://smoke.io`
     }
     , htmlNavigation = {
         titleBlock: `#title`
@@ -223,7 +229,7 @@ I decided to change this and discovered a new world that surrounds me! Today I s
         adapterSection: `
             <hr />
 
-            <h3 class="mx-auto" style="%3$s"><a href="%4$s" target="_blank" rel="noopener noreferrer">%2$s</a> Account</h3>
+            <h3 class="mx-auto" style="%3$s"><a href="%4$s" target="_blank" rel="noopener noreferrer"><img src="img/logo/%1$s-32.png" alt="%2$s" /> %2$s</a> Account</h3>
 
             <div class="form-group">
                 <input type="text" class="form-control" id="%1$s-tags" placeholder="Optional: Specify tags for %2$s (will replace previous)" />
@@ -298,6 +304,7 @@ module.exports = {
     , voxPlaceholders: voxPlaceholders
     , sereyPlaceholders: sereyPlaceholders
     , wekuPlaceholders: wekuPlaceholders
+    , smokePlaceholders: smokePlaceholders
     , postBodySign: postBodySign
     , adapterSteem: adapterSteem
     , adapterGolos: adapterGolos
@@ -305,6 +312,7 @@ module.exports = {
     , adapterVox: adapterVox
     , adapterSerey: adapterSerey
     , adapterWeku: adapterWeku
+    , adapterSmoke: adapterSmoke
     , adapterToHost: adapterToHost
     , htmlNavigation: htmlNavigation
     , htmlNames: htmlNames

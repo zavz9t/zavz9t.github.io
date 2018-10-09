@@ -8,10 +8,10 @@ jQuery(document).ready(function($) {
 
     // view section
     let sectionsView = {};
-    sectionsView[constant.adapterSteem] = { title: `Steem`, title_style: `width: 200px;` };
+    sectionsView[constant.adapterSteem] = { title: `Steem`, title_style: `width: 235px;` };
     sectionsView[constant.adapterGolos] = {
         title: `Golos`,
-        title_style: `width: 190px;`,
+        title_style: `width: 225px;`,
         append_html: `
             <div class="form-check">
                 <input type="checkbox" class="form-check-input" id="golos-as-golosio" />
@@ -36,12 +36,13 @@ jQuery(document).ready(function($) {
             </div>
         `
     };
-    sectionsView[constant.adapterWls] = { title: `Whaleshares`, title_style: `width: 280px;` };
-    sectionsView[constant.adapterSerey] = { title: `Serey`, title_style: `width: 200px;` };
-    sectionsView[constant.adapterWeku] = { title: `Weku`, title_style: `width: 190px;` };
+    sectionsView[constant.adapterWls] = { title: `Whaleshares`, title_style: `width: 315px;` };
+    sectionsView[constant.adapterSerey] = { title: `Serey`, title_style: `width: 230px;` };
+    sectionsView[constant.adapterWeku] = { title: `Weku`, title_style: `width: 225px;` };
+    sectionsView[constant.adapterSmoke] = { title: `Smoke`, title_style: `width: 240px;` };
     sectionsView[constant.adapterVox] = {
         title: `Vox`,
-        title_style: `width: 170px;`,
+        title_style: `width: 270px;`,
         append_html: `
             <div class="form-check">
                 <input type="checkbox" class="form-check-input" id="vox-for-ds" />
@@ -61,6 +62,7 @@ jQuery(document).ready(function($) {
     sectionsSubmit[constant.adapterWls] = defaultOptions;
     sectionsSubmit[constant.adapterSerey] = defaultOptions;
     sectionsSubmit[constant.adapterWeku] = defaultOptions;
+    sectionsSubmit[constant.adapterSmoke] = defaultOptions;
     sectionsSubmit[constant.adapterVox] = [ { type: `checkbox`, html_id: constant.adapterVox + `-for-ds`, key: `for_ds` } ];
 
     doc.addSections(sectionsView);

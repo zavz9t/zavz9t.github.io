@@ -897,4 +897,104 @@ describe(`adapter`, function () {
 
     });
 
+    describe(`smoke`, function() {
+
+        it(`should build simple operations`, function() {
+            let adapterObj = adapter.AbstractAdapter.factory(constant.adapterSmoke)
+                , author = `test-user`
+                , postTitle = `some test title`
+                , postBody = `Very important text`
+                , tags = [`first-tag`, `second-tag`, `third-one`]
+                , options = []
+                , permlink = tool.stripAndTransliterate(postTitle)
+                , expectedOperations = [
+                    [
+                        `comment`,
+                        {
+                            parent_author: ``,
+                            parent_permlink: tags[0],
+                            author: author,
+                            permlink: permlink,
+                            title: postTitle,
+                            body: postBody + constant.postBodySign,
+                            json_metadata: JSON.stringify(adapter.AbstractAdapter.buildJsonMetadata(tags))
+                        }
+                    // ],
+                    // [
+                    //     `comment_options`,
+                    //     {
+                    //         author: author,
+                    //         permlink: permlink,
+                    //         max_accepted_payout: `1000000.000 SMOKE`,
+                    //         percent_steem_dollars: 10000,
+                    //         allow_votes: true,
+                    //         allow_curation_rewards: true,
+                    //         extensions: [[
+                    //             0,
+                    //             {
+                    //                 beneficiaries: [{account: `chain-post`, weight: 500}]
+                    //             }
+                    //         ]]
+                    //     }
+                    ]
+                ]
+            ;
+
+            assert.deepEqual(
+                adapterObj.buildOperations(author, postTitle, postBody, tags, options),
+                expectedOperations,
+                `Operations should be build correctly`
+            );
+        });
+
+        it(`should replace placeholders`, function() {
+            let adapterObj = adapter.AbstractAdapter.factory(constant.adapterSmoke)
+                , author = `test-user`
+                , postTitle = `some test title`
+                , postBody = `Very important text {img_p_4}some-image`
+                , tags = [`first-tag`, `second-tag`, `third-one`]
+                , options = []
+                , permlink = tool.stripAndTransliterate(postTitle)
+                , expectedOperations = [
+                    [
+                        `comment`,
+                        {
+                            parent_author: ``,
+                            parent_permlink: tags[0],
+                            author: author,
+                            permlink: permlink,
+                            title: postTitle,
+                            body: `Very important text https://smoke.io/smokeimageproxy/400x0/some-image` + constant.postBodySign,
+                            json_metadata: JSON.stringify(adapter.AbstractAdapter.buildJsonMetadata(tags))
+                        }
+                    // ],
+                    // [
+                    //     `comment_options`,
+                    //     {
+                    //         author: author,
+                    //         permlink: permlink,
+                    //         max_accepted_payout: `1000000.000 SMOKE`,
+                    //         percent_steem_dollars: 10000,
+                    //         allow_votes: true,
+                    //         allow_curation_rewards: true,
+                    //         extensions: [[
+                    //             0,
+                    //             {
+                    //                 beneficiaries: [{account: `chain-post`, weight: 500}]
+                    //             }
+                    //         ]]
+                    //     }
+                    ]
+                ]
+            ;
+
+            assert.deepEqual(
+                adapterObj.buildOperations(author, postTitle, postBody, tags, options),
+                expectedOperations,
+                `Operations should be build correctly`
+            );
+        });
+
+    });
+
 });
