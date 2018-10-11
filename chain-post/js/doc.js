@@ -5,6 +5,7 @@ const htmlAccountsList = `accounts-list`
 
 let sprintf = require(`sprintf-js`).sprintf
     , jQuery = require(`jquery`)
+    , urlParse = require(`url-parse`)
     , tool = require(`./tool`)
     , Storage = require(`./storage`).Storage
     , adapter = require(`./adapter`)
@@ -297,21 +298,40 @@ function setHandlerLoadFacebook() {
             , facebookUrl = inputElement.val().replace(`www.facebook.com`, `m.facebook.com`)
             , photoUrl = null
             , buttonElement = jQuery(this).find(`.btn-primary`)
+            , onePhotoMode = false
+            , defaultTags = `facebook`
         ;
 
         buttonElement.prop(constant.htmlNames.disabledPropName, true);
 
-        if (false === facebookUrl.startsWith(`https://m.facebook.com/photo.php`)) {
-            console.error(sprintf(`Only facebook photo supported, received: "%s".`, facebookUrl));
-            buttonElement.prop(constant.htmlNames.disabledPropName, false);
+        if (facebookUrl.startsWith(`https://m.facebook.com/photo.php`)) {
+            onePhotoMode = true;
+        }
+        if (facebookUrl.startsWith(`https://m.facebook.com/permalink.php`)) {
+            let parsed = urlParse(facebookUrl)
+                , queryParts = parsed.query.slice(1).split(`&`)
+                , queryParams = {}
+                , urlPattern = `https://m.facebook.com/%s/posts/pcb.%s/`
+            ;
 
-            return false;
+            for (let i in queryParts) {
+                let [key, val] = queryParts[i].split(`=`);
+                queryParams[key] = decodeURIComponent(val);
+            }
+
+            facebookUrl = sprintf(urlPattern, queryParams.id, queryParams.story_fbid);
         }
         if (false === facebookUrl.includes(`locale=`)) {
-            facebookUrl += `&locale=ru_RU`;
+            let localeString = `locale=ru_RU`;
+            if (facebookUrl.endsWith(`/`)) {
+                localeString = `?` + localeString;
+            } else {
+                localeString = `&` + localeString;
+            }
+            facebookUrl += localeString;
         }
 
-        function fbProcess(config) {
+        function fbOnePhotoProcess(config) {
             // console.log(config);
 
             let el = jQuery( `<div></div>` );
@@ -337,10 +357,64 @@ function setHandlerLoadFacebook() {
                 );
             }
 
-            jQuery(constant.htmlNavigation.titleBlock).val(postTitle);
-            jQuery(constant.htmlNavigation.bodyBlock).val(postBody);
-            jQuery(constant.htmlNavigation.tagsBlock).val(`facebook`);
-            jQuery(constant.htmlNavigation.imagesBlock).val(JSON.stringify([photoUrl.replace(/&amp;/g, `&`)]));
+            fbFillSubmitFormAndCloseModal(
+                postTitle,
+                postBody,
+                defaultTags,
+                JSON.stringify([photoUrl.replace(/&amp;/g, `&`)])
+            );
+        }
+        function fbStoryProcess(content) {
+            let postTitle = ``
+                , postBody = ``
+                , postImages = ``
+            ;
+
+            let textTitles = content.match(/"title":{"text":"(.+?)"/g)
+                , titles = []
+            ;
+            for (let i in textTitles) {
+                let titleObj = JSON.parse(sprintf(`{%s}}`, textTitles[i]));
+
+                titles.push(titleObj.title.text);
+            }
+            if (titles.length > 1) {
+                postTitle = titles[1];
+            } else if (titles.length > 0) {
+                postTitle = titles[0];
+            }
+
+            let images = content.match(/"full_width_image":{"uri":"(.+?)"/g)
+                , imagesUrls = []
+            ;
+            for (let i in images) {
+                let imageObj = JSON.parse(sprintf(`{%s}}`, images[i]));
+
+                imagesUrls.push(imageObj.full_width_image.uri);
+            }
+            if (imagesUrls.length > 0) {
+                postImages = JSON.stringify(imagesUrls);
+            }
+
+            let textBody = content.match(/"message":{"text":"(.+?)"/);
+            if (textBody && textBody.length > 1) {
+                let textObj = JSON.parse(sprintf(`{"body":"%s"}`, textBody[1]));
+
+                postBody = sprintf(
+                    constant.htmlPieces.facebookPostBodyPattern,
+                    textObj.body,
+                    imagesUrls.join(`\n\n`),
+                    facebookUrl.replace(`m.facebook.com`, `www.facebook.com`)
+                );
+            }
+
+            fbFillSubmitFormAndCloseModal(postTitle, postBody, defaultTags, postImages);
+        }
+        function fbFillSubmitFormAndCloseModal(title, body, tags, images) {
+            jQuery(constant.htmlNavigation.titleBlock).val(title);
+            jQuery(constant.htmlNavigation.bodyBlock).val(body);
+            jQuery(constant.htmlNavigation.tagsBlock).val(tags);
+            jQuery(constant.htmlNavigation.imagesBlock).val(images);
 
             jQuery(`#facebookModal .close`).trigger(`click`);
             inputElement.val(``);
@@ -350,22 +424,24 @@ function setHandlerLoadFacebook() {
         jQuery.getJSON(
             `https://allorigins.me/get?url=` + encodeURIComponent(facebookUrl) + `&callback=?`,
             function(data) {
-                // console.log(data.contents);
+                if (onePhotoMode) {
+                    let el = jQuery(`<div></div>`);
+                    el.html(data.contents);
 
-                let el = jQuery( `<div></div>` );
-                el.html(data.contents);
+                    photoUrl = jQuery(`meta[property="og:image"]`, el).attr(`content`).replace(/&/g, `&amp;`);
 
-                photoUrl = jQuery(`meta[property="og:image"]`, el).attr(`content`).replace(/&/g, `&amp;`);
+                    let fbData = jQuery(`script:contains('require("MRenderingScheduler").getInstance().schedule({"id":"MPhotoContent"')`, el)
+                        .text()
+                        .replace(
+                            `require("MRenderingScheduler").getInstance().schedule`,
+                            `fbOnePhotoProcess`
+                        )
+                    ;
 
-                let fbData = jQuery(`script:contains('require("MRenderingScheduler").getInstance().schedule({"id":"MPhotoContent"')`, el)
-                    .text()
-                    .replace(
-                        `require("MRenderingScheduler").getInstance().schedule`,
-                        `fbProcess`
-                    )
-                ;
-
-                eval(fbData);
+                    eval(fbData);
+                } else {
+                    fbStoryProcess(data.contents);
+                }
             }
         );
     });
