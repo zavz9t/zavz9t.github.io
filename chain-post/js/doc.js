@@ -370,11 +370,11 @@ function setHandlerLoadFacebook() {
                 , postImages = ``
             ;
 
-            let textTitles = content.match(/"title":{"text":"(.+?)"/g)
+            let textTitles = content.match(/"title":{"text":"(.+?)","/g)
                 , titles = []
             ;
             for (let i in textTitles) {
-                let titleObj = JSON.parse(sprintf(`{%s}}`, textTitles[i]));
+                let titleObj = JSON.parse(sprintf(`{%s}}`, textTitles[i].slice(0, -2)));
 
                 titles.push(titleObj.title.text);
             }
@@ -396,7 +396,7 @@ function setHandlerLoadFacebook() {
                 postImages = JSON.stringify(imagesUrls);
             }
 
-            let textBody = content.match(/"message":{"text":"(.+?)"/);
+            let textBody = content.match(/"message":{"text":"(.+?)","/);
             if (textBody && textBody.length > 1) {
                 let textObj = JSON.parse(sprintf(`{"body":"%s"}`, textBody[1]));
 
