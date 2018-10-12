@@ -11,7 +11,6 @@
         gtag('config', 'UA-126560542-1');
     </script>
 
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -30,40 +29,48 @@
 
     <link rel="stylesheet" href="../css/app.css" crossorigin="anonymous">
 
-    <title>Chain-Post | @zavz9t Tools</title>
+    <title>Voter | @zavz9t Tools</title>
 </head>
 <body>
     <div class="container">
-        <div class="mx-auto header" style="width: 325px;"><img src="../img/chain-post-logo-s.png" alt="Chain Post"></div>
+        <div class="mx-auto header" style="width: 215px;"><img src="../img/voter-logo.png" alt="Voter"></div>
 
-        <form action="#" method="POST" id="form" class="needs-validation" novalidate>
+        <form action="#" method="POST" id="form" class="needs-validation align-items-center">
             <div class="form-group">
-                <input type="text" class="form-control" id="title" placeholder="Title" />
+                <input type="url" class="form-control" id="url" placeholder="https://..." required />
                 <div class="invalid-feedback">
-                    Title cannot be blank.
+                    Link is required.
                 </div>
             </div>
 
             <div class="form-group">
-                <textarea class="form-control" id="body" rows="20" placeholder="Write your story..."></textarea>
-                <div class="invalid-feedback">
-                    Post body cannot be blank.
+                <select id="section" class="form-control" title="Choose blockchain">
+                    <option value="" selected>Choose blockchain</option>
+                </select>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-2">Accounts</div>
+                <div class="col-sm-6">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="gridCheck1">
+                        <label class="form-check-label" for="gridCheck1">
+                            Example checkbox
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="gridCheck1">
+                        <label class="form-check-label" for="gridCheck1">
+                            Example checkbox
+                        </label>
+                    </div>
                 </div>
             </div>
 
-            <div class="form-group">
-                <input type="text" class="form-control" id="tags"  placeholder="Tags, the first tag is your main category."/>
-                <div class="invalid-feedback">
-                    You need to write at least one tag.
-                </div>
-            </div>
+            <hr />
 
-            <input type="hidden" class="form-control" id="images" />
-
-            <div class="btn-container text-right">
-                <button type="submit" id="submit-btn" class="btn btn-primary btn-lg"><i class="fa fa-refresh fa-spin loader"></i> Submit</button>
-                <p></p>
-                <button id="reset-btn" class="btn btn-secondary">Reset</button>
+            <div class="col-md-auto text-center">
+                <button type="submit" id="submit-btn" class="btn btn-primary btn-lg">Upvote</button>
             </div>
         </form>
 
@@ -78,7 +85,6 @@
     <footer class="footer">
         <div class="f-wrapper">
             <span class="text-muted">
-                <div><img src="../img/coins-icon-16.png" alt="Coins" /> We'll receive <strong>5% fee</strong> from your author rewards by <a href="https://steemit.com/steem/@timcliff/steem-hardfork-pull-request-submitted-beneficiaries-paid-based-on-author-s-payout-setting" target="_blank" rel="noopener noreferrer">beneficiaries functionality</a></div>
                 <div><img src="../img/telegram-logo-16.png" alt="Telegram" /> Telegram support <a href="https://t.me/chain_post" target="_blank" rel="noopener noreferrer">https://t.me/chain_post</a></div>
                 <div>
                     developed by @zavz9t
@@ -97,44 +103,6 @@
             </span>
         </div>
     </footer>
-
-    <!-- Tools icons -->
-    <div class="tool-buttons">
-        <img src="../img/info-icon-32.png" alt="info" class="info-tooltip" data-toggle="tooltip" data-placement="left" title="Publish your articles to favorite platforms by one click" />
-        &nbsp;
-        <img src="../img/logo/facebook-logo-32.png" alt="facebook" title="Load Facebook post to form" id="facebook-load-btn" data-toggle="modal" data-target="#facebookModal" />
-    </div>
-
-    <!-- Facebook Modal -->
-    <div class="modal fade" id="facebookModal" tabindex="-1" role="dialog" aria-labelledby="facebookTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="facebookTitle">Facebook post load</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form class="form-inline needs-validation" id="facebook-load-form">
-                        <div class="form-group col-md-10">
-                            <input type="text" class="form-control col-md-12" id="facebook-url" placeholder="https://www.facebook.com/" required>
-                            <div class="invalid-feedback">
-                                Facebook URL should be set.
-                            </div>
-                        </div>
-
-                        <div class="form-group col-md-2">
-                            <button type="submit" class="btn btn-primary">Load</button>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="../js/lib/jquery.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>

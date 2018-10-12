@@ -6,10 +6,10 @@ const htmlAccountsList = `accounts-list`
 let sprintf = require(`sprintf-js`).sprintf
     , jQuery = require(`jquery`)
     , urlParse = require(`url-parse`)
-    , tool = require(`./tool`)
-    , Storage = require(`./storage`).Storage
-    , adapter = require(`./adapter`)
-    , constant = require(`./constant`)
+    , tool = require(`../../js/tool`)
+    , Storage = require(`../../js/storage`).Storage
+    , adapter = require(`../../js/adapter`)
+    , constant = require(`../../js/constant`)
 ;
 
 function addSections(sections) {

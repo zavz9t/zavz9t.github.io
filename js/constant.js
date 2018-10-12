@@ -196,6 +196,15 @@ I decided to change this and discovered a new world that surrounds me! Today I s
     , adapterWeku = `weku`
     , adapterSerey = `serey`
     , adapterSmoke = `smoke`
+    , enabledAdapters = [
+        adapterSteem
+        , adapterGolos
+        , adapterWls
+        , adapterSerey
+        , adapterWeku
+        , adapterSmoke
+        , adapterVox
+    ]
     , adapterToHost = {
         golos: `https://golos.io`
         , steem: `https://steemit.com`
@@ -218,6 +227,7 @@ I decided to change this and discovered a new world that surrounds me! Today I s
         , golosVikValue: `#golos-for-vik`
         , golosVikSettings: `.golos-vik-settings`
         , facebookLoadForm: `#facebook-load-form`
+        , voterSection: `#section`
     }
     , htmlNames = {
         invalidClassName: `is-invalid`
@@ -229,7 +239,7 @@ I decided to change this and discovered a new world that surrounds me! Today I s
         adapterSection: `
             <hr />
 
-            <h3 class="mx-auto" style="%3$s"><a href="%4$s" target="_blank" rel="noopener noreferrer"><img src="img/logo/%1$s-32.png" alt="%2$s" /> %2$s</a> Account</h3>
+            <h3 class="mx-auto" style="%3$s"><a href="%4$s" target="_blank" rel="noopener noreferrer"><img src="../img/logo/%1$s-32.png" alt="%2$s" /> %2$s</a> Account</h3>
 
             <div class="form-group">
                 <input type="text" class="form-control" id="%1$s-tags" placeholder="Optional: Specify tags for %2$s (will replace previous)" />
@@ -266,21 +276,21 @@ I decided to change this and discovered a new world that surrounds me! Today I s
         `
         , publishSuccess: `
             <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <img src="img/logo/%1$s-16.png" alt="%1$s"> <a href="%2$s" target="_blank" rel="noopener noreferrer">%2$s</a>
+                <img src="../img/logo/%1$s-16.png" alt="%1$s"> <a href="%2$s" target="_blank" rel="noopener noreferrer">%2$s</a>
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>`
         , publishError: `
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <img src="img/logo/%1$s-16.png" alt="%1$s"> %2$s
+                <img src="../img/logo/%1$s-16.png" alt="%1$s"> %2$s
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>`
         , publishWarning: `
             <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                <img src="img/logo/%1$s-16.png" alt="%1$s"> %2$s
+                <img src="../img/logo/%1$s-16.png" alt="%1$s"> %2$s
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -313,6 +323,7 @@ module.exports = {
     , adapterSerey: adapterSerey
     , adapterWeku: adapterWeku
     , adapterSmoke: adapterSmoke
+    , enabledAdapters: enabledAdapters
     , adapterToHost: adapterToHost
     , htmlNavigation: htmlNavigation
     , htmlNames: htmlNames

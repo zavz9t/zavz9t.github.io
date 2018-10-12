@@ -1,6 +1,6 @@
 {
   "name": "chain-post",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Tool to publish posts to several blockchains",
   "main": "",
   "author": "Serhiy Walker <zavzyat@gmail.com>",
@@ -34,8 +34,9 @@
   "scripts": {
     "test": "mocha",
     "postinstall": "./bin/post_install.sh",
-    "build-js": "browserify js/app.js > js/main.js",
-    "build-js-prod": "browserify js/app.js | uglifyjs --compress --mangle > js/main.min.js",
-    "watch-js": "watchify js/app.js -o js/main.js"
+    "build-js-cp": "browserify chain-post/js/app.js | uglifyjs --compress --mangle > chain-post/js/main.min.js",
+    "watch-js-cp": "watchify chain-post/js/app.js -o chain-post/js/main.js",
+    "build-js-v": "browserify voter/js/app.js | uglifyjs --compress --mangle > voter/js/main.min.js",
+    "watch-js-v": "watchify voter/js/app.js -o voter/js/main.js"
   }
 }

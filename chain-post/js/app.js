@@ -1,12 +1,8 @@
 let doc = require(`./doc`)
-    , constant = require(`./constant`)
+    , constant = require(`../../js/constant`)
 ;
 
-jQuery(document).ready(function($) {
-
-    $(`[data-toggle="tooltip"]`).tooltip();
-
-    // view section
+function getViewConfig() {
     let sectionsView = {};
     sectionsView[constant.adapterSteem] = { title: `Steem`, title_style: `width: 235px;` };
     sectionsView[constant.adapterGolos] = {
@@ -41,7 +37,7 @@ jQuery(document).ready(function($) {
     sectionsView[constant.adapterWeku] = { title: `Weku`, title_style: `width: 225px;` };
     sectionsView[constant.adapterSmoke] = { title: `Smoke`, title_style: `width: 240px;` };
     sectionsView[constant.adapterVox] = {
-        title: `Vox`,
+        title: ``,
         title_style: `width: 270px;`,
         append_html: `
             <div class="form-check">
@@ -50,7 +46,11 @@ jQuery(document).ready(function($) {
             </div>
         `
     };
-    // submit section
+
+    return sectionsView;
+}
+
+function getSubmitConfig() {
     let sectionsSubmit = {}
         , defaultOptions = []
     ;
@@ -65,13 +65,20 @@ jQuery(document).ready(function($) {
     sectionsSubmit[constant.adapterSmoke] = defaultOptions;
     sectionsSubmit[constant.adapterVox] = [ { type: `checkbox`, html_id: constant.adapterVox + `-for-ds`, key: `for_ds` } ];
 
-    doc.addSections(sectionsView);
+    return sectionsSubmit;
+}
+
+jQuery(document).ready(function($) {
+
+    $(`[data-toggle="tooltip"]`).tooltip();
+
+    doc.addSections(getViewConfig());
     doc.fillAccountsList();
 
     doc.setHandlerAddAccount();
     doc.setHandlerChangeAccount();
     doc.setHandlerChangeGolosVik();
-    doc.setHandlerPostPublish(sectionsSubmit);
+    doc.setHandlerPostPublish(getSubmitConfig());
     doc.setHandlerLoadFacebook();
     doc.setHandlerResetButton();
 });
