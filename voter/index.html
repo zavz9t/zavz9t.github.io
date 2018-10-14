@@ -25,6 +25,7 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="../css/lib/bootstrap.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/lib/bootstrap-select.min.css" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/lib/font-awesome.min.css" crossorigin="anonymous">
 
     <link rel="stylesheet" href="../css/app.css" crossorigin="anonymous">
@@ -43,34 +44,20 @@
                 </div>
             </div>
 
-            <div class="form-group">
-                <select id="section" class="form-control" title="Choose blockchain">
-                    <option value="" selected>Choose blockchain</option>
-                </select>
-            </div>
-
-            <div class="form-group row">
-                <div class="col-sm-2">Accounts</div>
+            <div class="form-group row col-md-auto text-center">
                 <div class="col-sm-6">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="gridCheck1">
-                        <label class="form-check-label" for="gridCheck1">
-                            Example checkbox
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="gridCheck1">
-                        <label class="form-check-label" for="gridCheck1">
-                            Example checkbox
-                        </label>
-                    </div>
+                    <select id="section" title="Select blockchain" class="selectpicker">
+                        <option value="" selected>Choose blockchain</option>
+                    </select>
                 </div>
+
+                <div class="col-sm-6 collapse" id="accounts-container"></div>
             </div>
 
             <hr />
 
             <div class="col-md-auto text-center">
-                <button type="submit" id="submit-btn" class="btn btn-primary btn-lg">Upvote</button>
+                <button type="submit" id="submit-btn" class="btn btn-primary btn-lg"><i class="fa fa-refresh fa-spin loader"></i> Upvote</button>
             </div>
         </form>
 
@@ -107,7 +94,9 @@
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="../js/lib/jquery.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>
     <script src="../js/lib/bootstrap.bundle.min.js" integrity="sha384-pjaaA8dDz/5BgdFUPX6M/9SUZv4d12SUPF0axWc+VRZkx5xU3daN+lYb49+Ax+Tl" crossorigin="anonymous"></script>
+    <script src="../js/lib/bootstrap-select.min.js" crossorigin="anonymous"></script>
+    <script src="../js/lib/sortable.min.js" crossorigin="anonymous"></script>
 
-    <script src="js/main.js?t=1539295757"></script>
+    <script src="js/main.min.js?t=1539547184"></script>
 </body>
 </html>

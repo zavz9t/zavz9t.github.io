@@ -309,15 +309,9 @@ function setHandlerLoadFacebook() {
         }
         if (facebookUrl.startsWith(`https://m.facebook.com/permalink.php`)) {
             let parsed = urlParse(facebookUrl)
-                , queryParts = parsed.query.slice(1).split(`&`)
-                , queryParams = {}
+                , queryParams = tool.parseQueryParams(parsed.query)
                 , urlPattern = `https://m.facebook.com/%s/posts/pcb.%s/`
             ;
-
-            for (let i in queryParts) {
-                let [key, val] = queryParts[i].split(`=`);
-                queryParams[key] = decodeURIComponent(val);
-            }
 
             facebookUrl = sprintf(urlPattern, queryParams.id, queryParams.story_fbid);
         }

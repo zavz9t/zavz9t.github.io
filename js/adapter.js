@@ -218,13 +218,13 @@ class AbstractAdapter
         }
 
         this.reconnect();
-        let objInstance = this;
+        let adapterInstance = this;
 
-        objInstance.connection.config.set(keyConnBusy, true);
-        objInstance.connection.api.getContent(author, permlink, function(err, result) {
+        adapterInstance.connection.config.set(keyConnBusy, true);
+        adapterInstance.connection.api.getContent(author, permlink, function(err, result) {
             if (err) {
-                tool.handlePublishError(objInstance.name, err);
-                objInstance.connection.config.set(keyConnBusy, false);
+                tool.handlePublishError(adapterInstance.name, err);
+                adapterInstance.connection.config.set(keyConnBusy, false);
 
                 return;
             }
@@ -236,19 +236,96 @@ class AbstractAdapter
                 operations[1][1][`permlink`] = permlink;
             }
 
-            objInstance.connection.broadcast.send(
+            adapterInstance.connection.broadcast.send(
                 {'extensions': [], 'operations': operations},
                 {'posting': wif},
                 function (err, result) {
-                    objInstance.connection.config.set(keyConnBusy, false);
+                    adapterInstance.connection.config.set(keyConnBusy, false);
                     if (!err) {
-                        tool.handleSuccessfulPost(objInstance.name, result);
+                        tool.handleSuccessfulPost(adapterInstance.name, result);
                     } else {
-                        tool.handlePublishError(objInstance.name, err);
+                        tool.handlePublishError(adapterInstance.name, err);
                     }
                 }
             );
         });
+    }
+
+    vote(url, accounts) {
+        let params = tool.parsePostUrl(url);
+
+        this.reconnect();
+        let adapterInstance = this;
+
+        adapterInstance.connection.api.getContent(params[`author`], params[`permlink`], function(err, result) {
+            if (err) {
+                tool.handlePublishError(adapterInstance.name, err);
+
+                return;
+            }
+            if (result.id === 0) {
+                tool.handlePublishError(
+                    adapterInstance.name,
+                    sprintf(
+                        `Post with url: "%s" was not found at "%s" chain.`,
+                        url,
+                        constant.adapterDisplayNames[adapterInstance.name]
+                    )
+                );
+
+                return;
+            }
+
+            for (let i in result.active_votes) {
+                if (result.active_votes[i].voter in accounts) {
+                    delete accounts[result.active_votes[i].voter];
+                }
+            }
+
+            if (tool.isEmptyObject(accounts)) {
+                tool.handlePublishWarning(adapterInstance.name, `This post were upvoted by chosen accounts earlier.`)
+
+                return;
+            }
+
+            let operations = adapterInstance.buildVoteOperations(params[`author`], params[`permlink`], 10000, accounts);
+
+            if (tool.isTest()) {
+                console.log(operations, Object.values(accounts));
+                tool.finishPublishing();
+
+                return;
+            }
+
+            adapterInstance.connection.broadcast.send(
+                {'extensions': [], 'operations': operations},
+                Object.values(accounts),
+                function (err, result) {
+                    if (!err) {
+                        tool.handleSuccessfulVote(adapterInstance.name, Object.keys(accounts));
+                    } else {
+                        tool.handlePublishError(adapterInstance.name, err);
+                    }
+                }
+            );
+        });
+    }
+
+    buildVoteOperations(author, permlink, weight, accounts) {
+        let operations = [];
+        for (let username in accounts) {
+            operations.push([
+                `vote`,
+                {
+                    voter: username,
+                    author: author,
+                    permlink: permlink,
+                    weight: weight
+                }
+            ]);
+        }
+
+        return operations;
     }
 }
 

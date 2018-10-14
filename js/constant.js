@@ -205,6 +205,15 @@ I decided to change this and discovered a new world that surrounds me! Today I s
         , adapterSmoke
         , adapterVox
     ]
+    , adapterDisplayNames = {
+        golos: `Golos`
+        , steem: `Steem`
+        , vox: `VOX`
+        , wls: `Whaleshares`
+        , serey: `Serey`
+        , weku: `Weku`
+        , smoke: `Smoke`
+    }
     , adapterToHost = {
         golos: `https://golos.io`
         , steem: `https://steemit.com`
@@ -215,7 +224,8 @@ I decided to change this and discovered a new world that surrounds me! Today I s
         , smoke: `https://smoke.io`
     }
     , htmlNavigation = {
-        titleBlock: `#title`
+        submitForm: `#form`
+        , titleBlock: `#title`
         , bodyBlock: `#body`
         , tagsBlock: `#tags`
         , imagesBlock: `#images`
@@ -228,6 +238,8 @@ I decided to change this and discovered a new world that surrounds me! Today I s
         , golosVikSettings: `.golos-vik-settings`
         , facebookLoadForm: `#facebook-load-form`
         , voterSection: `#section`
+        , voterAccountsContainer: `#accounts-container`
+        , voterUrl: `#url`
     }
     , htmlNames = {
         invalidClassName: `is-invalid`
@@ -276,7 +288,7 @@ I decided to change this and discovered a new world that surrounds me! Today I s
         `
         , publishSuccess: `
             <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <img src="../img/logo/%1$s-16.png" alt="%1$s"> <a href="%2$s" target="_blank" rel="noopener noreferrer">%2$s</a>
+                <img src="../img/logo/%1$s-16.png" alt="%1$s"> <a href="%2$s" target="_blank" rel="noopener noreferrer">%2$s</a> <a href="/voter/?url=%2$s" target="_blank" rel="noopener noreferrer"><img src="../img/logo/upvote-16.png" title="Upvote" /></a>
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -295,6 +307,13 @@ I decided to change this and discovered a new world that surrounds me! Today I s
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>`
+        , voteSuccess: `
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <img src="../img/logo/%1$s-16.png" alt="%1$s"> %2$s
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>`
         , facebookPostBodyPattern: `%s
 
 %s
@@ -302,6 +321,13 @@ I decided to change this and discovered a new world that surrounds me! Today I s
 ---
 
 <center>[Original Post at Facebook](%s)</center>`
+        , voterSectionSelectOption: `<option value="%1$s" data-content="<img src='../img/logo/%1$s-16.png' title='%2$s'>&nbsp;&nbsp;%2$s">%2$s</option>`
+        , voterAccountItem: `
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="%1$s" value="%1$s">
+                <label class="form-check-label" for="%1$s">%1$s</label>
+            </div>
+        `
     }
 ;
 
@@ -324,6 +350,7 @@ module.exports = {
     , adapterWeku: adapterWeku
     , adapterSmoke: adapterSmoke
     , enabledAdapters: enabledAdapters
+    , adapterDisplayNames: adapterDisplayNames
     , adapterToHost: adapterToHost
     , htmlNavigation: htmlNavigation
     , htmlNames: htmlNames

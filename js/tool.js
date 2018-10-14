@@ -2,6 +2,7 @@ let sprintf = require(`sprintf-js`).sprintf
     , jQuery = require(`jquery`)
     , constant = require(`./constant`)
     , ss = require(`sessionstorage`)
+    , urlParse = require(`url-parse`)
 ;
 
 function stripAndTransliterate(input, spaceReplacement, ruPrefix) {
@@ -144,7 +145,7 @@ function increasePublishAdapters() {
 
 function decreasePublishAdapters() {
     let number = ss.getItem(constant.storageKeys.publishAdaptersCount);
-    if (!number || 0 === number) {
+    if (!number || 0 === (number * 1)) {
         number = 0;
     } else {
         number--;
@@ -221,6 +222,21 @@ function handleSuccessfulPost(section, result) {
     scrollTo(constant.htmlNavigation.resultLastItem);
 }
 
+function handleSuccessfulVote(section, accounts) {
+    console.log(section, accounts);
+
+    jQuery(constant.htmlNavigation.resultBlock).append(
+        sprintf(
+            constant.htmlPieces.voteSuccess,
+            section,
+            sprintf(`Post were upvoted by accounts: %s`, JSON.stringify(accounts))
+        )
+    );
+
+    finishPublishing();
+    scrollTo(constant.htmlNavigation.resultLastItem);
+}
+
 function handlePublishError(section, error) {
     decreasePublishAdapters();
 
@@ -262,6 +278,46 @@ function parseFunctionName(rawName) {
     return name.substr(0, name.indexOf('(')); // trim off everything after the function name
 }
 
+function parseQueryParams(queryString) {
+    if (queryString[0] === `?`) {
+        queryString = queryString.slice(1);
+    }
+    let queryParts = queryString.split(`&`)
+        , queryParams = {}
+    ;
+
+    for (let i in queryParts) {
+        let [key, val] = queryParts[i].split(`=`);
+        queryParams[key] = decodeURIComponent(val);
+    }
+
+    return queryParams;
+}
+
+function parsePostUrl(url) {
+    let parsed = urlParse(url)
+        , path = parsed.pathname
+    ;
+    if (path[0] === `/`) {
+        path = path.slice(1);
+    }
+
+    let [parentPermlink, author, permlink] = path.split(`/`);
+    if (author[0] === `@`) {
+        author = author.slice(1);
+    }
+
+    return {
+        parent_permlink: parentPermlink,
+        author: author,
+        permlink: permlink
+    };
+}
+
+function isEmptyObject(obj) {
+    return jQuery.isEmptyObject(obj);
+}
+
 module.exports = {
     stripAndTransliterate: stripAndTransliterate
     , stripAccount: stripAccount
@@ -277,7 +333,12 @@ module.exports = {
     , startPublishing: startPublishing
     , finishPublishing: finishPublishing
     , handleSuccessfulPost: handleSuccessfulPost
+    , handleSuccessfulVote: handleSuccessfulVote
+    , handlePublishWarning: handlePublishWarning
     , handlePublishError: handlePublishError
     , getElementSection: getElementSection
     , parseFunctionName: parseFunctionName
+    , parseQueryParams: parseQueryParams
+    , parsePostUrl: parsePostUrl
+    , isEmptyObject: isEmptyObject
 }
