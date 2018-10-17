@@ -19,7 +19,7 @@ const storageKeys = {
 `,
     '{f_a-s}': `---
 <center>
-### [![](https://s19.postimg.cc/855m162ab/27cb8858fa0dfe41d2b1190533c8af9a63-32x32.png)](https://steemit.com/@alba-stories) &nbsp; [![](https://i.postimg.cc/FHPx155H/WLS-32.png)](https://whaleshares.io/@alba-stories) &nbsp; [![](https://s19.postimg.cc/7tsr21vrn/1480-32x32.png)](https://golos.io/@alba-stories) &nbsp; [![VOX](https://s19.postimg.cc/fgjyfjt4j/vox-32.png)](https://vox.community/@alba-stories) &nbsp; [![Serey](https://i.postimg.cc/XNfxDkn4/serey-32.png)](https://serey.io/@alba-stories)
+### [![](https://s19.postimg.cc/855m162ab/27cb8858fa0dfe41d2b1190533c8af9a63-32x32.png)](https://steemit.com/@alba-stories) &nbsp; [![](https://i.postimg.cc/FHPx155H/WLS-32.png)](https://whaleshares.io/@alba-stories) &nbsp; [![](https://s19.postimg.cc/7tsr21vrn/1480-32x32.png)](https://golos.io/@alba-stories) &nbsp; [![VOX](https://s19.postimg.cc/fgjyfjt4j/vox-32.png)](https://vox.community/@alba-stories) &nbsp; [![Serey](https://i.postimg.cc/XNfxDkn4/serey-32.png)](https://serey.io/@alba-stories) &nbsp; [![Weku](https://i.postimg.cc/P5j6LdMG/weku-32.png)](https://deals.weku.io/@alba-stories)
 </center>
 `,
     '{f_cc_ua}': `---
@@ -230,7 +230,10 @@ I decided to change this and discovered a new world that surrounds me! Today I s
         , tagsBlock: `#tags`
         , imagesBlock: `#images`
         , submitButton: `#submit-btn`
-        , resetButton: `#reset-btn`
+        , submitFormButton: `#submit-form-btn`
+        , resetFormButton: `#reset-form-btn`
+        , resetAccountsButton: `#reset-accounts-btn`
+        , accountsFormElements: `.accounts-form`
         , resultBlock: `#result`
         , resultLastItem: `#result div:last`
         , golosVik: `#golos-vik-enable`
@@ -254,11 +257,11 @@ I decided to change this and discovered a new world that surrounds me! Today I s
             <h3 class="mx-auto" style="%3$s"><a href="%4$s" target="_blank" rel="noopener noreferrer"><img src="../img/logo/%1$s-32.png" alt="%2$s" /> %2$s</a> Account</h3>
 
             <div class="form-group">
-                <input type="text" class="form-control" id="%1$s-tags" placeholder="Optional: Specify tags for %2$s (will replace previous)" />
+                <input type="text" class="form-control accounts-form" id="%1$s-tags" placeholder="Optional: Specify tags for %2$s (will replace previous)" />
             </div>
 
             <div class="form-group">
-                <select id="%1$s-accounts-list" class="form-control accounts-list">
+                <select id="%1$s-accounts-list" class="form-control accounts-list accounts-form">
                     <option value="" selected>Choose or fill new one 👇</option>
                 </select>
             </div>
@@ -269,14 +272,14 @@ I decided to change this and discovered a new world that surrounds me! Today I s
                         <div class="input-group-prepend">
                             <div class="input-group-text">@</div>
                         </div>
-                        <input type="text" class="form-control" id="%1$s-username" placeholder="Enter your %2$s username">
+                        <input type="text" class="form-control accounts-form" id="%1$s-username" placeholder="Enter your %2$s username">
                         <div class="invalid-feedback">
                             Username cannot be blank.
                         </div>
                     </div>
                 </div>
                 <div class="form-group col-md-6">
-                    <input type="password" class="form-control" id="%1$s-wif" placeholder="WIF (Posting key)" />
+                    <input type="password" class="form-control accounts-form" id="%1$s-wif" placeholder="WIF (Posting key)" />
                     <div class="invalid-feedback">
                         WIF is empty or has invalid value.
                     </div>

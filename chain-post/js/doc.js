@@ -441,12 +441,32 @@ function setHandlerLoadFacebook() {
     });
 }
 
-function setHandlerResetButton() {
-    jQuery(constant.htmlNavigation.resetButton).on(`click`, function(e) {
+function setHandlerSubmitFormButton() {
+    jQuery(constant.htmlNavigation.submitFormButton).on(`click`, function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        jQuery(constant.htmlNavigation.submitForm).trigger(`submit`);
+    });
+}
+
+function setHandlerResetFormButton() {
+    jQuery(constant.htmlNavigation.resetFormButton).on(`click`, function(e) {
         e.preventDefault();
         e.stopPropagation();
 
         location.reload();
+    });
+}
+
+function setHandlerResetAccountsButton() {
+    jQuery(constant.htmlNavigation.resetAccountsButton).on(`click`, function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        jQuery(constant.htmlNavigation.accountsFormElements).each(function() {
+            jQuery(this).val(``);
+        })
     });
 }
 
@@ -458,5 +478,7 @@ module.exports = {
     , setHandlerChangeGolosVik: setHandlerChangeGolosVik
     , setHandlerPostPublish: setHandlerPostPublish
     , setHandlerLoadFacebook: setHandlerLoadFacebook
-    , setHandlerResetButton: setHandlerResetButton
+    , setHandlerSubmitFormButton: setHandlerSubmitFormButton
+    , setHandlerResetFormButton: setHandlerResetFormButton
+    , setHandlerResetAccountsButton: setHandlerResetAccountsButton
 }
