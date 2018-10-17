@@ -15,7 +15,7 @@ let sprintf = require(`sprintf-js`).sprintf
 function addSections(sections) {
     let funcName = tool.parseFunctionName(arguments.callee.toString());
     if (!sections || sections.length < 1) {
-        console.log(funcName + `: No sections was received.`);
+        console.info(funcName + `: No sections was received.`);
 
         return;
     }
@@ -23,7 +23,7 @@ function addSections(sections) {
         , container = jQuery(`#` + containerId)
     ;
     if (!container || container.length < 1) {
-        console.log(sprintf(`%s: Container by id "%s" was not found.`, funcName, containerId));
+        console.info(sprintf(`%s: Container by id "%s" was not found.`, funcName, containerId));
 
         return;
     }
@@ -127,7 +127,7 @@ function setHandlerAddAccount() {
                 addAccountToList(section, username, true);
 
                 element.prop(constant.htmlNames.disabledPropName, false);
-                console.log(section, `User WIF is correct.`);
+                console.info(section, `User WIF is correct.`);
             },
             function (msg) {
                 console.error(msg);
@@ -295,7 +295,9 @@ function setHandlerLoadFacebook() {
         e.stopPropagation();
 
         let inputElement = jQuery(this).find(`input`)
-            , facebookUrl = inputElement.val().replace(`www.facebook.com`, `m.facebook.com`)
+            , facebookUrl = inputElement.val()
+                .replace(`www.facebook.com`, `m.facebook.com`)
+                .replace(`/posts/`, `/posts/pcb.`)
             , photoUrl = null
             , buttonElement = jQuery(this).find(`.btn-primary`)
             , onePhotoMode = false
@@ -307,7 +309,10 @@ function setHandlerLoadFacebook() {
         if (facebookUrl.startsWith(`https://m.facebook.com/photo.php`)) {
             onePhotoMode = true;
         }
-        if (facebookUrl.startsWith(`https://m.facebook.com/permalink.php`)) {
+        if (
+            facebookUrl.startsWith(`https://m.facebook.com/permalink.php`)
+            || facebookUrl.startsWith(`https://m.facebook.com/story.php`)
+        ) {
             let parsed = urlParse(facebookUrl)
                 , queryParams = tool.parseQueryParams(parsed.query)
                 , urlPattern = `https://m.facebook.com/%s/posts/pcb.%s/`
@@ -326,8 +331,6 @@ function setHandlerLoadFacebook() {
         }
 
         function fbOnePhotoProcess(config) {
-            // console.log(config);
-
             let el = jQuery( `<div></div>` );
             el.html(config.content[`__html`]);
 
@@ -346,7 +349,7 @@ function setHandlerLoadFacebook() {
                 postBody = sprintf(
                     constant.htmlPieces.facebookPostBodyPattern,
                     postBody,
-                    photoUrl,
+                    sprintf(constant.htmlPieces.facebookPhotoPattern, photoUrl),
                     facebookUrl.replace(`m.facebook.com`, `www.facebook.com`)
                 );
             }
@@ -358,7 +361,7 @@ function setHandlerLoadFacebook() {
                 JSON.stringify([photoUrl.replace(/&amp;/g, `&`)])
             );
         }
-        function fbStoryProcess(content) {
+        function fbStoryProcess(content) { // permalink
             let postTitle = ``
                 , postBody = ``
                 , postImages = ``
@@ -388,6 +391,9 @@ function setHandlerLoadFacebook() {
             }
             if (imagesUrls.length > 0) {
                 postImages = JSON.stringify(imagesUrls);
+                imagesUrls.forEach(function(element, index, theArray) {
+                    theArray[index] = sprintf(constant.htmlPieces.facebookPhotoPattern, element);
+                });
             }
 
             let textBody = content.match(/"message":{"text":"(.+?)","/);
@@ -398,7 +404,7 @@ function setHandlerLoadFacebook() {
                     constant.htmlPieces.facebookPostBodyPattern,
                     textObj.body,
                     imagesUrls.join(`\n\n`),
-                    facebookUrl.replace(`m.facebook.com`, `www.facebook.com`)
+                    facebookUrl.replace(`m.facebook.com`, `www.facebook.com`).replace(`/posts/pcb.`, `/posts/`)
                 );
             }
 
