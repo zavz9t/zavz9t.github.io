@@ -297,6 +297,7 @@ function setHandlerLoadFacebook() {
         let inputElement = jQuery(this).find(`input`)
             , facebookUrl = inputElement.val()
                 .replace(`www.facebook.com`, `m.facebook.com`)
+                .replace(`/posts/pcb.`, `/posts/`)
                 .replace(`/posts/`, `/posts/pcb.`)
             , photoUrl = null
             , buttonElement = jQuery(this).find(`.btn-primary`)

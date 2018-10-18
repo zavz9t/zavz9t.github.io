@@ -229,7 +229,7 @@ I decided to change this and discovered a new world that surrounds me! Today I s
         , bodyBlock: `#body`
         , tagsBlock: `#tags`
         , imagesBlock: `#images`
-        , submitButton: `#submit-btn`
+        , submitButton: `#submit-form-btn`
         , submitFormButton: `#submit-form-btn`
         , resetFormButton: `#reset-form-btn`
         , resetAccountsButton: `#reset-accounts-btn`
