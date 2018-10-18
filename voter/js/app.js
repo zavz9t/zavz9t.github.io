@@ -90,7 +90,7 @@ function setSubmitHandler() {
         e.preventDefault();
         e.stopPropagation();
 
-        tool.startPublishing(jQuery(constant.htmlNavigation.submitButton));
+        tool.startPublishing(jQuery(constant.htmlNavigation.submitFormButton));
 
         let url = jQuery(constant.htmlNavigation.voterUrl).val()
             , section = jQuery(constant.htmlNavigation.voterSection).val()

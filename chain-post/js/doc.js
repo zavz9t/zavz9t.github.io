@@ -6,7 +6,6 @@ const htmlAccountsList = `accounts-list`
 let sprintf = require(`sprintf-js`).sprintf
     , jQuery = require(`jquery`)
     , urlParse = require(`url-parse`)
-    , Evernote = require('evernote')
     , tool = require(`../../js/tool`)
     , Storage = require(`../../js/storage`).Storage
     , adapter = require(`../../js/adapter`)
@@ -188,7 +187,7 @@ function setHandlerPostPublish(sections) {
         e.preventDefault();
         e.stopPropagation();
 
-        let buttonElement = jQuery(constant.htmlNavigation.submitButton)
+        let buttonElement = jQuery(constant.htmlNavigation.submitFormButton)
             , dataValid = true
             , usernamePattern = `#%s-username`
             , wifPattern = `#%s-wif`
@@ -476,7 +475,10 @@ function setHandlerLoadEvernote() {
             jQuery(constant.htmlNavigation.titleBlock).val(title);
             jQuery(constant.htmlNavigation.bodyBlock).val(body);
             jQuery(constant.htmlNavigation.tagsBlock).val(tags);
-            jQuery(constant.htmlNavigation.imagesBlock).val(images);
+
+            for (let section in sectionTags) {
+                jQuery(sprintf(constant.htmlNavigation.sectionTagsPattern, section)).val(sectionTags[section]);
+            }
 
             jQuery(`#evernoteModal .close`).trigger(`click`);
             inputElement.val(``);
@@ -494,6 +496,8 @@ function setHandlerLoadEvernote() {
             function(data) {
                 let jsonData = JSON.parse(data.contents)
                     , postTitle = ``
+                    , postBody = ``
+                    , tagsList = []
                 ;
 
                 if (`title` in jsonData) {
@@ -502,14 +506,23 @@ function setHandlerLoadEvernote() {
                     console.warn(`Evernote: cannot find note title`)
                 }
 
-                // add content key check
+                if (!(`content` in jsonData)) {
+                    console.warn(`Evernote: cannot find note content`);
+
+                    evernoteFillSubmitFormAndCloseModal(
+                        postTitle,
+                        postBody,
+                        defaultTags,
+                        tagsList
+                    );
+
+                    return;
+                }
 
                 let el = jQuery(`<div></div>`);
                 el.html(jsonData.content);
 
-                let rawContent = jQuery(`en-note`, el).html()
-                    , [postBody, tagsList] = rawContent.split(tagsSeparator)
-                ;
+                [postBody, tagsList] = jQuery(`en-note`, el).html().split(tagsSeparator);
 
                 evernoteFillSubmitFormAndCloseModal(
                     postTitle,

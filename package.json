@@ -21,6 +21,7 @@
     "fingerprintjs2sync": "^1.5.5",
     "local-storage": "^1.4.2",
     "sessionstorage": "^0.1.0",
+    "html-to-text": "^4.0.0",
     "crypto-js": "^3.1.9-1",
     "golos-js": "^0.7.3",
     "@steemit/steem-js": "^0.7.1",

@@ -1,5 +1,6 @@
 let sprintf = require(`sprintf-js`).sprintf
     , jQuery = require(`jquery`)
+    , htmlToText = require(`html-to-text`)
     , constant = require(`./constant`)
     , ss = require(`sessionstorage`)
     , urlParse = require(`url-parse`)
@@ -169,8 +170,8 @@ function startPublishing(buttonElement) {
 
 function finishPublishing() {
     if (false === areAdaptersPublishing()) {
-        jQuery(constant.htmlNavigation.submitButton).prop(constant.htmlNames.disabledPropName, false);
-        jQuery(constant.htmlNavigation.submitButton).removeClass(constant.htmlNames.loadingClassName);
+        jQuery(constant.htmlNavigation.submitFormButton).prop(constant.htmlNames.disabledPropName, false);
+        jQuery(constant.htmlNavigation.submitFormButton).removeClass(constant.htmlNames.loadingClassName);
     }
 }
 
@@ -323,10 +324,17 @@ function buildCorsUrl(url) {
 }
 
 function htmlDecodeString(string) {
-    let txt = document.createElement('textarea');
-    txt.innerHTML = string;
+    string = string.replace(/<div>/g, `<div>\n`);
 
-    return txt.value;
+    return htmlToText.fromString(string, {
+        wordwrap: false
+        , preserveNewlines: true
+        , format: {
+            lineBreak: function (elem, fn, options) {
+                return `\n\n`;
+            }
+        }
+    }).trim();
 }
 
 function stripHtml(string) {

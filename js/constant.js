@@ -228,8 +228,8 @@ I decided to change this and discovered a new world that surrounds me! Today I s
         , titleBlock: `#title`
         , bodyBlock: `#body`
         , tagsBlock: `#tags`
+        , sectionTagsPattern: `#%s-tags`
         , imagesBlock: `#images`
-        , submitButton: `#submit-form-btn`
         , submitFormButton: `#submit-form-btn`
         , resetFormButton: `#reset-form-btn`
         , resetAccountsButton: `#reset-accounts-btn`
