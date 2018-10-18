@@ -105,7 +105,9 @@
     <div class="tool-buttons">
         <img src="../img/info-icon-32.png" alt="info" class="info-tooltip" data-toggle="tooltip" data-placement="left" title="Publish your articles to favorite platforms by one click" />
         &nbsp;
-        <img src="../img/logo/facebook-logo-32.png" alt="facebook" title="Load Facebook post to form" id="facebook-load-btn" data-toggle="modal" data-target="#facebookModal" />
+        <img src="../img/logo/facebook-logo-32.png" alt="Facebook" title="Load Facebook post to form" id="facebook-load-btn" class="cursor-pointer" data-toggle="modal" data-target="#facebookModal" />
+        &nbsp;
+        <img src="../img/logo/evernote-32.png" alt="Evernote" title="Load Evernote shared note to form" id="evernote-load-btn" class="cursor-pointer" data-toggle="modal" data-target="#evernoteModal" />
     </div>
 
     <!-- Facebook Modal -->
@@ -124,6 +126,37 @@
                             <input type="text" class="form-control col-md-12" id="facebook-url" placeholder="https://www.facebook.com/" required>
                             <div class="invalid-feedback">
                                 Facebook URL should be set.
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-2">
+                            <button type="submit" class="btn btn-primary">Load</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Evernote Modal -->
+    <div class="modal fade" id="evernoteModal" tabindex="-1" role="dialog" aria-labelledby="evernoteTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="evernoteTitle">Evernote shared note load</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="form-inline needs-validation" id="evernote-load-form">
+                        <div class="form-group col-md-10">
+                            <input type="text" class="form-control col-md-12" id="evernote-url" placeholder="https://www.evernote.com/shard/" required>
+                            <div class="invalid-feedback">
+                                Evernote URL should be set.
                             </div>
                         </div>
 

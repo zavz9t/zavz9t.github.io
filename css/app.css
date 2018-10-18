@@ -50,6 +50,6 @@ body {
     display: inline-block;
 }
 
-#facebook-load-btn {
+.cursor-pointer {
     cursor: pointer;
 }

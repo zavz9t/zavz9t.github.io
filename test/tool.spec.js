@@ -12,6 +12,7 @@
 // );
 
 let assert = require(`assert`)
+    , sprintf = require(`sprintf-js`).sprintf
     , tool = require(`../js/tool`)
 ;
 
@@ -136,6 +137,72 @@ describe(`tool`, function () {
                 tool.stripAndTransliterate(`[Горнятко кави] Я Морячка Ты Моряк ⛵`),
                 `ru--gornyatko-kavi-ya-moryachka-ty-moryak`,
                 `Strip with transliteration should be done correctly`
+            );
+        });
+
+    });
+
+    describe(`parseSectionTags`, function() {
+
+        it(`should handle empty string`, function() {
+            assert.deepEqual(
+                tool.parseSectionTags(``),
+                {},
+                `Parsing should be done correctly`
+            );
+        });
+
+        it(`should handle one section`, function() {
+            let tags = `ua beautiful-life photography streetphotography life steemitbloggers`
+                , section = `steem`
+                , rawString = sprintf(`|%s: %s `, section, tags)
+                , expectedData = {}
+            ;
+
+            expectedData[section] = tags;
+
+            assert.deepEqual(
+                tool.parseSectionTags(rawString),
+                expectedData,
+                `Parsing should be done correctly`
+            );
+        });
+
+        it(`should handle several sections at one row`, function() {
+            let tags = `ua beautiful-life photography streetphotography life steemitbloggers`
+                , section1 = `steem`
+                , section2 = `golos`
+                , rawString = sprintf(`|%s, %s: %s `, section1, section2, tags)
+                , expectedData = {}
+            ;
+
+            expectedData[section1] = tags;
+            expectedData[section2] = tags;
+
+            assert.deepEqual(
+                tool.parseSectionTags(rawString),
+                expectedData,
+                `Parsing should be done correctly`
+            );
+        });
+
+        it(`should handle combined usage`, function() {
+            let rawString = `|steem: ua beautiful-life photography streetphotography life steemitbloggers |serey, golos, vox: beautiful-life photography en streetphotography life |wls: beautiful-life photography streetphotography life pixel|smoke: beautiful-life photography streetphotography life |weku: beautiful-life en photography streetphotography zealpro phototalent teamquality wekubloggers`
+                , expectedData = {
+                    steem: `ua beautiful-life photography streetphotography life steemitbloggers`
+                    , serey: `beautiful-life photography en streetphotography life`
+                    , golos: `beautiful-life photography en streetphotography life`
+                    , vox: `beautiful-life photography en streetphotography life`
+                    , wls: `beautiful-life photography streetphotography life pixel`
+                    , smoke: `beautiful-life photography streetphotography life`
+                    , weku: `beautiful-life en photography streetphotography zealpro phototalent teamquality wekubloggers`
+                }
+            ;
+
+            assert.deepEqual(
+                tool.parseSectionTags(rawString),
+                expectedData,
+                `Parsing should be done correctly`
             );
         });
 

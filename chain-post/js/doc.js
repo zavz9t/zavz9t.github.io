@@ -6,6 +6,7 @@ const htmlAccountsList = `accounts-list`
 let sprintf = require(`sprintf-js`).sprintf
     , jQuery = require(`jquery`)
     , urlParse = require(`url-parse`)
+    , Evernote = require('evernote')
     , tool = require(`../../js/tool`)
     , Storage = require(`../../js/storage`).Storage
     , adapter = require(`../../js/adapter`)
@@ -423,7 +424,7 @@ function setHandlerLoadFacebook() {
         }
 
         jQuery.getJSON(
-            `https://allorigins.me/get?url=` + encodeURIComponent(facebookUrl) + `&callback=?`,
+            tool.buildCorsUrl(facebookUrl),
             function(data) {
                 if (onePhotoMode) {
                     let el = jQuery(`<div></div>`);
@@ -443,6 +444,79 @@ function setHandlerLoadFacebook() {
                 } else {
                     fbStoryProcess(data.contents);
                 }
+            }
+        );
+    });
+}
+
+function setHandlerLoadEvernote() {
+    jQuery(constant.htmlNavigation.evernoteLoadForm).on(`submit`, function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        let inputElement = jQuery(this).find(`input`)
+            , url = inputElement.val()
+            , buttonElement = jQuery(this).find(`.btn-primary`)
+            , sharedNotePrefix = `https://www.evernote.com/shard/`
+            , defaultTags = `evernote`
+            , tagsSeparator = `---tags---`
+        ;
+
+        if (false === url.startsWith(sharedNotePrefix)) {
+            console.error(sprintf(
+                `Received url "%s" is not shared Evernote note. It should starts by "%s" string.`
+                , url
+                , sharedNotePrefix
+            ));
+
+            return;
+        }
+
+        function evernoteFillSubmitFormAndCloseModal(title, body, tags, sectionTags) {
+            jQuery(constant.htmlNavigation.titleBlock).val(title);
+            jQuery(constant.htmlNavigation.bodyBlock).val(body);
+            jQuery(constant.htmlNavigation.tagsBlock).val(tags);
+            jQuery(constant.htmlNavigation.imagesBlock).val(images);
+
+            jQuery(`#evernoteModal .close`).trigger(`click`);
+            inputElement.val(``);
+            buttonElement.prop(constant.htmlNames.disabledPropName, false);
+        }
+
+        buttonElement.prop(constant.htmlNames.disabledPropName, true);
+
+        let [stripUrl] = url.split(`?`)
+            , urlSuffix = `?json=1&rdata=0`
+        ;
+
+        jQuery.getJSON(
+            tool.buildCorsUrl(stripUrl + urlSuffix),
+            function(data) {
+                let jsonData = JSON.parse(data.contents)
+                    , postTitle = ``
+                ;
+
+                if (`title` in jsonData) {
+                    postTitle = jsonData.title;
+                } else {
+                    console.warn(`Evernote: cannot find note title`)
+                }
+
+                // add content key check
+
+                let el = jQuery(`<div></div>`);
+                el.html(jsonData.content);
+
+                let rawContent = jQuery(`en-note`, el).html()
+                    , [postBody, tagsList] = rawContent.split(tagsSeparator)
+                ;
+
+                evernoteFillSubmitFormAndCloseModal(
+                    postTitle,
+                    tool.htmlDecodeString(postBody),
+                    defaultTags,
+                    tool.parseSectionTags(tool.stripHtml(tagsList))
+                );
             }
         );
     });
@@ -485,6 +559,7 @@ module.exports = {
     , setHandlerChangeGolosVik: setHandlerChangeGolosVik
     , setHandlerPostPublish: setHandlerPostPublish
     , setHandlerLoadFacebook: setHandlerLoadFacebook
+    , setHandlerLoadEvernote: setHandlerLoadEvernote
     , setHandlerSubmitFormButton: setHandlerSubmitFormButton
     , setHandlerResetFormButton: setHandlerResetFormButton
     , setHandlerResetAccountsButton: setHandlerResetAccountsButton

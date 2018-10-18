@@ -240,6 +240,7 @@ I decided to change this and discovered a new world that surrounds me! Today I s
         , golosVikValue: `#golos-for-vik`
         , golosVikSettings: `.golos-vik-settings`
         , facebookLoadForm: `#facebook-load-form`
+        , evernoteLoadForm: `#evernote-load-form`
         , voterSection: `#section`
         , voterAccountsContainer: `#accounts-container`
         , voterUrl: `#url`

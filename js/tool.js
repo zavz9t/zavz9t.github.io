@@ -318,6 +318,58 @@ function isEmptyObject(obj) {
     return jQuery.isEmptyObject(obj);
 }
 
+function buildCorsUrl(url) {
+    return `https://allorigins.me/get?url=` + encodeURIComponent(url) + `&callback=?`
+}
+
+function htmlDecodeString(string) {
+    let txt = document.createElement('textarea');
+    txt.innerHTML = string;
+
+    return txt.value;
+}
+
+function stripHtml(string) {
+    let parser = new DOMParser
+        , dom = parser.parseFromString(
+            `<!doctype html><body>` + string,
+            `text/html`
+        )
+    ;
+
+    return dom.body.textContent;
+}
+
+function parseSectionTags(tagsString) {
+    let blockSeparator = `|`
+        , tagsSeparator = `:`
+        , sectionSeparator = `,`
+        , parts = tagsString.split(blockSeparator)
+        , result = {}
+    ;
+
+    for (let k in parts) {
+        if (!parts[k]) {
+            continue;
+        }
+        let [section, tags] = parts[k].trim().split(tagsSeparator);
+
+        if (section.includes(sectionSeparator)) {
+            let sections = section.split(sectionSeparator);
+            for (let i in sections) {
+                if (!sections[i]) {
+                    continue;
+                }
+                result[sections[i].trim()] = tags.trim();
+            }
+        } else {
+            result[section.trim()] = tags.trim();
+        }
+    }
+
+    return result;
+}
+
 module.exports = {
     stripAndTransliterate: stripAndTransliterate
     , stripAccount: stripAccount
@@ -341,4 +393,8 @@ module.exports = {
     , parseQueryParams: parseQueryParams
     , parsePostUrl: parsePostUrl
     , isEmptyObject: isEmptyObject
+    , buildCorsUrl: buildCorsUrl
+    , htmlDecodeString: htmlDecodeString
+    , stripHtml: stripHtml
+    , parseSectionTags: parseSectionTags
 }

@@ -80,6 +80,7 @@ jQuery(document).ready(function($) {
     doc.setHandlerChangeGolosVik();
     doc.setHandlerPostPublish(getSubmitConfig());
     doc.setHandlerLoadFacebook();
+    doc.setHandlerLoadEvernote();
     doc.setHandlerSubmitFormButton();
     doc.setHandlerResetFormButton();
     doc.setHandlerResetAccountsButton();
