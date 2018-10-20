@@ -366,7 +366,7 @@ I decided to change this and discovered a new world that surrounds me! Today I s
                         <div class="progress-bar progress-bar-striped bg-info" role="progressbar" style="width: %2$s%%" aria-valuenow="%2$s" aria-valuemin="0" aria-valuemax="100">%2$s%%</div>
                     </div>
 
-                    <div class="progress-title">Resource Credits</div>
+                    <div class="progress-title">Bandwidth | Resource Credits</div>
                     <div class="progress">
                         <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: %3$s%%" aria-valuenow="%3$s" aria-valuemin="0" aria-valuemax="100">%3$s%%</div>
                     </div>

@@ -315,6 +315,7 @@ class AbstractAdapter
     async processAccountsInfo(accounts, callback) {
         let adapterInstance = this;
 
+        adapterInstance.reconnect();
         adapterInstance.connection.api.getDynamicGlobalProperties(function(err, dynamicProperties) {
             if (err) {
                 console.error(sprintf(
