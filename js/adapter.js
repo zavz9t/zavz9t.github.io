@@ -327,6 +327,7 @@ class AbstractAdapter
                 return;
             }
 
+            adapterInstance.reconnect();
             adapterInstance.connection.api.getAccounts(accounts, function (err, result) {
                 if (err) {
                     console.error(sprintf(
