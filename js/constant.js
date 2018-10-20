@@ -234,6 +234,7 @@ I decided to change this and discovered a new world that surrounds me! Today I s
         , resetFormButton: `#reset-form-btn`
         , resetAccountsButton: `#reset-accounts-btn`
         , accountsFormElements: `.accounts-form`
+        , accountsResetElements: `.account-reset-item`
         , resultBlock: `#result`
         , resultLastItem: `#result div:last`
         , golosVik: `#golos-vik-enable`
@@ -264,7 +265,7 @@ I decided to change this and discovered a new world that surrounds me! Today I s
             </div>
 
             <div class="form-group">
-                <select id="%1$s-accounts-list" class="form-control accounts-list accounts-form">
+                <select id="%1$s-accounts-list" class="form-control accounts-list accounts-form account-reset-item">
                     <option value="" selected>Choose or fill new one 👇</option>
                 </select>
             </div>
@@ -275,14 +276,14 @@ I decided to change this and discovered a new world that surrounds me! Today I s
                         <div class="input-group-prepend">
                             <div class="input-group-text">@</div>
                         </div>
-                        <input type="text" class="form-control accounts-form" id="%1$s-username" placeholder="Enter your %2$s username">
+                        <input type="text" class="form-control accounts-form account-reset-item" id="%1$s-username" placeholder="Enter your %2$s username">
                         <div class="invalid-feedback">
                             Username cannot be blank.
                         </div>
                     </div>
                 </div>
                 <div class="form-group col-md-6">
-                    <input type="password" class="form-control accounts-form" id="%1$s-wif" placeholder="WIF (Posting key)" />
+                    <input type="password" class="form-control accounts-form account-reset-item" id="%1$s-wif" placeholder="WIF (Posting key)" />
                     <div class="invalid-feedback">
                         WIF is empty or has invalid value.
                     </div>

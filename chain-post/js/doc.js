@@ -558,7 +558,7 @@ function setHandlerResetAccountsButton() {
         e.preventDefault();
         e.stopPropagation();
 
-        jQuery(constant.htmlNavigation.accountsFormElements).each(function() {
+        jQuery(constant.htmlNavigation.accountsResetElements).each(function() {
             jQuery(this).val(``);
         })
     });

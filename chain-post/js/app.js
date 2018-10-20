@@ -10,20 +10,20 @@ function getViewConfig() {
         title_style: `width: 225px;`,
         append_html: `
             <div class="form-check">
-                <input type="checkbox" class="form-check-input" id="golos-as-golosio" />
+                <input type="checkbox" class="form-check-input accounts-form account-reset-item" id="golos-as-golosio" />
                 <label class="form-check-label" for="golos-as-golosio">Publish as golos.io</label>
             </div>
 
             <div class="form-row align-items-center">
                 <div class="form-group col-md-3">
                     <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="golos-vik-enable" />
+                        <input type="checkbox" class="form-check-input accounts-form account-reset-item" id="golos-vik-enable" />
                         <label class="form-check-label" for="golos-vik-enable">Publish for VIK</label>
                     </div>
                 </div>
                 
                 <div class="form-group col-md-2 golos-vik-settings invisible">
-                    <input type="number" step="1" min="10" max="85" class="form-control" id="golos-for-vik" />
+                    <input type="number" step="1" min="10" max="85" class="form-control accounts-form account-reset-item" id="golos-for-vik" />
                 </div>
                 
                 <div class="form-group col-md-2 golos-vik-settings invisible">
@@ -41,7 +41,7 @@ function getViewConfig() {
         title_style: `width: 270px;`,
         append_html: `
             <div class="form-check">
-                <input type="checkbox" class="form-check-input" id="vox-for-ds" />
+                <input type="checkbox" class="form-check-input accounts-form account-reset-item" id="vox-for-ds" />
                 <label class="form-check-label" for="vox-for-ds">Publish for Denis-Skripnik</label>
             </div>
         `
