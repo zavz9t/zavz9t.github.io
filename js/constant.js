@@ -243,7 +243,9 @@ I decided to change this and discovered a new world that surrounds me! Today I s
         , evernoteLoadForm: `#evernote-load-form`
         , voterSection: `#section`
         , voterAccountsContainer: `#accounts-container`
+        , voterAccountItem: `.account-item`
         , voterUrl: `#url`
+        , voterCheckAll: `#check-all`
     }
     , htmlNames = {
         invalidClassName: `is-invalid`
@@ -329,8 +331,16 @@ I decided to change this and discovered a new world that surrounds me! Today I s
         , voterSectionSelectOption: `<option value="%1$s" data-content="<img src='../img/logo/%1$s-16.png' title='%2$s'>&nbsp;&nbsp;%2$s">%2$s</option>`
         , voterAccountItem: `
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="%1$s" value="%1$s">
+                <input class="form-check-input account-item" type="checkbox" id="%1$s" value="%1$s">
                 <label class="form-check-label" for="%1$s">%1$s</label>
+            </div>
+        `
+        , voterCheckAllAccountsItem: `
+            <div class="form-check">
+                <hr />
+                <input class="form-check-input" type="checkbox" id="check-all" value="check-all">
+                <label class="form-check-label" for="check-all">Check All</label>
+                <hr />
             </div>
         `
     }

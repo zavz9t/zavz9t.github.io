@@ -74,6 +74,7 @@ function fillAccountsList(section) {
 
     accounts.sort();
     el.html(``);
+    el.append(constant.htmlPieces.voterCheckAllAccountsItem);
     for (let k in accounts) {
         el.append(sprintf(
             constant.htmlPieces.voterAccountItem,
@@ -94,7 +95,7 @@ function setSubmitHandler() {
 
         let url = jQuery(constant.htmlNavigation.voterUrl).val()
             , section = jQuery(constant.htmlNavigation.voterSection).val()
-            , accounts = jQuery(sprintf(`%s input:checked`, constant.htmlNavigation.voterAccountsContainer))
+            , accounts = jQuery(sprintf(`%s:checked`, constant.htmlNavigation.voterAccountItem))
         ;
         if (!section) {
             tool.handlePublishError(section, `No blockchain was chosen.`);
@@ -117,6 +118,23 @@ function setSubmitHandler() {
     });
 }
 
+function setCheckAllHandler() {
+    jQuery(`body`).on(`change`, constant.htmlNavigation.voterCheckAll, function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        let elements = jQuery(constant.htmlNavigation.voterAccountItem);
+        if (elements.length < 1) {
+            return;
+        }
+        if (!jQuery(this).prop(`checked`)) {
+            elements.prop(`checked`, false);
+        } else {
+            elements.prop(`checked`, true);
+        }
+    });
+}
+
 jQuery(document).ready(function($) {
 
     fillSections();
@@ -128,5 +146,6 @@ jQuery(document).ready(function($) {
     });
     sectionEl.selectpicker();
 
+    setCheckAllHandler();
     setSubmitHandler();
 });
