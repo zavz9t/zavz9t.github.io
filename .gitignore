@@ -1,4 +1,5 @@
 .idea/
 chain-post/js/main.js
+levels/js/main.js
 node_modules/
 voter/js/main.js

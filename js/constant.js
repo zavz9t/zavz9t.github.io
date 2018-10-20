@@ -237,6 +237,7 @@ I decided to change this and discovered a new world that surrounds me! Today I s
         , accountsResetElements: `.account-reset-item`
         , resultBlock: `#result`
         , resultLastItem: `#result div:last`
+        , toolButtons: `.tool-buttons`
         , golosVik: `#golos-vik-enable`
         , golosVikValue: `#golos-for-vik`
         , golosVikSettings: `.golos-vik-settings`
@@ -247,6 +248,7 @@ I decided to change this and discovered a new world that surrounds me! Today I s
         , voterAccountItem: `.account-item`
         , voterUrl: `#url`
         , voterCheckAll: `#check-all`
+        , levelsSectionsContainer: `.container`
     }
     , htmlNames = {
         invalidClassName: `is-invalid`
@@ -343,6 +345,37 @@ I decided to change this and discovered a new world that surrounds me! Today I s
                 <label class="form-check-label" for="check-all">Check All</label>
                 <hr />
             </div>
+        `
+        , levelsSectionItem: `
+            <hr />
+
+            <div id="%1$s" class="section-container">
+                <h2 class="section-title text-center"><img src="../img/logo/%1$s-32.png" alt="%2$s" /> %2$s</h2>
+
+            </div>
+            
+            <hr />
+        `
+        , levelsAccountItem: `
+            <hr />
+            <div class="account-wrapper row align-items-center justify-content-center">
+                <div class="col-4"><h5>@%1$s</h5></div>
+                <div class="col-8">
+                    <div class="progress-title">Voting Power</div>
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-striped bg-info" role="progressbar" style="width: %2$s%%" aria-valuenow="%2$s" aria-valuemin="0" aria-valuemax="100">%2$s%%</div>
+                    </div>
+
+                    <div class="progress-title">Resource Credits</div>
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: %3$s%%" aria-valuenow="%3$s" aria-valuemin="0" aria-valuemax="100">%3$s%%</div>
+                    </div>
+                </div>
+            </div>
+        `
+        , levelsSectionButton: `
+            <a href="?s=%1$s"><img src="../img/logo/%1$s-32.png" alt="%2$s" /></a>
+            &nbsp;
         `
     }
 ;

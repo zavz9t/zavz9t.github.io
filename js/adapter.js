@@ -3,9 +3,10 @@ const appName = `@chain-post`
 ;
 
 let items = []
-    , constant = require(`./constant`)
     , sprintf = require(`sprintf-js`).sprintf
     , sleep = require(`sleep-promise`)
+    , jQuery = require(`jquery`)
+    , constant = require(`./constant`)
     , tool = require(`./tool`)
 ;
 
@@ -311,6 +312,37 @@ class AbstractAdapter
         });
     }
 
+    async processAccountsInfo(accounts, callback) {
+        let adapterInstance = this;
+
+        adapterInstance.connection.api.getDynamicGlobalProperties(function(err, dynamicProperties) {
+            if (err) {
+                console.error(sprintf(
+                    `%s: Failed to load dynamic global properties`,
+                    adapterInstance.name
+                ));
+                console.error(err);
+
+                return;
+            }
+
+            adapterInstance.connection.api.getAccounts(accounts, function (err, result) {
+                if (err) {
+                    console.error(sprintf(
+                        `%s: Failed to load accounts: "%s"`,
+                        adapterInstance.name,
+                        JSON.stringify(accounts)
+                    ));
+                    console.error(err);
+
+                    return;
+                }
+
+                callback(result, dynamicProperties);
+            });
+        });
+    }
+
     buildVoteOperations(author, permlink, weight, accounts) {
         let operations = [];
         for (let username in accounts) {
@@ -356,6 +388,49 @@ class Steem extends AbstractAdapter
         this.connection.api.setOptions({ url: `https://api.steemit.com` });
         this.connection.config.set(`address_prefix`, `STM`);
         this.connection.config.set(`chain_id`, `0000000000000000000000000000000000000000000000000000000000000000`);
+    }
+
+    async processAccountsInfo(accounts, callback) {
+        function rcLoadCallback(resultAccounts, dynamicProperties) {
+            // load RC data
+            let requestData = {
+                jsonrpc: `2.0`,
+                id: 1,
+                method: `rc_api.find_rc_accounts`,
+                params: {
+                    accounts: accounts
+                }
+            };
+            jQuery.ajax({
+                url: `https://api.steemit.com`,
+                type: `POST`,
+                data: JSON.stringify(requestData),
+                success: function (response) {
+                    let nameToIndex = {};
+                    for (let i in resultAccounts) {
+                        nameToIndex[resultAccounts[i].name] = i;
+                    }
+
+                    for (let i in response.result.rc_accounts) {
+                        let account = response.result.rc_accounts[i]
+                            , key = nameToIndex[account.account]
+                        ;
+                        resultAccounts[key][`max_rc`] = account.max_rc;
+                        resultAccounts[key][`max_rc_creation_adjustment`] = account.max_rc_creation_adjustment;
+                        resultAccounts[key][`rc_manabar`] = account.rc_manabar;
+                    }
+
+                    callback(resultAccounts, dynamicProperties);
+                },
+                error: function(e) {
+                    console.error(e);
+
+                    callback(resultAccounts, dynamicProperties);
+                }
+            });
+        }
+
+        super.processAccountsInfo(accounts, rcLoadCallback);
     }
 }
 

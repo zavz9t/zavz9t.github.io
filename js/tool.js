@@ -378,6 +378,15 @@ function parseSectionTags(tagsString) {
     return result;
 }
 
+function getArrayProperty(objects, propertyName) {
+    let result = [];
+    for (let i in objects) {
+        result[i] = objects[i][propertyName];
+    }
+
+    return result;
+}
+
 module.exports = {
     stripAndTransliterate: stripAndTransliterate
     , stripAccount: stripAccount
@@ -405,4 +414,5 @@ module.exports = {
     , htmlDecodeString: htmlDecodeString
     , stripHtml: stripHtml
     , parseSectionTags: parseSectionTags
+    , getArrayProperty: getArrayProperty
 }

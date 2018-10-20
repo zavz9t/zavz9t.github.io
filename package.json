@@ -40,6 +40,9 @@
     "build-js-cp": "browserify chain-post/js/app.js | uglifyjs --compress --mangle > chain-post/js/main.min.js",
     "watch-js-cp": "watchify chain-post/js/app.js -o chain-post/js/main.js",
     "build-js-v": "browserify voter/js/app.js | uglifyjs --compress --mangle > voter/js/main.min.js",
-    "watch-js-v": "watchify voter/js/app.js -o voter/js/main.js"
+    "watch-js-v": "watchify voter/js/app.js -o voter/js/main.js",
+    "build-js-l": "browserify levels/js/app.js | uglifyjs --compress --mangle > levels/js/main.min.js",
+    "watch-js-l": "watchify levels/js/app.js -o levels/js/main.js",
+    "build-js-all": "browserify chain-post/js/app.js | uglifyjs --compress --mangle > chain-post/js/main.min.js && browserify voter/js/app.js | uglifyjs --compress --mangle > voter/js/main.min.js && browserify levels/js/app.js | uglifyjs --compress --mangle > levels/js/main.min.js"
   }
 }
