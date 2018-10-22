@@ -2,6 +2,7 @@ let sprintf = require(`sprintf-js`).sprintf
     , urlParse = require(`url-parse`)
     , constant = require(`../../js/constant`)
     , tool = require(`../../js/tool`)
+    , doc = require(`../../js/doc`)
     , AbstractAdapter = require(`../../js/adapter`).AbstractAdapter
     , Storage = require(`../../js/storage`).Storage
 ;
@@ -109,13 +110,18 @@ function addSectionLevels(sectionId, sectionName, accounts, properties) {
     }
 }
 
-function fillSectionsIcon() {
-    let container = jQuery(constant.htmlNavigation.toolButtons);
+function fillSectionsButtons($) {
+    if (!constant.enabledAdapters || constant.enabledAdapters.length < 0) {
+        return;
+    }
+    let container = $(constant.htmlNavigation.toolButtonsContainer);
+    container.append(sprintf(constant.htmlPieces.levelsSectionButton, ``, `cross`, `All sections`));
+
     for (let i in constant.enabledAdapters) {
         let sectionId = constant.enabledAdapters[i]
             , sectionName = constant.adapterDisplayNames[sectionId]
         ;
-        container.append(sprintf(constant.htmlPieces.levelsSectionButton, sectionId, sectionName))
+        container.append(sprintf(constant.htmlPieces.levelsSectionButton, sectionId, sectionId, sectionName))
     }
 }
 
@@ -151,7 +157,10 @@ function loadLevels() {
 
 jQuery(document).ready(function($) {
 
-    fillSectionsIcon();
+    fillSectionsButtons($);
+
+    doc.setHideShowButtonsHandler($);
+
     loadLevels();
 
 });

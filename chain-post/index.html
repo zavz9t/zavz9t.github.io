@@ -94,22 +94,31 @@
         </div>
     </footer>
 
-    <!-- Page Buttons -->
-    <div class="btn-container text-right">
+    <!-- Form Buttons -->
+    <div id="form-buttons" class="btn-container text-right collapse-buttons collapse show">
         <button id="submit-form-btn" class="btn btn-primary btn-lg"><i class="fa fa-refresh fa-spin loader"></i> Submit</button>
-        <p></p>
+        &nbsp;
         <button id="reset-form-btn" class="btn btn-secondary">Reset Form</button>
-        <p></p>
+        &nbsp;
         <button id="reset-accounts-btn" class="btn btn-outline-info">Reset Acc</button>
     </div>
 
-    <!-- Tools icons -->
-    <div class="tool-buttons">
-        <img src="../img/info-icon-32.png" alt="info" class="info-tooltip" data-toggle="tooltip" data-placement="left" title="Publish your articles to favorite platforms by one click" />
-        &nbsp;
-        <img src="../img/logo/facebook-logo-32.png" alt="Facebook" title="Load Facebook post to form" id="facebook-load-btn" class="cursor-pointer" data-toggle="modal" data-target="#facebookModal" />
-        &nbsp;
-        <img src="../img/logo/evernote-32.png" alt="Evernote" title="Load Evernote shared note to form" id="evernote-load-btn" class="cursor-pointer" data-toggle="modal" data-target="#evernoteModal" />
+    <!-- Tools buttons -->
+    <div id="tool-buttons">
+        <div class="show-buttons collapse">
+            <a href="#" title="Show buttons" data-toggle="collapse" data-target=".collapse-buttons" aria-expanded="true" aria-controls="tool-container form-buttons"><img src="../img/logo/downvote-32.png" alt="Show buttons" /></a>
+        </div>
+        <div id="tool-container" class="collapse-buttons collapse show">
+            <img src="../img/info-icon-32.png" alt="info" class="info-tooltip" data-toggle="tooltip" data-placement="left" title="Publish your articles to favorite platforms by one click" />
+            &nbsp;
+            <a href="#" id="facebook-load-btn" title="Load Facebook post to form" data-toggle="modal" data-target="#facebookModal"><img src="../img/logo/facebook-logo-32.png" alt="Facebook" /></a>
+            &nbsp;
+            <a href="#" id="evernote-load-btn" title="Load Evernote shared note to form" data-toggle="modal" data-target="#evernoteModal"><img src="../img/logo/evernote-32.png" alt="Evernote" /></a>
+            &nbsp;
+        </div>
+        <div class="hide-buttons collapse show">
+            <a href="#" title="Hide buttons" data-toggle="collapse" data-target=".collapse-buttons" aria-expanded="true" aria-controls="tool-container form-buttons"><img src="../img/logo/upvote-32.png" alt="Hide buttons" /></a>
+        </div>
     </div>
 
     <!-- Facebook Modal -->
@@ -178,6 +187,6 @@
     <script src="../js/lib/jquery.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>
     <script src="../js/lib/bootstrap.bundle.min.js" integrity="sha384-pjaaA8dDz/5BgdFUPX6M/9SUZv4d12SUPF0axWc+VRZkx5xU3daN+lYb49+Ax+Tl" crossorigin="anonymous"></script>
 
-    <script src="js/main.min.js?t=1540069751"></script>
+    <script src="js/main.min.js?t=1540221979"></script>
 </body>
 </html>

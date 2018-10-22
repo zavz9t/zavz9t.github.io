@@ -4,7 +4,7 @@ const storageKeys = {
     , placeholders = {
     '{f_zavz9t}': `---
 <center>
-### [![](https://s19.postimg.cc/855m162ab/27cb8858fa0dfe41d2b1190533c8af9a63-32x32.png)](https://steemit.com/@zavz9t) &nbsp; [![](https://i.postimg.cc/FHPx155H/WLS-32.png)](https://whaleshares.io/@zavz9t) &nbsp; [![](https://s19.postimg.cc/7tsr21vrn/1480-32x32.png)](https://golos.io/@zavz9t) &nbsp; [![VOX](https://s19.postimg.cc/fgjyfjt4j/vox-32.png)](https://vox.community/@zavz9t) &nbsp; [![Serey](https://i.postimg.cc/XNfxDkn4/serey-32.png)](https://serey.io/@zavz9t) &nbsp; [![Weku](https://i.postimg.cc/P5j6LdMG/weku-32.png)](https://deals.weku.io/@zavz9t)
+### [![](https://s19.postimg.cc/855m162ab/27cb8858fa0dfe41d2b1190533c8af9a63-32x32.png)](https://steemit.com/@zavz9t) &nbsp; [![](https://i.postimg.cc/FHPx155H/WLS-32.png)](https://whaleshares.io/@zavz9t) &nbsp; [![](https://s19.postimg.cc/7tsr21vrn/1480-32x32.png)](https://golos.io/@zavz9t) &nbsp; [![VOX](https://s19.postimg.cc/fgjyfjt4j/vox-32.png)](https://vox.community/@zavz9t) &nbsp; [![Serey](https://i.postimg.cc/XNfxDkn4/serey-32.png)](https://serey.io/@zavz9t) &nbsp; [![Weku](https://i.postimg.cc/P5j6LdMG/weku-32.png)](https://deals.weku.io/@zavz9t) &nbsp; [![Smoke](https://i.postimg.cc/vmhkQp0n/smoke-32.png)](https://smoke.io/@zavz9t)
 </center>
 `,
     '{f_lego-cat}': `---
@@ -19,7 +19,7 @@ const storageKeys = {
 `,
     '{f_a-s}': `---
 <center>
-### [![](https://s19.postimg.cc/855m162ab/27cb8858fa0dfe41d2b1190533c8af9a63-32x32.png)](https://steemit.com/@alba-stories) &nbsp; [![](https://i.postimg.cc/FHPx155H/WLS-32.png)](https://whaleshares.io/@alba-stories) &nbsp; [![](https://s19.postimg.cc/7tsr21vrn/1480-32x32.png)](https://golos.io/@alba-stories) &nbsp; [![VOX](https://s19.postimg.cc/fgjyfjt4j/vox-32.png)](https://vox.community/@alba-stories) &nbsp; [![Serey](https://i.postimg.cc/XNfxDkn4/serey-32.png)](https://serey.io/@alba-stories) &nbsp; [![Weku](https://i.postimg.cc/P5j6LdMG/weku-32.png)](https://deals.weku.io/@alba-stories)
+### [![](https://s19.postimg.cc/855m162ab/27cb8858fa0dfe41d2b1190533c8af9a63-32x32.png)](https://steemit.com/@alba-stories) &nbsp; [![](https://i.postimg.cc/FHPx155H/WLS-32.png)](https://whaleshares.io/@alba-stories) &nbsp; [![](https://s19.postimg.cc/7tsr21vrn/1480-32x32.png)](https://golos.io/@alba-stories) &nbsp; [![VOX](https://s19.postimg.cc/fgjyfjt4j/vox-32.png)](https://vox.community/@alba-stories) &nbsp; [![Serey](https://i.postimg.cc/XNfxDkn4/serey-32.png)](https://serey.io/@alba-stories) &nbsp; [![Weku](https://i.postimg.cc/P5j6LdMG/weku-32.png)](https://deals.weku.io/@alba-stories) &nbsp; [![Smoke](https://i.postimg.cc/vmhkQp0n/smoke-32.png)](https://smoke.io/@alba-stories)
 </center>
 `,
     '{f_cc_ua}': `---
@@ -109,6 +109,20 @@ I decided to change this and discovered a new world that surrounds me! Today I s
 ---
 
 <center>![](https://i.postimg.cc/05thg3rP/Ukraine-_Flag-16.png) Український варіант постів можна знайти в блозі @zavz9t</center>
+`,
+        '{f_ns_en}': `
+
+---
+
+### What's its about?
+
+After many times when I walked near garbage at the park/forest I decided to change something. So, I will clean it by each day by one garbage pack.
+
+**Wish me luck** 😉
+
+<center>https://i.postimg.cc/pLq4vk5R/nature-saver-footer.jpg</center>
+
+<center>[Image Source](https://www.lifegate.it/imprese/news/lifegate-5-giugno-led)</center>
 `
 }
     , steemPlaceholders = {
@@ -237,7 +251,10 @@ I decided to change this and discovered a new world that surrounds me! Today I s
         , accountsResetElements: `.account-reset-item`
         , resultBlock: `#result`
         , resultLastItem: `#result div:last`
-        , toolButtons: `.tool-buttons`
+        , toolButtons: `#tool-buttons`
+        , toolButtonsContainer: `#tool-container`
+        , toolButtonsShow: `#tool-buttons .show-buttons`
+        , toolButtonsHide: `#tool-buttons .hide-buttons`
         , golosVik: `#golos-vik-enable`
         , golosVikValue: `#golos-for-vik`
         , golosVikSettings: `.golos-vik-settings`
@@ -374,7 +391,7 @@ I decided to change this and discovered a new world that surrounds me! Today I s
             </div>
         `
         , levelsSectionButton: `
-            <a href="?s=%1$s"><img src="../img/logo/%1$s-32.png" alt="%2$s" /></a>
+            <a href="?s=%1$s"><img src="../img/logo/%2$s-32.png" alt="%3$s" /></a>
             &nbsp;
         `
     }

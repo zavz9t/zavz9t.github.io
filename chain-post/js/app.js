@@ -1,4 +1,5 @@
 let doc = require(`./doc`)
+    , commonDoc = require(`../../js/doc`)
     , constant = require(`../../js/constant`)
 ;
 
@@ -75,6 +76,7 @@ jQuery(document).ready(function($) {
     doc.addSections(getViewConfig());
     doc.fillAccountsList();
 
+    commonDoc.setHideShowButtonsHandler($);
     doc.setHandlerAddAccount();
     doc.setHandlerChangeAccount();
     doc.setHandlerChangeGolosVik();
