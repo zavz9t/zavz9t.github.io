@@ -24,6 +24,8 @@ function calculateVotingPower(account) {
         }
 
         return (currentMana * 100 / maxMana).toFixed(2);
+    } else if (`energy` in account) {
+        return (account.energy / 100)
     } else {
         return (account.voting_power / 100)
     }

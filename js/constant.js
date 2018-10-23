@@ -197,6 +197,10 @@ I decided to change this and discovered a new world that surrounds me! Today I s
         '{img_p_4}': `https://smoke.io/smokeimageproxy/400x0/`,
         '{img_p_8}': `https://smoke.io/smokeimageproxy/800x0/`
     }
+    , vizPlaceholders = {
+        '{img_p_4}': `https://i.goldvoice.club/400x0/`,
+        '{img_p_8}': `https://i.goldvoice.club/800x0/`
+    }
     , postBodySign = `
 
 ---
@@ -210,6 +214,7 @@ I decided to change this and discovered a new world that surrounds me! Today I s
     , adapterWeku = `weku`
     , adapterSerey = `serey`
     , adapterSmoke = `smoke`
+    , adapterViz = `viz`
     , enabledAdapters = [
         adapterSteem
         , adapterGolos
@@ -217,6 +222,7 @@ I decided to change this and discovered a new world that surrounds me! Today I s
         , adapterSerey
         , adapterWeku
         , adapterSmoke
+        , adapterViz
         , adapterVox
     ]
     , adapterDisplayNames = {
@@ -227,6 +233,67 @@ I decided to change this and discovered a new world that surrounds me! Today I s
         , serey: `Serey`
         , weku: `Weku`
         , smoke: `Smoke`
+        , viz: `VIZ`
+    }
+    , chainPostViewConfig = {
+        steem: { title: adapterDisplayNames.steem, title_style: `width: 235px;` }
+        , golos: {
+            title: adapterDisplayNames.golos,
+            title_style: `width: 225px;`,
+            append_html: `
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input accounts-form account-reset-item" id="golos-as-golosio" />
+                    <label class="form-check-label" for="golos-as-golosio">Publish as golos.io</label>
+                </div>
+    
+                <div class="form-row align-items-center">
+                    <div class="form-group col-md-3">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input accounts-form account-reset-item" id="golos-vik-enable" />
+                            <label class="form-check-label" for="golos-vik-enable">Publish for VIK</label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group col-md-2 golos-vik-settings invisible">
+                        <input type="number" step="1" min="10" max="85" class="form-control accounts-form account-reset-item" id="golos-for-vik" />
+                    </div>
+                    
+                    <div class="form-group col-md-2 golos-vik-settings invisible">
+                        <strong>%</strong>
+                    </div>
+                </div>
+            `
+        }
+        , wls: { title: adapterDisplayNames.wls, title_style: `width: 315px;` }
+        , serey: { title: adapterDisplayNames.serey, title_style: `width: 230px;` }
+        , weku: { title: adapterDisplayNames.weku, title_style: `width: 225px;` }
+        , smoke: { title: adapterDisplayNames.smoke, title_style: `width: 240px;` }
+        , viz: { title: ``, title_style: `width: 160px;` }
+        , vox: {
+            title: ``,
+            title_style: `width: 270px;`,
+            append_html: `
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input accounts-form account-reset-item" id="vox-for-ds" />
+                        <label class="form-check-label" for="vox-for-ds">Publish for Denis-Skripnik</label>
+                    </div>
+                `
+        }
+    }
+    , chainPostSubmitConfig = {
+        steem: []
+        , golos: [
+            { type: `checkbox`, html_id: adapterGolos + `-as-golosio`, key: `as_golosio` }
+            , { type: `int`, html_id: adapterGolos + `-for-vik`, key: `for_vik` }
+        ]
+        , wls: []
+        , serey: []
+        , weku: []
+        , smoke: []
+        , viz: []
+        , vox: [
+            { type: `checkbox`, html_id: adapterVox + `-for-ds`, key: `for_ds` }
+        ]
     }
     , adapterToHost = {
         golos: `https://golos.io`
@@ -236,6 +303,7 @@ I decided to change this and discovered a new world that surrounds me! Today I s
         , serey: `https://serey.io`
         , weku: `https://deals.weku.io`
         , smoke: `https://smoke.io`
+        , viz: `https://viz.world`
     }
     , htmlNavigation = {
         submitForm: `#form`
@@ -407,6 +475,7 @@ module.exports = {
     , sereyPlaceholders: sereyPlaceholders
     , wekuPlaceholders: wekuPlaceholders
     , smokePlaceholders: smokePlaceholders
+    , vizPlaceholders: vizPlaceholders
     , postBodySign: postBodySign
     , adapterSteem: adapterSteem
     , adapterGolos: adapterGolos
@@ -415,8 +484,11 @@ module.exports = {
     , adapterSerey: adapterSerey
     , adapterWeku: adapterWeku
     , adapterSmoke: adapterSmoke
+    , adapterViz: adapterViz
     , enabledAdapters: enabledAdapters
     , adapterDisplayNames: adapterDisplayNames
+    , chainPostViewConfig: chainPostViewConfig
+    , chainPostSubmitConfig: chainPostSubmitConfig
     , adapterToHost: adapterToHost
     , htmlNavigation: htmlNavigation
     , htmlNames: htmlNames

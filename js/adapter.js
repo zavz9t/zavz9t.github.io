@@ -48,6 +48,9 @@ class AbstractAdapter
                 case constant.adapterSmoke:
                     items[section] = new Smoke();
                     break;
+                case constant.adapterViz:
+                    items[section] = new Viz();
+                    break;
                 default:
                     throw sprintf(
                         `factory: Section "%s" is not implemented yet!`,
@@ -213,7 +216,7 @@ class AbstractAdapter
 
     async broadcastSend(wif, author, permlink, operations) {
         while (true === this.connection.config.get(keyConnBusy)) {
-            console.log(this.name + `:broadcastSend: wait execution for 1 sec`);
+            console.info(this.name + `:broadcastSend: wait execution for 1 sec`);
 
             await sleep(1000);
         }
@@ -665,6 +668,135 @@ class Smoke extends AbstractAdapter
         operations.splice(1, 1);
 
         return operations;
+    }
+}
+
+class Viz extends AbstractAdapter
+{
+    constructor() {
+        super();
+
+        this.name = constant.adapterViz;
+        this.connection = require(`viz-world-js`);
+    }
+
+    static getCurrency()
+    {
+        return `VIZ`;
+    }
+
+    static getPlaceholders()
+    {
+        return Object.assign({}, super.getPlaceholders(), constant.vizPlaceholders);
+    }
+
+    async broadcastSend(wif, author, permlink, operations) {
+        while (true === this.connection.config.get(keyConnBusy)) {
+            console.info(this.name + `:broadcastSend: wait execution for 1 sec`);
+
+            await sleep(1000);
+        }
+
+        this.reconnect();
+        let adapterInstance = this;
+
+        adapterInstance.connection.config.set(keyConnBusy, true);
+        adapterInstance.connection.api.getContent(author, permlink, 0, function(err, result) {
+            if (err) {
+                tool.handlePublishError(adapterInstance.name, err);
+                adapterInstance.connection.config.set(keyConnBusy, false);
+
+                return;
+            }
+
+            if (result[`permlink`] === permlink) {
+                permlink = permlink + `-` + Math.floor(Date.now() / 1000);
+
+                operations[0][1][`permlink`] = permlink;
+                operations[1][1][`permlink`] = permlink;
+            }
+
+            adapterInstance.connection.broadcast.content(
+                wif,
+                operations[0][1][`parent_author`],
+                operations[0][1][`parent_permlink`],
+                operations[0][1][`author`],
+                operations[0][1][`permlink`],
+                operations[0][1][`title`],
+                operations[0][1][`body`],
+                5000, // curation_percent - 50%
+                operations[0][1][`json_metadata`],
+                (`extensions` in operations[1][1]) ? operations[1][1][`extensions`] : [],
+                function (err, result) {
+                    adapterInstance.connection.config.set(keyConnBusy, false);
+                    if (!err) {
+                        tool.handleSuccessfulPost(adapterInstance.name, result);
+                    } else {
+                        tool.handlePublishError(adapterInstance.name, err);
+                    }
+                }
+            );
+        });
+    }
+
+    vote(url, accounts) {
+        let params = tool.parsePostUrl(url);
+
+        this.reconnect();
+        let adapterInstance = this;
+
+        adapterInstance.connection.api.getContent(params[`author`], params[`permlink`], -1, function(err, result) {
+            if (err) {
+                tool.handlePublishError(adapterInstance.name, err);
+
+                return;
+            }
+            if (result.id === 0) {
+                tool.handlePublishError(
+                    adapterInstance.name,
+                    sprintf(
+                        `Post with url: "%s" was not found at "%s" chain.`,
+                        url,
+                        constant.adapterDisplayNames[adapterInstance.name]
+                    )
+                );
+
+                return;
+            }
+
+            for (let i in result.active_votes) {
+                if (result.active_votes[i].voter in accounts) {
+                    delete accounts[result.active_votes[i].voter];
+                }
+            }
+
+            if (tool.isEmptyObject(accounts)) {
+                tool.handlePublishWarning(adapterInstance.name, `This post were upvoted by chosen accounts earlier.`)
+
+                return;
+            }
+
+            let operations = adapterInstance.buildVoteOperations(params[`author`], params[`permlink`], 10000, accounts);
+
+            if (tool.isTest()) {
+                console.log(operations, Object.values(accounts));
+                tool.finishPublishing();
+
+                return;
+            }
+
+            adapterInstance.connection.broadcast.send(
+                {'extensions': [], 'operations': operations},
+                Object.values(accounts),
+                function (err, result) {
+                    if (!err) {
+                        tool.handleSuccessfulVote(adapterInstance.name, Object.keys(accounts));
+                    } else {
+                        tool.handlePublishError(adapterInstance.name, err);
+                    }
+                }
+            );
+        });
     }
 }
 

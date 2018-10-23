@@ -182,6 +182,7 @@ function handleSuccessfulPost(section, result) {
 
     let funcName = parseFunctionName(arguments.callee.toString())
         , urlFormat = `%s/%s/@%s/%s`
+        , vizUrlFormat = `%s/@%s/%s`
         , operation = undefined
     ;
 
@@ -196,12 +197,16 @@ function handleSuccessfulPost(section, result) {
             operation = result.operations[key][1];
             break;
         }
+        if (`content` === result.operations[key][0]) {
+            operation = result.operations[key][1];
+            break;
+        }
     }
 
     if (!operation) {
         handlePublishWarning(
             section,
-            sprintf(`%s: Operation "comment" for section "%s" was not found in result.`, funcName, section)
+            sprintf(`%s: Operation "comment" or "content" for section "%s" was not found in result.`, funcName, section)
         );
 
         return;
@@ -214,6 +219,14 @@ function handleSuccessfulPost(section, result) {
         operation['author'],
         operation['permlink']
     );
+    if (section === constant.adapterViz) {
+        url = sprintf(
+            vizUrlFormat,
+            constant.adapterToHost[section],
+            operation['author'],
+            operation['permlink']
+        );
+    }
 
     jQuery(constant.htmlNavigation.resultBlock).append(
         sprintf(constant.htmlPieces.publishSuccess, section, url)
@@ -304,6 +317,11 @@ function parsePostUrl(url) {
     }
 
     let [parentPermlink, author, permlink] = path.split(`/`);
+    if (`` === permlink) {
+        permlink = author;
+        author = parentPermlink;
+        parentPermlink = ``;
+    }
     if (author[0] === `@`) {
         author = author.slice(1);
     }

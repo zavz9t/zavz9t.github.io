@@ -25,7 +25,8 @@
     "crypto-js": "^3.1.9-1",
     "golos-js": "^0.7.3",
     "@steemit/steem-js": "^0.7.1",
-    "wlsjs-staging": "^0.1.4"
+    "wlsjs-staging": "^0.1.4",
+    "viz-world-js": "^0.9.9"
   },
   "devDependencies": {
     "browserify": "latest",
