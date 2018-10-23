@@ -315,6 +315,7 @@ I decided to change this and discovered a new world that surrounds me! Today I s
         , submitFormButton: `#submit-form-btn`
         , resetFormButton: `#reset-form-btn`
         , resetAccountsButton: `#reset-accounts-btn`
+        , formResetElements: `.form-reset-item`
         , accountsFormElements: `.accounts-form`
         , accountsResetElements: `.account-reset-item`
         , resultBlock: `#result`

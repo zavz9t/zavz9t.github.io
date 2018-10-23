@@ -405,6 +405,12 @@ function getArrayProperty(objects, propertyName) {
     return result;
 }
 
+function receiveImagesUrlFromText(content) {
+    let images = content.match(/(https?:\/\/.*\.(?:png|jpg))/ig);
+
+    return [...new Set(images)];
+}
+
 module.exports = {
     stripAndTransliterate: stripAndTransliterate
     , stripAccount: stripAccount
@@ -433,4 +439,5 @@ module.exports = {
     , stripHtml: stripHtml
     , parseSectionTags: parseSectionTags
     , getArrayProperty: getArrayProperty
+    , receiveImagesUrlFromText: receiveImagesUrlFromText
 }

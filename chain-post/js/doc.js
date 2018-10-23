@@ -202,6 +202,8 @@ function setHandlerPostPublish(sections) {
         ;
         if (imagesValue) {
             imagesValue = JSON.parse(imagesValue);
+        } else {
+            imagesValue = tool.receiveImagesUrlFromText(postBody);
         }
 
         tool.startPublishing(buttonElement);
@@ -289,18 +291,21 @@ function setHandlerPostPublish(sections) {
     });
 }
 
-function setHandlerLoadFacebook() {
-    jQuery(constant.htmlNavigation.facebookLoadForm).on(`submit`, function(e) {
+function setHandlerLoadFacebook($) {
+    $(constant.htmlNavigation.facebookLoadForm).on(`submit`, function(e) {
         e.preventDefault();
         e.stopPropagation();
 
-        let inputElement = jQuery(this).find(`input`)
+        // reset previous values for Form elements
+        $(constant.htmlNavigation.formResetElements).val(``);
+
+        let inputElement = $(this).find(`input`)
             , facebookUrl = inputElement.val()
                 .replace(`www.facebook.com`, `m.facebook.com`)
                 .replace(`/posts/pcb.`, `/posts/`)
                 .replace(`/posts/`, `/posts/pcb.`)
             , photoUrl = null
-            , buttonElement = jQuery(this).find(`.btn-primary`)
+            , buttonElement = $(this).find(`.btn-primary`)
             , onePhotoMode = false
             , defaultTags = `facebook`
         ;
@@ -332,20 +337,20 @@ function setHandlerLoadFacebook() {
         }
 
         function fbOnePhotoProcess(config) {
-            let el = jQuery( `<div></div>` );
+            let el = $( `<div></div>` );
             el.html(config.content[`__html`]);
 
-            let voiceElement = jQuery(`#voice_replace_id`, el)
+            let voiceElement = $(`#voice_replace_id`, el)
                 , postTitle = voiceElement.text().replace(`—`, ``).trim()
             ;
             voiceElement.remove();
 
             // remove smiles images
-            jQuery(`img.img`, el).each(function() {
-                jQuery(this).remove();
+            $(`img.img`, el).each(function() {
+                $(this).remove();
             });
 
-            let postBody = jQuery(`.msg div`, el).html().replace(/<br>/g, `<br /><br />`);
+            let postBody = $(`.msg div`, el).html().replace(/<br>/g, `<br /><br />`);
             if (postBody) {
                 postBody = sprintf(
                     constant.htmlPieces.facebookPostBodyPattern,
@@ -412,26 +417,26 @@ function setHandlerLoadFacebook() {
             fbFillSubmitFormAndCloseModal(postTitle, postBody, defaultTags, postImages);
         }
         function fbFillSubmitFormAndCloseModal(title, body, tags, images) {
-            jQuery(constant.htmlNavigation.titleBlock).val(title);
-            jQuery(constant.htmlNavigation.bodyBlock).val(body);
-            jQuery(constant.htmlNavigation.tagsBlock).val(tags);
-            jQuery(constant.htmlNavigation.imagesBlock).val(images);
+            $(constant.htmlNavigation.titleBlock).val(title);
+            $(constant.htmlNavigation.bodyBlock).val(body);
+            $(constant.htmlNavigation.tagsBlock).val(tags);
+            $(constant.htmlNavigation.imagesBlock).val(images);
 
-            jQuery(`#facebookModal .close`).trigger(`click`);
+            $(`#facebookModal .close`).trigger(`click`);
             inputElement.val(``);
             buttonElement.prop(constant.htmlNames.disabledPropName, false);
         }
 
-        jQuery.getJSON(
+        $.getJSON(
             tool.buildCorsUrl(facebookUrl),
             function(data) {
                 if (onePhotoMode) {
-                    let el = jQuery(`<div></div>`);
+                    let el = $(`<div></div>`);
                     el.html(data.contents);
 
-                    photoUrl = jQuery(`meta[property="og:image"]`, el).attr(`content`).replace(/&/g, `&amp;`);
+                    photoUrl = $(`meta[property="og:image"]`, el).attr(`content`).replace(/&/g, `&amp;`);
 
-                    let fbData = jQuery(`script:contains('require("MRenderingScheduler").getInstance().schedule({"id":"MPhotoContent"')`, el)
+                    let fbData = $(`script:contains('require("MRenderingScheduler").getInstance().schedule({"id":"MPhotoContent"')`, el)
                         .text()
                         .replace(
                             `require("MRenderingScheduler").getInstance().schedule`,
@@ -448,14 +453,17 @@ function setHandlerLoadFacebook() {
     });
 }
 
-function setHandlerLoadEvernote() {
-    jQuery(constant.htmlNavigation.evernoteLoadForm).on(`submit`, function(e) {
+function setHandlerLoadEvernote($) {
+    $(constant.htmlNavigation.evernoteLoadForm).on(`submit`, function(e) {
         e.preventDefault();
         e.stopPropagation();
 
-        let inputElement = jQuery(this).find(`input`)
+        // reset previous values for Form elements
+        $(constant.htmlNavigation.formResetElements).val(``);
+
+        let inputElement = $(this).find(`input`)
             , url = inputElement.val()
-            , buttonElement = jQuery(this).find(`.btn-primary`)
+            , buttonElement = $(this).find(`.btn-primary`)
             , sharedNotePrefix = `https://www.evernote.com/shard/`
             , defaultTags = `evernote`
             , tagsSeparator = `---tags---`
@@ -472,15 +480,15 @@ function setHandlerLoadEvernote() {
         }
 
         function evernoteFillSubmitFormAndCloseModal(title, body, tags, sectionTags) {
-            jQuery(constant.htmlNavigation.titleBlock).val(title);
-            jQuery(constant.htmlNavigation.bodyBlock).val(body);
-            jQuery(constant.htmlNavigation.tagsBlock).val(tags);
+            $(constant.htmlNavigation.titleBlock).val(title);
+            $(constant.htmlNavigation.bodyBlock).val(body);
+            $(constant.htmlNavigation.tagsBlock).val(tags);
 
             for (let section in sectionTags) {
-                jQuery(sprintf(constant.htmlNavigation.sectionTagsPattern, section)).val(sectionTags[section]);
+                $(sprintf(constant.htmlNavigation.sectionTagsPattern, section)).val(sectionTags[section]);
             }
 
-            jQuery(`#evernoteModal .close`).trigger(`click`);
+            $(`#evernoteModal .close`).trigger(`click`);
             inputElement.val(``);
             buttonElement.prop(constant.htmlNames.disabledPropName, false);
         }
@@ -491,7 +499,7 @@ function setHandlerLoadEvernote() {
             , urlSuffix = `?json=1&rdata=0`
         ;
 
-        jQuery.getJSON(
+        $.getJSON(
             tool.buildCorsUrl(stripUrl + urlSuffix),
             function(data) {
                 let jsonData = JSON.parse(data.contents)
@@ -519,10 +527,10 @@ function setHandlerLoadEvernote() {
                     return;
                 }
 
-                let el = jQuery(`<div></div>`);
+                let el = $(`<div></div>`);
                 el.html(jsonData.content);
 
-                [postBody, tagsList] = jQuery(`en-note`, el).html().split(tagsSeparator);
+                [postBody, tagsList] = $(`en-note`, el).html().split(tagsSeparator);
 
                 evernoteFillSubmitFormAndCloseModal(
                     postTitle,

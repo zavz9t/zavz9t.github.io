@@ -15,8 +15,8 @@ jQuery(document).ready(function($) {
     doc.setHandlerChangeAccount();
     doc.setHandlerChangeGolosVik();
     doc.setHandlerPostPublish(constant.chainPostSubmitConfig);
-    doc.setHandlerLoadFacebook();
-    doc.setHandlerLoadEvernote();
+    doc.setHandlerLoadFacebook($);
+    doc.setHandlerLoadEvernote($);
     doc.setHandlerSubmitFormButton();
     doc.setHandlerResetFormButton();
     doc.setHandlerResetAccountsButton();

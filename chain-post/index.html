@@ -38,27 +38,27 @@
 
         <form action="#" method="POST" id="form" class="needs-validation" novalidate>
             <div class="form-group">
-                <input type="text" class="form-control" id="title" placeholder="Title" />
+                <input type="text" class="form-control form-reset-item" id="title" placeholder="Title" />
                 <div class="invalid-feedback">
                     Title cannot be blank.
                 </div>
             </div>
 
             <div class="form-group">
-                <textarea class="form-control" id="body" rows="20" placeholder="Write your story..."></textarea>
+                <textarea id="body" class="form-control form-reset-item" rows="20" placeholder="Write your story..."></textarea>
                 <div class="invalid-feedback">
                     Post body cannot be blank.
                 </div>
             </div>
 
             <div class="form-group">
-                <input type="text" class="form-control" id="tags"  placeholder="Tags, the first tag is your main category."/>
+                <input type="text" id="tags" class="form-control form-reset-item" placeholder="Tags, the first tag is your main category."/>
                 <div class="invalid-feedback">
                     You need to write at least one tag.
                 </div>
             </div>
 
-            <input type="hidden" class="form-control" id="images" />
+            <input type="hidden" class="form-control form-reset-item" id="images" />
         </form>
 
         <hr />
