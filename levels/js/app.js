@@ -109,6 +109,7 @@ function addSectionLevels(sectionId, sectionName, accounts, properties) {
             , accounts[i].name
             , calculateVotingPower(accounts[i])
             , calculateResources(accounts[i], properties)
+            , (`reward_vesting_steem` in accounts[i]) ? accounts[i].reward_vesting_steem : `N/A`
         ));
     }
 }

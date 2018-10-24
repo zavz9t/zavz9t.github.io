@@ -456,6 +456,8 @@ I decided to change this and discovered a new world that surrounds me! Today I s
                     <div class="progress">
                         <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: %3$s%%" aria-valuenow="%3$s" aria-valuemin="0" aria-valuemax="100">%3$s%%</div>
                     </div>
+
+                    <div class="pending-rewards">Pending rewards: %4$s</div>
                 </div>
             </div>
         `
