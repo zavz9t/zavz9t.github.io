@@ -16,6 +16,7 @@
     "sortablejs": "^1.7.0",
     "font-awesome": "^4.7.0",
     "sprintf-js": "^1.1.1",
+    "numeral": "^2.0.6",
     "url-parse": "^1.4.3",
     "sleep-promise": "^8.0.1",
     "fingerprintjs2sync": "^1.5.5",

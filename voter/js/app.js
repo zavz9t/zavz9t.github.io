@@ -45,7 +45,7 @@ function fillUrl() {
     }
 }
 
-function fillAccountsList(section) {
+function fillAccountsList($, section) {
     let el = $(constant.htmlNavigation.voterAccountsContainer);
     if (el.length < 1) {
         console.error(sprintf(
@@ -73,18 +73,31 @@ function fillAccountsList(section) {
         return;
     }
 
-    accounts.sort();
-    el.html(``);
-    el.append(constant.htmlPieces.voterCheckAllAccountsItem);
-    for (let k in accounts) {
-        el.append(sprintf(
-            constant.htmlPieces.voterAccountItem,
-            accounts[k]
-        ));
-    }
+    AbstractAdapter.factory(section).processAccountsInfo(accounts, function (accountsInfo, gp) {
+        accountsInfo.sort(function(a, b) {
+            if (a.name > b.name) {
+                return 1;
+            }
+            if (a.name < b.name) {
+                return -1;
+            }
+            return 0;
+        });
 
-    el.collapse(`show`);
-    Sortable.create(el.get(0));
+        console.log(gp, accountsInfo[0]);
+
+        el.html(``);
+        el.append(constant.htmlPieces.voterCheckAllAccountsItem);
+        for (let k in accountsInfo) {
+            el.append(sprintf(
+                constant.htmlPieces.voterAccountItem,
+                sprintf(`%s (%s)`, accountsInfo[k].name, tool.vestsToPower(accountsInfo[k], gp))
+            ));
+        }
+
+        el.collapse(`show`);
+        Sortable.create(el.get(0));
+    });
 }
 
 function setSubmitHandler() {
@@ -146,7 +159,7 @@ jQuery(document).ready(function($) {
 
     let sectionEl = $(constant.htmlNavigation.voterSection);
     sectionEl.on(`change`, function () {
-        fillAccountsList($(this).val());
+        fillAccountsList($, $(this).val());
     });
     sectionEl.selectpicker();
 

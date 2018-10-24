@@ -4,6 +4,7 @@ let sprintf = require(`sprintf-js`).sprintf
     , constant = require(`./constant`)
     , ss = require(`sessionstorage`)
     , urlParse = require(`url-parse`)
+    , numeral = require(`numeral`)
 ;
 
 function stripAndTransliterate(input, spaceReplacement, ruPrefix) {
@@ -411,6 +412,24 @@ function receiveImagesUrlFromText(content) {
     return [...new Set(images)];
 }
 
+function vestsToPower(account, gp) {
+    let totalVestingFundSteem = (`total_vesting_fund_steem` in gp)
+            ? parseFloat(gp.total_vesting_fund_steem.split(` `)[0])
+            : parseFloat(gp.total_vesting_fund.split(` `)[0])
+        , totalVestingShares = parseFloat(gp.total_vesting_shares.split(` `)[0])
+        , steemPerVests = 1e6 * totalVestingFundSteem / totalVestingShares
+        , accountVests = parseFloat(account.vesting_shares.split(` `)[0]);
+
+    if (`received_vesting_shares` in account) {
+        accountVests += parseFloat(account.received_vesting_shares.split(` `)[0])
+    }
+    if (`delegated_vesting_shares` in account) {
+        accountVests -= parseFloat(account.delegated_vesting_shares.split(` `)[0])
+    }
+
+    return numeral(accountVests / 1e6 * steemPerVests).format(`0,0.000`);
+}
+
 module.exports = {
     stripAndTransliterate: stripAndTransliterate
     , stripAccount: stripAccount
@@ -440,4 +459,5 @@ module.exports = {
     , parseSectionTags: parseSectionTags
     , getArrayProperty: getArrayProperty
     , receiveImagesUrlFromText: receiveImagesUrlFromText
+    , vestsToPower: vestsToPower
 }
