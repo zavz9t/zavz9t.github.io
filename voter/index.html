@@ -19,7 +19,6 @@
     <link rel="icon" type="image/png" sizes="32x32" href="./favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="./favicon/favicon-16x16.png">
     <link rel="manifest" href="./favicon/site.webmanifest">
-    <link rel="mask-icon" href="./favicon/safari-pinned-tab.svg" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
 
@@ -33,65 +32,47 @@
     <title>Voter | @zavz9t Tools</title>
 </head>
 <body>
-    <div class="container">
-        <div class="mx-auto header" style="width: 215px;"><img src="../img/voter-logo.png" alt="Voter"></div>
+<div class="card text-center">
+    <div id="navigation" class="card-header"></div>
 
-        <form action="#" method="POST" id="form" class="needs-validation align-items-center">
-            <div class="form-group">
-                <input type="url" class="form-control" id="url" placeholder="https://..." required />
-                <div class="invalid-feedback">
-                    Link is required.
-                </div>
-            </div>
+    <div class="card-body">
+        <div class="container">
+            <div class="mx-auto header" style="width: 215px;"><img src="../img/voter-logo.png" alt="Voter"></div>
 
-            <div class="form-group row col-md-auto text-center">
-                <div class="col-sm-6">
-                    <select id="section" title="Select blockchain" class="selectpicker">
-                        <option value="" selected>Choose blockchain</option>
-                    </select>
+            <form action="#" method="POST" id="form" class="needs-validation align-items-center">
+                <div class="form-group">
+                    <input type="url" class="form-control" id="url" placeholder="https://..." required />
+                    <div class="invalid-feedback">
+                        Link is required.
+                    </div>
                 </div>
 
-                <div class="col-sm-6 collapse" id="accounts-container"></div>
-            </div>
+                <div class="form-group row col-md-auto text-center">
+                    <div class="col-sm-6">
+                        <select id="section" title="Select blockchain" class="selectpicker">
+                            <option value="" selected>Choose blockchain</option>
+                        </select>
+                    </div>
+
+                    <div class="col-sm-6 collapse" id="accounts-container"></div>
+                </div>
+
+                <hr />
+
+                <div class="col-md-auto text-center">
+                    <button type="submit" id="submit-form-btn" class="btn btn-primary btn-lg"><i class="fa fa-refresh fa-spin loader"></i> Upvote</button>
+                </div>
+            </form>
 
             <hr />
 
-            <div class="col-md-auto text-center">
-                <button type="submit" id="submit-form-btn" class="btn btn-primary btn-lg"><i class="fa fa-refresh fa-spin loader"></i> Upvote</button>
-            </div>
-        </form>
+            <div id="result"></div>
 
-        <hr />
-
-        <div id="result"></div>
-
-    </div>
-
-    <hr />
-
-    <footer class="footer">
-        <div class="f-wrapper">
-            <span class="text-muted">
-                <div><img src="../img/telegram-logo-16.png" alt="Telegram" /> Telegram support <a href="https://t.me/chain_post" target="_blank" rel="noopener noreferrer">https://t.me/chain_post</a></div>
-                <div>
-                    developed by @zavz9t
-                    &nbsp;
-                    <a href="https://steemit.com/@zavz9t" target="_blank" rel="noopener noreferrer"><img src="../img/logo/steem-16.png" alt="Steem" /></a>
-                    &nbsp;
-                    <a href="https://golos.io/@zavz9t" target="_blank" rel="noopener noreferrer"><img src="../img/logo/golos-16.png" alt="Golos" /></a>
-                    &nbsp;
-                    <a href="https://whaleshares.io/@zavz9t" target="_blank" rel="noopener noreferrer"><img src="../img/logo/wls-16.png" alt="Whaleshares" /></a>
-                    &nbsp;
-                    <a href="https://deals.weku.io/@zavz9t" target="_blank" rel="noopener noreferrer"><img src="../img/logo/weku-16.png" alt="Weku" /></a>
-                    &nbsp;
-                    <a href="https://smoke.io/@zavz9t" target="_blank" rel="noopener noreferrer"><img src="../img/logo/smoke-16.png" alt="Smoke" /></a>
-                    &nbsp;
-                    <a href="https://serey.io/@zavz9t" target="_blank" rel="noopener noreferrer"><img src="../img/logo/serey-16.png" alt="Serey" /></a>
-                    <a href="https://vox.community/@zavz9t" target="_blank" rel="noopener noreferrer"><img src="../img/logo/vox-16.png" alt="VOX" /></a>
-                </div>
-            </span>
         </div>
-    </footer>
+    </div>
+</div>
+
+<footer></footer>
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="../js/lib/jquery.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>
@@ -99,6 +80,6 @@
     <script src="../js/lib/bootstrap-select.min.js" crossorigin="anonymous"></script>
     <script src="../js/lib/sortable.min.js" crossorigin="anonymous"></script>
 
-    <script src="js/main.min.js?t=1540305761"></script>
+    <script src="js/main.min.js?t=1540398591"></script>
 </body>
 </html>

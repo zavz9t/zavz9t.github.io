@@ -5,6 +5,9 @@ let doc = require(`./doc`)
 
 jQuery(document).ready(function($) {
 
+    commonDoc.loadNavigation($);
+    commonDoc.loadFooter($);
+
     $(`[data-toggle="tooltip"]`).tooltip();
 
     doc.addSections(constant.chainPostViewConfig);

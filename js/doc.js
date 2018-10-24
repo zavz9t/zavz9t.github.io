@@ -10,6 +10,24 @@ function setHideShowButtonsHandler($) {
     })
 }
 
+function loadFooter($) {
+    $(`footer`).load(`/common/footer.html`);
+}
+
+function loadNavigation($) {
+    let url = new URL(window.location.href);
+
+    $(`#navigation`).load(`/common/navigation.html`, function() {
+        $(this).find(`a`).each(function() {
+            if ($(this).attr(`href`) === url.pathname) {
+                $(this).addClass(`active`)
+            }
+        })
+    });
+}
+
 module.exports = {
     setHideShowButtonsHandler: setHideShowButtonsHandler
+    , loadFooter: loadFooter
+    , loadNavigation: loadNavigation
 }

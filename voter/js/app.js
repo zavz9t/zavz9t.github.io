@@ -1,8 +1,9 @@
 let constant = require(`../../js/constant`)
     , tool = require(`../../js/tool`)
+    , commonDoc = require(`../../js/doc`)
     , AbstractAdapter = require(`../../js/adapter`).AbstractAdapter
-    , sprintf = require(`sprintf-js`).sprintf
     , Storage = require(`../../js/storage`).Storage
+    , sprintf = require(`sprintf-js`).sprintf
     , urlParse = require(`url-parse`)
 ;
 
@@ -136,6 +137,9 @@ function setCheckAllHandler() {
 }
 
 jQuery(document).ready(function($) {
+
+    commonDoc.loadNavigation($);
+    commonDoc.loadFooter($);
 
     fillSections();
     fillUrl();

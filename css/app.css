@@ -10,7 +10,7 @@ body {
 .header {
     margin-top: 20px;
 }
-.footer {
+footer {
     position: absolute;
     bottom: 0;
     width: 100%;
@@ -18,7 +18,7 @@ body {
     line-height: 60px; /* Vertically center the text there */
     text-align: center;
 }
-.footer .f-wrapper {
+footer .f-wrapper {
     margin: 0;
     padding: 0;
 }
@@ -52,4 +52,9 @@ body {
 
 .cursor-pointer {
     cursor: pointer;
+}
+
+.nav-tabs > li {
+    float: none;
+    display: inline-block;
 }

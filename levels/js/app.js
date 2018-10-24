@@ -1,6 +1,7 @@
 let sprintf = require(`sprintf-js`).sprintf
     , urlParse = require(`url-parse`)
     , constant = require(`../../js/constant`)
+    , commonDoc = require(`../../js/doc`)
     , tool = require(`../../js/tool`)
     , doc = require(`../../js/doc`)
     , AbstractAdapter = require(`../../js/adapter`).AbstractAdapter
@@ -158,6 +159,9 @@ function loadLevels() {
 }
 
 jQuery(document).ready(function($) {
+
+    commonDoc.loadNavigation($);
+    commonDoc.loadFooter($);
 
     fillSectionsButtons($);
 
