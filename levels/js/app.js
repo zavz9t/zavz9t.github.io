@@ -11,6 +11,7 @@ let sprintf = require(`sprintf-js`).sprintf
 const STEEMIT_BANDWIDTH_AVERAGE_WINDOW_SECONDS = 60 * 60 * 24 * 7
     , STEEM_VOTING_MANA_REGENERATION_SECONDS = 432000 // 432000 sec = 5 days
     , STEEM_RC_MANA_REGENERATION_SECONDS = 432000 // 432000 sec = 5 days
+    , CHAIN_ENERGY_REGENERATION_SECONDS = 432000 // 432000 sec = 5 days
 ;
 
 function calculateVotingPower(account) {
@@ -26,10 +27,18 @@ function calculateVotingPower(account) {
 
         return (currentMana * 100 / maxMana).toFixed(2);
     } else if (`energy` in account) {
-        return (account.energy / 100)
+        return (calculateCurrentValue(account, `energy`) / 100)
     } else {
-        return (account.voting_power / 100)
+        return (calculateCurrentValue(account, `voting_power`) / 100)
     }
+}
+
+function calculateCurrentValue(account, key) {
+    let lastVoteTime = Date.parse(account.last_vote_time)
+        , deltaTime = parseInt((new Date().getTime() - lastVoteTime + (new Date().getTimezoneOffset() * 60000)) / 1000)
+    ;
+
+    return parseInt(account[key] + (deltaTime * 10000 / CHAIN_ENERGY_REGENERATION_SECONDS));
 }
 
 function calculateResources(account, properties) {
