@@ -89,7 +89,8 @@ function fillAccountsList($, section) {
         for (let k in accountsInfo) {
             el.append(sprintf(
                 constant.htmlPieces.voterAccountItem,
-                sprintf(`%s (%s)`, accountsInfo[k].name, tool.vestsToPower(accountsInfo[k], gp))
+                accountsInfo[k].name,
+                tool.vestsToPower(accountsInfo[k], gp)
             ));
         }
 
@@ -122,7 +123,7 @@ function setSubmitHandler() {
 
         let accountsList = {};
         accounts.each(function (k, element) {
-            let [accountName] = jQuery(element).val().split(` `);
+            let accountName = jQuery(element).val();
             accountsList[accountName] = Storage.getAccountWif(section, accountName);
         });
 

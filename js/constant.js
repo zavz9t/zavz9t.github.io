@@ -432,7 +432,7 @@ I decided to change this and discovered a new world that surrounds me! Today I s
         , voterAccountItem: `
             <div class="form-check">
                 <input class="form-check-input account-item" type="checkbox" id="%1$s" value="%1$s">
-                <label class="form-check-label" for="%1$s">%1$s</label>
+                <label class="form-check-label" for="%1$s">%1$s (%2$s)</label>
             </div>
         `
         , voterCheckAllAccountsItem: `
