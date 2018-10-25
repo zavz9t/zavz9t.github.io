@@ -311,26 +311,33 @@ function parseQueryParams(queryString) {
 
 function parsePostUrl(url) {
     let parsed = urlParse(url)
-        , path = parsed.pathname
+        , parts = parsed.pathname.split(`/`)
+        , queryParams = parseQueryParams(parsed.query)
+        , authorIndex = 0
     ;
-    if (path[0] === `/`) {
-        path = path.slice(1);
+    if (`author` in queryParams && `permlink` in queryParams) {
+        return {
+            author: queryParams[`author`]
+            , permlink: queryParams[`permlink`]
+        };
     }
 
-    let [parentPermlink, author, permlink] = path.split(`/`);
-    if (`` === permlink) {
-        permlink = author;
-        author = parentPermlink;
-        parentPermlink = ``;
+    for (let i in parts) {
+        if (parts[i].length === 0) {
+            continue;
+        }
+        if (parts[i][0] === `@`) {
+            authorIndex = i * 1;
+            break;
+        }
     }
-    if (author[0] === `@`) {
-        author = author.slice(1);
+    if (authorIndex === 0) {
+        return {};
     }
 
     return {
-        parent_permlink: parentPermlink,
-        author: author,
-        permlink: permlink
+        author: parts[authorIndex].slice(1),
+        permlink: parts[authorIndex + 1]
     };
 }
 

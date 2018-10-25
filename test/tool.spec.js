@@ -208,4 +208,60 @@ describe(`tool`, function () {
 
     });
 
+    describe(`parsePostUrl`, function() {
+
+        it(`should handle empty url`, function() {
+            assert.deepEqual(
+                tool.parsePostUrl(``),
+                {},
+                `Parsing should be done correctly`
+            );
+        });
+
+        it(`should handle golos url`, function() {
+            assert.deepEqual(
+                tool.parsePostUrl(`https://golos.io/alba-stories/@alba-stories/otelx-1000-zvyozd`),
+                {
+                    author: `alba-stories`,
+                    permlink: `otelx-1000-zvyozd`
+                },
+                `Parsing should be done correctly`
+            );
+        });
+
+        it(`should handle golos url`, function() {
+            assert.deepEqual(
+                tool.parsePostUrl(`https://golos.io/alba-stories/@alba-stories/otelx-1000-zvyozd`),
+                {
+                    author: `alba-stories`,
+                    permlink: `otelx-1000-zvyozd`
+                },
+                `Parsing should be done correctly`
+            );
+        });
+
+        it(`should handle goldvoice url`, function() {
+            assert.deepEqual(
+                tool.parsePostUrl(`https://goldvoice.club/@alex007/bitstash-kriptovalyutnyi-internet-magzin-tovarov/`),
+                {
+                    author: `alex007`,
+                    permlink: `bitstash-kriptovalyutnyi-internet-magzin-tovarov`
+                },
+                `Parsing should be done correctly`
+            );
+        });
+
+        it(`should handle liveblogs.space url`, function() {
+            assert.deepEqual(
+                tool.parsePostUrl(`https://liveblogs.space/show.html?author=tatdt&permlink=----czerkovx-voskreseniya-khristova-na-obvodnom-kanale`),
+                {
+                    author: `tatdt`,
+                    permlink: `----czerkovx-voskreseniya-khristova-na-obvodnom-kanale`
+                },
+                `Parsing should be done correctly`
+            );
+        });
+
+    });
+
 });
