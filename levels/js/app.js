@@ -36,9 +36,13 @@ function calculateVotingPower(account) {
 function calculateCurrentValue(account, key) {
     let lastVoteTime = Date.parse(account.last_vote_time)
         , deltaTime = parseInt((new Date().getTime() - lastVoteTime + (new Date().getTimezoneOffset() * 60000)) / 1000)
+        , currentValue = parseInt(account[key] + (deltaTime * 10000 / CHAIN_ENERGY_REGENERATION_SECONDS))
     ;
+    if (currentValue > 10000) {
+        currentValue = 10000;
+    }
 
-    return parseInt(account[key] + (deltaTime * 10000 / CHAIN_ENERGY_REGENERATION_SECONDS));
+    return currentValue;
 }
 
 function calculateResources(account, properties) {
