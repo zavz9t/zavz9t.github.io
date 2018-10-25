@@ -1005,7 +1005,8 @@ describe(`adapter`, function () {
                 , postTitle = `some test title`
                 , postBody = `Very important text`
                 , tags = [`first-tag`, `second-tag`, `third-one`]
-                , options = []
+                , expectedTags = tags.concat([`liveblogs`])
+                , options = { as_liveblogs: true }
                 , permlink = tool.stripAndTransliterate(postTitle)
                 , expectedOperations = [
                     [
@@ -1017,7 +1018,7 @@ describe(`adapter`, function () {
                             permlink: permlink,
                             title: postTitle,
                             body: postBody + constant.postBodySign,
-                            json_metadata: JSON.stringify(adapter.AbstractAdapter.buildJsonMetadata(tags))
+                            json_metadata: JSON.stringify(adapter.AbstractAdapter.buildJsonMetadata(expectedTags))
                         }
                         ],
                         [
@@ -1032,10 +1033,61 @@ describe(`adapter`, function () {
                                 extensions: [[
                                     0,
                                     {
-                                        beneficiaries: [{account: `chain-post`, weight: 500}]
+                                        beneficiaries: [
+                                            { account: `chain-post`, weight: 500 }
+                                            , { account: `denis-skripnik`, weight: 100 }
+                                        ]
                                     }
                                 ]]
                             }
+                    ]
+                ]
+            ;
+
+            assert.deepEqual(
+                adapterObj.buildOperations(author, postTitle, postBody, tags, options),
+                expectedOperations,
+                `Operations should be build correctly`
+            );
+        });
+
+        it(`should publish as liveblogs`, function() {
+            let adapterObj = adapter.AbstractAdapter.factory(constant.adapterViz)
+                , author = `test-user`
+                , postTitle = `some test title`
+                , postBody = `Very important text`
+                , tags = [`first-tag`, `second-tag`, `third-one`]
+                , options = []
+                , permlink = tool.stripAndTransliterate(postTitle)
+                , expectedOperations = [
+                    [
+                        `comment`,
+                        {
+                            parent_author: ``,
+                            parent_permlink: tags[0],
+                            author: author,
+                            permlink: permlink,
+                            title: postTitle,
+                            body: postBody + constant.postBodySign,
+                            json_metadata: JSON.stringify(adapter.AbstractAdapter.buildJsonMetadata(tags))
+                        }
+                    ],
+                    [
+                        `comment_options`,
+                        {
+                            author: author,
+                            permlink: permlink,
+                            max_accepted_payout: `1000000.000 VIZ`,
+                            percent_steem_dollars: 10000,
+                            allow_votes: true,
+                            allow_curation_rewards: true,
+                            extensions: [[
+                                0,
+                                {
+                                    beneficiaries: [{account: `chain-post`, weight: 500}]
+                                }
+                            ]]
+                        }
                     ]
                 ]
             ;

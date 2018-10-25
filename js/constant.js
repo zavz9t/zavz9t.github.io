@@ -4,22 +4,22 @@ const storageKeys = {
     , placeholders = {
     '{f_zavz9t}': `---
 <center>
-### [![](https://s19.postimg.cc/855m162ab/27cb8858fa0dfe41d2b1190533c8af9a63-32x32.png)](https://steemit.com/@zavz9t) &nbsp; [![](https://i.postimg.cc/FHPx155H/WLS-32.png)](https://whaleshares.io/@zavz9t) &nbsp; [![](https://s19.postimg.cc/7tsr21vrn/1480-32x32.png)](https://golos.io/@zavz9t) &nbsp; [![VOX](https://s19.postimg.cc/fgjyfjt4j/vox-32.png)](https://vox.community/@zavz9t) &nbsp; [![Serey](https://i.postimg.cc/XNfxDkn4/serey-32.png)](https://serey.io/@zavz9t) &nbsp; [![Weku](https://i.postimg.cc/P5j6LdMG/weku-32.png)](https://deals.weku.io/@zavz9t) &nbsp; [![Smoke](https://i.postimg.cc/vmhkQp0n/smoke-32.png)](https://smoke.io/@zavz9t)
+### [![](https://s19.postimg.cc/855m162ab/27cb8858fa0dfe41d2b1190533c8af9a63-32x32.png)](https://steemit.com/@zavz9t) &nbsp; [![](https://i.postimg.cc/FHPx155H/WLS-32.png)](https://whaleshares.io/@zavz9t) &nbsp; [![](https://s19.postimg.cc/7tsr21vrn/1480-32x32.png)](https://golos.io/@zavz9t) &nbsp; [![VOX](https://s19.postimg.cc/fgjyfjt4j/vox-32.png)](https://vox.community/@zavz9t) &nbsp; [![Serey](https://i.postimg.cc/XNfxDkn4/serey-32.png)](https://serey.io/@zavz9t) &nbsp; [![Weku](https://i.postimg.cc/P5j6LdMG/weku-32.png)](https://deals.weku.io/@zavz9t) &nbsp; [![Smoke](https://i.postimg.cc/vmhkQp0n/smoke-32.png)](https://smoke.io/@zavz9t) &nbsp; [![VIZ](https://i.postimg.cc/dQj73Mq2/viz-32.png)](https://viz.world/@zavz9t)
 </center>
 `,
     '{f_lego-cat}': `---
 <center>
-### [![](https://s19.postimg.cc/855m162ab/27cb8858fa0dfe41d2b1190533c8af9a63-32x32.png)](https://steemit.com/@lego-cat) &nbsp; [![](https://i.postimg.cc/FHPx155H/WLS-32.png)](https://whaleshares.io/@lego-cat) &nbsp; [![](https://s19.postimg.cc/7tsr21vrn/1480-32x32.png)](https://golos.io/@lego-cat) &nbsp; [![VOX](https://s19.postimg.cc/fgjyfjt4j/vox-32.png)](https://vox.community/@lego-cat) &nbsp; [![Serey](https://i.postimg.cc/XNfxDkn4/serey-32.png)](https://serey.io/@lego-cat) &nbsp; [![Weku](https://i.postimg.cc/P5j6LdMG/weku-32.png)](https://deals.weku.io/@lego-cat)
+### [![](https://s19.postimg.cc/855m162ab/27cb8858fa0dfe41d2b1190533c8af9a63-32x32.png)](https://steemit.com/@lego-cat) &nbsp; [![](https://i.postimg.cc/FHPx155H/WLS-32.png)](https://whaleshares.io/@lego-cat) &nbsp; [![](https://s19.postimg.cc/7tsr21vrn/1480-32x32.png)](https://golos.io/@lego-cat) &nbsp; [![VOX](https://s19.postimg.cc/fgjyfjt4j/vox-32.png)](https://vox.community/@lego-cat) &nbsp; [![Serey](https://i.postimg.cc/XNfxDkn4/serey-32.png)](https://serey.io/@lego-cat) &nbsp; [![Weku](https://i.postimg.cc/P5j6LdMG/weku-32.png)](https://deals.weku.io/@lego-cat) &nbsp; [![VIZ](https://i.postimg.cc/dQj73Mq2/viz-32.png)](https://viz.world/@lego-cat)
 </center>
 `,
     '{f_v-mi}': `---
 <center>
-### [![](https://s19.postimg.cc/855m162ab/27cb8858fa0dfe41d2b1190533c8af9a63-32x32.png)](https://steemit.com/@v-mi) &nbsp; [![](https://i.postimg.cc/FHPx155H/WLS-32.png)](https://whaleshares.io/@v-mi) &nbsp; [![](https://s19.postimg.cc/7tsr21vrn/1480-32x32.png)](https://golos.io/@v-mi) &nbsp; [![VOX](https://s19.postimg.cc/fgjyfjt4j/vox-32.png)](https://vox.community/@v-mi) &nbsp; [![Serey](https://i.postimg.cc/XNfxDkn4/serey-32.png)](https://serey.io/@v-mi)
+### [![](https://s19.postimg.cc/855m162ab/27cb8858fa0dfe41d2b1190533c8af9a63-32x32.png)](https://steemit.com/@v-mi) &nbsp; [![](https://i.postimg.cc/FHPx155H/WLS-32.png)](https://whaleshares.io/@v-mi) &nbsp; [![](https://s19.postimg.cc/7tsr21vrn/1480-32x32.png)](https://golos.io/@v-mi) &nbsp; [![VOX](https://s19.postimg.cc/fgjyfjt4j/vox-32.png)](https://vox.community/@v-mi) &nbsp; [![Serey](https://i.postimg.cc/XNfxDkn4/serey-32.png)](https://serey.io/@v-mi) &nbsp; [![VIZ](https://i.postimg.cc/dQj73Mq2/viz-32.png)](https://viz.world/@v-mi)
 </center>
 `,
     '{f_a-s}': `---
 <center>
-### [![](https://s19.postimg.cc/855m162ab/27cb8858fa0dfe41d2b1190533c8af9a63-32x32.png)](https://steemit.com/@alba-stories) &nbsp; [![](https://i.postimg.cc/FHPx155H/WLS-32.png)](https://whaleshares.io/@alba-stories) &nbsp; [![](https://s19.postimg.cc/7tsr21vrn/1480-32x32.png)](https://golos.io/@alba-stories) &nbsp; [![VOX](https://s19.postimg.cc/fgjyfjt4j/vox-32.png)](https://vox.community/@alba-stories) &nbsp; [![Serey](https://i.postimg.cc/XNfxDkn4/serey-32.png)](https://serey.io/@alba-stories) &nbsp; [![Weku](https://i.postimg.cc/P5j6LdMG/weku-32.png)](https://deals.weku.io/@alba-stories) &nbsp; [![Smoke](https://i.postimg.cc/vmhkQp0n/smoke-32.png)](https://smoke.io/@alba-stories)
+### [![](https://s19.postimg.cc/855m162ab/27cb8858fa0dfe41d2b1190533c8af9a63-32x32.png)](https://steemit.com/@alba-stories) &nbsp; [![](https://i.postimg.cc/FHPx155H/WLS-32.png)](https://whaleshares.io/@alba-stories) &nbsp; [![](https://s19.postimg.cc/7tsr21vrn/1480-32x32.png)](https://golos.io/@alba-stories) &nbsp; [![VOX](https://s19.postimg.cc/fgjyfjt4j/vox-32.png)](https://vox.community/@alba-stories) &nbsp; [![Serey](https://i.postimg.cc/XNfxDkn4/serey-32.png)](https://serey.io/@alba-stories) &nbsp; [![Weku](https://i.postimg.cc/P5j6LdMG/weku-32.png)](https://deals.weku.io/@alba-stories) &nbsp; [![Smoke](https://i.postimg.cc/vmhkQp0n/smoke-32.png)](https://smoke.io/@alba-stories) &nbsp; [![VIZ](https://i.postimg.cc/dQj73Mq2/viz-32.png)](https://viz.world/@alba-stories)
 </center>
 `,
     '{f_cc_ua}': `---
@@ -205,7 +205,7 @@ I decided to change this and discovered a new world that surrounds me! Today I s
 
 ---
 
-###### <center>https://i.postimg.cc/Kzt4Myqq/chain-post-logo-32.png *published by @chain-post* &nbsp; [![Steem](https://i.postimg.cc/MpFVhrVH/steem-16.png) ![Golos](https://i.postimg.cc/rpRxcCNJ/golos-16.png) ![WLS](https://i.postimg.cc/h4yw3Khq/WLS-16.png) ![Serey](https://i.postimg.cc/TwSs1cz3/serey-16.png) ![Weku](https://i.postimg.cc/wTJfT1Lc/weku-16.png) ![Smoke](https://i.postimg.cc/1zsb19rP/smoke-16.png)](https://zavz9t.github.io/chain-post/)</center>
+###### <center>https://i.postimg.cc/Kzt4Myqq/chain-post-logo-32.png *published by @chain-post* &nbsp; [![Steem](https://i.postimg.cc/MpFVhrVH/steem-16.png) ![Golos](https://i.postimg.cc/rpRxcCNJ/golos-16.png) ![WLS](https://i.postimg.cc/h4yw3Khq/WLS-16.png) ![Serey](https://i.postimg.cc/TwSs1cz3/serey-16.png) ![Weku](https://i.postimg.cc/wTJfT1Lc/weku-16.png) ![Smoke](https://i.postimg.cc/1zsb19rP/smoke-16.png) ![VIZ](https://i.postimg.cc/90bzn9x8/viz-16.png)](https://zavz9t.github.io/chain-post/)</center>
 `
     , adapterSteem = `steem`
     , adapterGolos = `golos`
@@ -243,7 +243,7 @@ I decided to change this and discovered a new world that surrounds me! Today I s
             append_html: `
                 <div class="form-check">
                     <input type="checkbox" class="form-check-input accounts-form account-reset-item" id="golos-as-golosio" />
-                    <label class="form-check-label" for="golos-as-golosio">Publish as golos.io</label>
+                    <label class="form-check-label" for="golos-as-golosio">Publish as <a href="https://golos.io/" target="_blank" rel="noopener noreferrer">golos.io</a></label>
                 </div>
     
                 <div class="form-row align-items-center">
@@ -268,7 +268,16 @@ I decided to change this and discovered a new world that surrounds me! Today I s
         , serey: { title: adapterDisplayNames.serey, title_style: `width: 230px;` }
         , weku: { title: adapterDisplayNames.weku, title_style: `width: 225px;` }
         , smoke: { title: adapterDisplayNames.smoke, title_style: `width: 240px;` }
-        , viz: { title: ``, title_style: `width: 160px;` }
+        , viz: {
+            title: ``
+            , title_style: `width: 160px;`
+            , append_html: `
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input accounts-form account-reset-item" id="viz-as-liveblogs" />
+                    <label class="form-check-label" for="viz-as-liveblogs">Publish as <a href="https://liveblogs.space/" target="_blank" rel="noopener noreferrer">liveblogs.space</a></label>
+                </div>
+            `
+        }
         , vox: {
             title: ``,
             title_style: `width: 270px;`,
@@ -290,7 +299,9 @@ I decided to change this and discovered a new world that surrounds me! Today I s
         , serey: []
         , weku: []
         , smoke: []
-        , viz: []
+        , viz: [
+            { type: `checkbox`, html_id: adapterViz + `-as-liveblogs`, key: `as_liveblogs` }
+        ]
         , vox: [
             { type: `checkbox`, html_id: adapterVox + `-for-ds`, key: `for_ds` }
         ]

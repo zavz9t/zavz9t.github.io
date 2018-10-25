@@ -690,6 +690,32 @@ class Viz extends AbstractAdapter
         return Object.assign({}, super.getPlaceholders(), constant.vizPlaceholders);
     }
 
+    static buildJsonMetadata(tags, options)
+    {
+        let metadata = super.buildJsonMetadata(tags, options)
+            , keyLiveBlogs = `as_liveblogs`
+        ;
+
+        if (keyLiveBlogs in options && options[keyLiveBlogs]) {
+            metadata[`tags`] = tags.concat([`liveblogs`]);
+        }
+
+        return metadata;
+    }
+
+    static buildBeneficiaries(options)
+    {
+        let beneficiaries = super.buildBeneficiaries(options)
+            , keyLiveBlogs = `as_liveblogs`
+        ;
+
+        if (keyLiveBlogs in options && options[keyLiveBlogs]) {
+            beneficiaries.push({ account: `denis-skripnik`, weight: 100 });
+        }
+
+        return beneficiaries;
+    }
+
     async broadcastSend(wif, author, permlink, operations) {
         while (true === this.connection.config.get(keyConnBusy)) {
             console.info(this.name + `:broadcastSend: wait execution for 1 sec`);
