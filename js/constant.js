@@ -420,7 +420,7 @@ I decided to change this and discovered a new world that surrounds me! Today I s
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>`
-        , facebookPhotoPattern: `<center>%s</center>`
+        , facebookPhotoPattern: `<center>![](%s)</center>`
         , facebookPostBodyPattern: `%s
 
 %s
