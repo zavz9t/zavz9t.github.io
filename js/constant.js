@@ -184,8 +184,8 @@ I decided to change this and discovered a new world that surrounds me! Today I s
 `
     }
     , wlsPlaceholders = {
-        '{img_p_4}': `https://whaleshares.io/imageproxy/400x0/`,
-        '{img_p_8}': `https://whaleshares.io/imageproxy/800x0/`
+        '{img_p_4}': `https://wls.rjght.com/imageproxy/400x0/`,
+        '{img_p_8}': `https://wls.rjght.com/imageproxy/800x0/`
     }
     , voxPlaceholders = {}
     , sereyPlaceholders = {
@@ -420,7 +420,7 @@ I decided to change this and discovered a new world that surrounds me! Today I s
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>`
-        , facebookPhotoPattern: `<center>![](%s)</center>`
+        , facebookPhotoPattern: `<center>%s</center>`
         , facebookPostBodyPattern: `%s
 
 %s
