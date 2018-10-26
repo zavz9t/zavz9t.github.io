@@ -558,7 +558,7 @@ describe(`adapter`, function () {
                             author: author,
                             permlink: permlink,
                             title: postTitle,
-                            body: `Very important text https://whaleshares.io/imageproxy/400x0/some-image` + constant.postBodySign,
+                            body: `Very important text https://wls.rjght.com/imageproxy/400x0/some-image` + constant.postBodySign,
                             json_metadata: JSON.stringify(adapter.AbstractAdapter.buildJsonMetadata(tags))
                         }
                     ],
@@ -827,13 +827,13 @@ describe(`adapter`, function () {
                             max_accepted_payout: `1000000.000 WKD`,
                             percent_steem_dollars: 10000,
                             allow_votes: true,
-                            allow_curation_rewards: true
-                            // extensions: [[
-                            //     0,
-                            //     {
-                            //         beneficiaries: [{account: `chain-post`, weight: 500}]
-                            //     }
-                            // ]]
+                            allow_curation_rewards: true,
+                            extensions: [[
+                                0,
+                                {
+                                    beneficiaries: [{account: `chain-post`, weight: 500}]
+                                }
+                            ]]
                         }
                     ]
                 ]
@@ -876,13 +876,13 @@ describe(`adapter`, function () {
                             max_accepted_payout: `1000000.000 WKD`,
                             percent_steem_dollars: 10000,
                             allow_votes: true,
-                            allow_curation_rewards: true
-                            // extensions: [[
-                            //     0,
-                            //     {
-                            //         beneficiaries: [{account: `chain-post`, weight: 500}]
-                            //     }
-                            // ]]
+                            allow_curation_rewards: true,
+                            extensions: [[
+                                0,
+                                {
+                                    beneficiaries: [{account: `chain-post`, weight: 500}]
+                                }
+                            ]]
                         }
                     ]
                 ]

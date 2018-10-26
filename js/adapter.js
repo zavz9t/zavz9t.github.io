@@ -612,11 +612,6 @@ class Weku extends AbstractAdapter
         return Object.assign({}, super.getPlaceholders(), constant.wekuPlaceholders);
     }
 
-    static buildBeneficiaries(options)
-    {
-        return []
-    }
-
     static buildJsonMetadata(tags, options)
     {
         let metadata = super.buildJsonMetadata(tags, options);
