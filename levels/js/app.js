@@ -179,6 +179,8 @@ jQuery(document).ready(function($) {
 
     fillSectionsButtons($);
 
+    commonDoc.setToTopHandler($);
+
     doc.setHideShowButtonsHandler($);
 
     loadLevels();

@@ -321,6 +321,7 @@ I decided to change this and discovered a new world that surrounds me! Today I s
         , titleBlock: `#title`
         , bodyBlock: `#body`
         , tagsBlock: `#tags`
+        , toTopButton: `#to-top`
         , sectionTagsPattern: `#%s-tags`
         , imagesBlock: `#images`
         , submitFormButton: `#submit-form-btn`

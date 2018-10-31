@@ -153,6 +153,8 @@ jQuery(document).ready(function($) {
     commonDoc.loadNavigation($);
     commonDoc.loadFooter($);
 
+    commonDoc.setToTopHandler($);
+
     fillSections();
     fillUrl();
 

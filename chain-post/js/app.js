@@ -14,6 +14,7 @@ jQuery(document).ready(function($) {
     doc.fillAccountsList();
 
     commonDoc.setHideShowButtonsHandler($);
+    commonDoc.setToTopHandler($);
     doc.setHandlerAddAccount();
     doc.setHandlerChangeAccount();
     doc.setHandlerChangeGolosVik();

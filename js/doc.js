@@ -26,8 +26,24 @@ function loadNavigation($) {
     });
 }
 
+function setToTopHandler($) {
+    $(`body`).append(`<div id="to-top" class="btn btn-outline-secondary">👆</div>`);
+    $(window).scroll(function () {
+        if ($(this).scrollTop() !== 0) {
+            $(constant.htmlNavigation.toTopButton).fadeIn();
+        } else {
+            $(constant.htmlNavigation.toTopButton).fadeOut();
+        }
+    });
+    $(constant.htmlNavigation.toTopButton).click(function() {
+        $(`html, body`).animate({ scrollTop: 0 }, 600);
+        return false;
+    });
+}
+
 module.exports = {
     setHideShowButtonsHandler: setHideShowButtonsHandler
     , loadFooter: loadFooter
     , loadNavigation: loadNavigation
+    , setToTopHandler: setToTopHandler
 }
