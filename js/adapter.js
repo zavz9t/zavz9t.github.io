@@ -237,7 +237,9 @@ class AbstractAdapter
                 permlink = permlink + `-` + Math.floor(Date.now() / 1000);
 
                 operations[0][1][`permlink`] = permlink;
-                operations[1][1][`permlink`] = permlink;
+                if (1 in operations) {
+                    operations[1][1][`permlink`] = permlink;
+                }
             }
 
             adapterInstance.connection.broadcast.send(
