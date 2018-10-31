@@ -635,10 +635,8 @@ class Smoke extends AbstractAdapter
         super();
 
         this.name = constant.adapterSmoke;
-        this.connection = require(`@steemit/steem-js`);
-
-        if (false === this.connection.config.get(keyConnBusy)) {
-            this.reconnect();
+        if (false === tool.isTerminal()) {
+            this.connection = require(`./static/smoke-js.min`).smoke;
         }
     }
 
@@ -652,17 +650,11 @@ class Smoke extends AbstractAdapter
         return Object.assign({}, super.getPlaceholders(), constant.smokePlaceholders);
     }
 
-    reconnect() {
-        this.connection.api.setOptions({ url: `https://rpc.smoke.io` });
-        this.connection.config.set(`address_prefix`, `SMK`);
-        this.connection.config.set(`chain_id`, `1ce08345e61cd3bf91673a47fc507e7ed01550dab841fd9cdb0ab66ef576aaf0`);
-    }
-
     buildOperations(author, postTitle, postBody, tags, options)
     {
         let operations = super.buildOperations(author, postTitle, postBody, tags, options);
 
-        operations.splice(1, 1);
+        delete operations[1][1][`percent_steem_dollars`];
 
         return operations;
     }

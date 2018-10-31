@@ -27,7 +27,8 @@
     "golos-js": "^0.7.3",
     "@steemit/steem-js": "^0.7.1",
     "wlsjs-staging": "^0.1.4",
-    "viz-world-js": "^0.9.9"
+    "viz-world-js": "^0.9.9",
+    "@scorum/scorum-js": "^2.9.0"
   },
   "devDependencies": {
     "browserify": "latest",

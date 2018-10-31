@@ -919,23 +919,22 @@ describe(`adapter`, function () {
                             body: postBody + constant.postBodySign,
                             json_metadata: JSON.stringify(adapter.AbstractAdapter.buildJsonMetadata(tags))
                         }
-                    // ],
-                    // [
-                    //     `comment_options`,
-                    //     {
-                    //         author: author,
-                    //         permlink: permlink,
-                    //         max_accepted_payout: `1000000.000 SMOKE`,
-                    //         percent_steem_dollars: 10000,
-                    //         allow_votes: true,
-                    //         allow_curation_rewards: true,
-                    //         extensions: [[
-                    //             0,
-                    //             {
-                    //                 beneficiaries: [{account: `chain-post`, weight: 500}]
-                    //             }
-                    //         ]]
-                    //     }
+                    ],
+                    [
+                        `comment_options`,
+                        {
+                            author: author,
+                            permlink: permlink,
+                            max_accepted_payout: `1000000.000 SMOKE`,
+                            allow_votes: true,
+                            allow_curation_rewards: true,
+                            extensions: [[
+                                0,
+                                {
+                                    beneficiaries: [{account: `chain-post`, weight: 500}]
+                                }
+                            ]]
+                        }
                     ]
                 ]
             ;
@@ -967,23 +966,22 @@ describe(`adapter`, function () {
                             body: `Very important text https://smoke.io/smokeimageproxy/400x0/some-image` + constant.postBodySign,
                             json_metadata: JSON.stringify(adapter.AbstractAdapter.buildJsonMetadata(tags))
                         }
-                    // ],
-                    // [
-                    //     `comment_options`,
-                    //     {
-                    //         author: author,
-                    //         permlink: permlink,
-                    //         max_accepted_payout: `1000000.000 SMOKE`,
-                    //         percent_steem_dollars: 10000,
-                    //         allow_votes: true,
-                    //         allow_curation_rewards: true,
-                    //         extensions: [[
-                    //             0,
-                    //             {
-                    //                 beneficiaries: [{account: `chain-post`, weight: 500}]
-                    //             }
-                    //         ]]
-                    //     }
+                    ],
+                    [
+                        `comment_options`,
+                        {
+                            author: author,
+                            permlink: permlink,
+                            max_accepted_payout: `1000000.000 SMOKE`,
+                            allow_votes: true,
+                            allow_curation_rewards: true,
+                            extensions: [[
+                                0,
+                                {
+                                    beneficiaries: [{account: `chain-post`, weight: 500}]
+                                }
+                            ]]
+                        }
                     ]
                 ]
             ;

@@ -112,6 +112,14 @@ function isTest(urlString) {
     return url.searchParams.get('test');
 }
 
+function isTerminal() {
+    if (!process.stdout) {
+        return false;
+    } else {
+        return process.stdout.isTTY
+    }
+}
+
 function handleTags(tags) {
     tags = tags.replace(/,/g, ` `)
         .replace(/\s+/g, ` `)
@@ -443,6 +451,7 @@ module.exports = {
     , stripWif: stripWif
     , buildDefaultPermlink: buildDefaultPermlink
     , isTest: isTest
+    , isTerminal: isTerminal
     , handleTags: handleTags
     , stripPlaceholders: stripPlaceholders
     , scrollTo: scrollTo
