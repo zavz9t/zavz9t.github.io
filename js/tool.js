@@ -163,6 +163,10 @@ function decreasePublishAdapters() {
     ss.setItem(constant.storageKeys.publishAdaptersCount, number);
 }
 
+function resetPublishAdapters() {
+    ss.setItem(constant.storageKeys.publishAdaptersCount, 0);
+}
+
 function areAdaptersPublishing() {
     let number = ss.getItem(constant.storageKeys.publishAdaptersCount);
     if (0 === (number * 1)) {
@@ -173,6 +177,8 @@ function areAdaptersPublishing() {
 }
 
 function startPublishing(buttonElement) {
+    resetPublishAdapters();
+
     jQuery(buttonElement).prop(constant.htmlNames.disabledPropName, true);
     jQuery(buttonElement).addClass(constant.htmlNames.loadingClassName);
 }
@@ -458,6 +464,7 @@ module.exports = {
     , increasePublishAdapters: increasePublishAdapters
     , decreasePublishAdapters: decreasePublishAdapters
     , areAdaptersPublishing: areAdaptersPublishing
+    , resetPublishAdapters: resetPublishAdapters
     , startPublishing: startPublishing
     , finishPublishing: finishPublishing
     , handleSuccessfulPost: handleSuccessfulPost
