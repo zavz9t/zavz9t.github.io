@@ -477,6 +477,10 @@ class Golos extends AbstractAdapter
 
         return beneficiaries;
     }
+
+    reconnect() {
+        this.connection.config.set(`websocket`, `wss://ws.golos.io`);
+    }
 }
 
 class Vox extends AbstractAdapter
@@ -542,7 +546,7 @@ class Wls extends AbstractAdapter
 
         this.name = constant.adapterWls;
         this.connection = require(`wlsjs-staging`);
-        this.connection.api.setOptions({ url: `https://rpc.wls.services` })
+        this.reconnect();
     }
 
     static getCurrency()
@@ -553,6 +557,10 @@ class Wls extends AbstractAdapter
     static getPlaceholders()
     {
         return Object.assign({}, super.getPlaceholders(), constant.wlsPlaceholders);
+    }
+
+    reconnect() {
+        this.connection.api.setOptions({ url: `https://rpc.wls.services` })
     }
 }
 
@@ -650,6 +658,10 @@ class Smoke extends AbstractAdapter
         return Object.assign({}, super.getPlaceholders(), constant.smokePlaceholders);
     }
 
+    reconnect() {
+        this.connection.api.setOptions({ url: `wss://rpc.smoke.io` });
+    }
+
     buildOperations(author, postTitle, postBody, tags, options)
     {
         let operations = super.buildOperations(author, postTitle, postBody, tags, options);
@@ -703,6 +715,10 @@ class Viz extends AbstractAdapter
         }
 
         return beneficiaries;
+    }
+
+    reconnect() {
+        this.connection.api.setOptions({ url: `wss://testnet.viz.world` });
     }
 
     async broadcastSend(wif, author, permlink, operations) {
