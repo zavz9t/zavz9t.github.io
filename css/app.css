@@ -66,3 +66,22 @@ footer .f-wrapper {
     cursor: pointer;
     display: none;
 }
+
+span.deleteicon {
+    position: relative;
+    display: block;
+}
+span.deleteicon span {
+    position: absolute;
+    display: block;
+    top: 11px;
+    right: 11px;
+    width: 16px;
+    height: 16px;
+    background: url('/img/logo/cross-16.png');
+    cursor: pointer;
+}
+span.deleteicon input {
+    padding-right: 32px;
+    box-sizing: border-box;
+}

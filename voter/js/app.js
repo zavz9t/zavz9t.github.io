@@ -154,6 +154,7 @@ jQuery(document).ready(function($) {
     commonDoc.loadFooter($);
 
     commonDoc.setToTopHandler($);
+    commonDoc.setDeletableInputHandler($);
 
     fillSections();
     fillUrl();

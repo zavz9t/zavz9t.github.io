@@ -41,9 +41,25 @@ function setToTopHandler($) {
     });
 }
 
+function setDeletableInputHandler($) {
+    $(constant.htmlNavigation.inputDeletable).wrap(`<span class="deleteicon" />`)
+        .after($(`<span/>`).click(function() {
+                $(this).prev(`input`).val(``).trigger(`keyup`).trigger(`change`).focus()
+            }).fadeOut()
+        ).keyup(function() {
+            if ($(this).val().length > 0) {
+                $(this).siblings(`span`).fadeIn()
+            } else {
+                $(this).siblings(`span`).fadeOut()
+            }
+        })
+    ;
+}
+
 module.exports = {
     setHideShowButtonsHandler: setHideShowButtonsHandler
     , loadFooter: loadFooter
     , loadNavigation: loadNavigation
     , setToTopHandler: setToTopHandler
+    , setDeletableInputHandler: setDeletableInputHandler
 }
