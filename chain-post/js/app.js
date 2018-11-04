@@ -12,7 +12,7 @@ jQuery(document).ready(function($) {
 
     doc.addSections(constant.chainPostViewConfig);
     doc.fillAccountsList();
-    commonDoc.fillSections($);
+    commonDoc.fillEnabledChains($);
 
     commonDoc.setHideShowButtonsHandler($);
     commonDoc.setToTopHandler($);

@@ -127,7 +127,7 @@ function addSectionLevels(sectionId, sectionName, accounts, properties) {
     }
 }
 
-function fillSectionsButtons($) {
+function fillChainsButtons($) {
     if (!constant.enabledAdapters || constant.enabledAdapters.length < 0) {
         return;
     }
@@ -177,7 +177,7 @@ jQuery(document).ready(function($) {
     commonDoc.loadNavigation($);
     commonDoc.loadFooter($);
 
-    fillSectionsButtons($);
+    fillChainsButtons($);
 
     commonDoc.setToTopHandler($);
 

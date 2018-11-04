@@ -56,8 +56,8 @@ function setDeletableInputHandler($) {
     ;
 }
 
-function fillSections($) {
-    let element = $(constant.htmlNavigation.chooseSection);
+function fillEnabledChains($) {
+    let element = $(constant.htmlNavigation.chooseChain);
     if (element.length < 1) {
         console.warn(`Section element not found.`);
 
@@ -81,5 +81,5 @@ module.exports = {
     , loadNavigation: loadNavigation
     , setToTopHandler: setToTopHandler
     , setDeletableInputHandler: setDeletableInputHandler
-    , fillSections: fillSections
+    , fillEnabledChains: fillEnabledChains
 }

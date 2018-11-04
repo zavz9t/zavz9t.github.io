@@ -343,7 +343,7 @@ I decided to change this and discovered a new world that surrounds me! Today I s
         , facebookLoadForm: `#facebook-load-form`
         , evernoteLoadForm: `#evernote-load-form`
         , chainLoadForm: `#chain-load-form`
-        , chooseSection: `#choose-section`
+        , chooseChain: `#choose-chain`
         , voterAccountsContainer: `#accounts-container`
         , voterAccountItem: `.account-item`
         , voterUrl: `#url`
@@ -439,10 +439,18 @@ I decided to change this and discovered a new world that surrounds me! Today I s
             </div>
         `
         , voterCheckAllAccountsItem: `
-            <div class="form-check">
+            <div class="form-row">
                 <hr />
-                <input class="form-check-input" type="checkbox" id="check-all" value="check-all">
-                <label class="form-check-label" for="check-all">Check All</label>
+                <div class="form-check col-auto">
+                    <input class="form-check-input" type="checkbox" id="check-all" value="check-all">
+                    <label class="form-check-label" for="check-all">Check All</label>
+                </div>
+                <div style="width: 32px">
+                    <img src="/img/tool/power-16.png" id="order-by-power" alt="By Power" title="By Power" class="cursor-pointer" />
+                </div>
+                <div style="width: 32px">
+                    <img src="/img/tool/alphabet-16.png" id="order-by-alphabet" alt="By Alphabet" title="By Alphabet" class="cursor-pointer" />
+                </div>
                 <hr />
             </div>
         `

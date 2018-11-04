@@ -90,7 +90,7 @@ function setSubmitHandler($) {
         tool.startPublishing($(constant.htmlNavigation.submitFormButton));
 
         let url = $(constant.htmlNavigation.voterUrl).val()
-            , section = $(constant.htmlNavigation.chooseSection).val()
+            , section = $(constant.htmlNavigation.chooseChain).val()
             , accounts = $(sprintf(`%s:checked`, constant.htmlNavigation.voterAccountItem))
         ;
         if (!section) {
@@ -115,7 +115,7 @@ function setSubmitHandler($) {
 }
 
 function setChangeChainHandler($) {
-    $(constant.htmlNavigation.chooseSection).on(`change`, function() {
+    $(constant.htmlNavigation.chooseChain).on(`change`, function() {
         fillAccountsList($, $(this).val());
     });
 }
@@ -142,7 +142,7 @@ jQuery(document).ready(function($) {
     commonDoc.loadNavigation($);
     commonDoc.loadFooter($);
 
-    commonDoc.fillSections($);
+    commonDoc.fillEnabledChains($);
 
     commonDoc.setToTopHandler($);
     commonDoc.setDeletableInputHandler($);
