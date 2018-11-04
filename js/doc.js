@@ -1,4 +1,6 @@
-let constant = require(`./constant`);
+let constant = require(`./constant`)
+    , numeral = require(`numeral`)
+;
 
 function setHideShowButtonsHandler($) {
     $(constant.htmlNavigation.toolButtonsContainer).on(`show.bs.collapse`, function () {
@@ -75,6 +77,39 @@ function fillEnabledChains($) {
     element.selectpicker();
 }
 
+function setSortHandler($, containerSelector) {
+    $(`body`).on(`click`, containerSelector + ` .sort-control`, function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        let selector = $(this).data(`selector`)
+            , sortAttr = $(this).data(`attr`)
+            , sortDir = $(this).data(`direction`)
+        ;
+
+        $(this).data(`direction`, (sortDir === 1) ? -1 : 1);
+
+        $(selector).sort(function (a, b) {
+            let valueA = $(a).attr(sortAttr)
+                , valueB = $(b).attr(sortAttr)
+                , numA = numeral(valueA).value()
+                , numB = numeral(valueB).value()
+            ;
+
+            if (numA !== null && numB !== null) {
+                valueA = numA;
+                valueB = numB;
+            }
+
+            if (sortDir === 1) {
+                return (valueB < valueA) ? 1 : -1;
+            } else {
+                return (valueB > valueA) ? 1 : -1;
+            }
+        }).appendTo(containerSelector);
+    });
+}
+
 module.exports = {
     setHideShowButtonsHandler: setHideShowButtonsHandler
     , loadFooter: loadFooter
@@ -82,4 +117,5 @@ module.exports = {
     , setToTopHandler: setToTopHandler
     , setDeletableInputHandler: setDeletableInputHandler
     , fillEnabledChains: fillEnabledChains
+    , setSortHandler: setSortHandler
 }

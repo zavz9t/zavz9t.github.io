@@ -78,7 +78,10 @@ function fillAccountsList($, section) {
             ));
         }
         el.collapse(`show`);
-        Sortable.create(el.get(0));
+        Sortable.create(
+            el.get(0)
+            , { draggable: `.form-check` }
+        );
     });
 }
 
@@ -146,6 +149,7 @@ jQuery(document).ready(function($) {
 
     commonDoc.setToTopHandler($);
     commonDoc.setDeletableInputHandler($);
+    commonDoc.setSortHandler($, constant.htmlNavigation.voterAccountsContainer);
 
     fillUrl($);
 

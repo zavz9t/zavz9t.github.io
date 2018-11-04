@@ -433,26 +433,30 @@ I decided to change this and discovered a new world that surrounds me! Today I s
 <center>[Original Post at Facebook](%s)</center>`
         , sectionSelectOption: `<option value="%1$s" data-content="<img src='../img/chain/%1$s-16.png' title='%2$s'>&nbsp;&nbsp;%2$s">%2$s</option>`
         , voterAccountItem: `
-            <div class="form-check">
+            <div class="form-check sortable" data-vp="%2$s" data-name="%1$s">
                 <input class="form-check-input account-item" type="checkbox" id="%1$s" value="%1$s">
                 <label class="form-check-label" for="%1$s">%1$s (%2$s)</label>
             </div>
         `
         , voterCheckAllAccountsItem: `
+            <hr />
             <div class="form-row">
-                <hr />
-                <div class="form-check col-auto">
+                <div class="form-check col-8">
                     <input class="form-check-input" type="checkbox" id="check-all" value="check-all">
                     <label class="form-check-label" for="check-all">Check All</label>
                 </div>
-                <div style="width: 32px">
-                    <img src="/img/tool/power-16.png" id="order-by-power" alt="By Power" title="By Power" class="cursor-pointer" />
+                <div class="form-check col-2">
+                    <img src="/img/tool/power-16.png" id="order-by-power" alt="By Power"
+                         title="By Power" class="cursor-pointer sort-control"
+                         data-selector="#accounts-container .sortable" data-attr="data-vp" data-direction="1" />
                 </div>
-                <div style="width: 32px">
-                    <img src="/img/tool/alphabet-16.png" id="order-by-alphabet" alt="By Alphabet" title="By Alphabet" class="cursor-pointer" />
+                <div class="form-check col-2">
+                    <img src="/img/tool/alphabet-16.png" id="order-by-alphabet" alt="By Alphabet"
+                         title="By Alphabet" class="cursor-pointer sort-control"
+                         data-selector="#accounts-container .sortable" data-attr="data-name" data-direction="1" />
                 </div>
-                <hr />
             </div>
+            <hr />
         `
         , levelsSectionItem: `
             <hr />
