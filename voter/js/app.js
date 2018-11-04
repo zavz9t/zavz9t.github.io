@@ -90,7 +90,7 @@ function setSubmitHandler($) {
         tool.startPublishing($(constant.htmlNavigation.submitFormButton));
 
         let url = $(constant.htmlNavigation.voterUrl).val()
-            , section = $(constant.htmlNavigation.voterSection).val()
+            , section = $(constant.htmlNavigation.chooseSection).val()
             , accounts = $(sprintf(`%s:checked`, constant.htmlNavigation.voterAccountItem))
         ;
         if (!section) {
