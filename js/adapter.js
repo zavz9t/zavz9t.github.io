@@ -718,7 +718,7 @@ class Viz extends AbstractAdapter
     }
 
     reconnect() {
-        this.connection.api.setOptions({ url: `wss://testnet.viz.world` });
+        this.connection.config.set(`websocket`, `wss://ws.viz.ropox.tools`);
     }
 
     async broadcastSend(wif, author, permlink, operations) {
