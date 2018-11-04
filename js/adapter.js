@@ -166,7 +166,7 @@ class AbstractAdapter
     buildOperations(author, postTitle, postBody, tags, options)
     {
         let permlink = this.constructor.buildPermlink(postTitle)
-            , beneficiaries = this.constructor.buildBeneficiaries(options)
+            , beneficiaries = this.constructor.buildBeneficiaries(options, author)
             , operations = [
                 [
                     `comment`,
@@ -704,14 +704,27 @@ class Viz extends AbstractAdapter
         return metadata;
     }
 
-    static buildBeneficiaries(options)
+    static buildBeneficiaries(options, author)
     {
         let beneficiaries = super.buildBeneficiaries(options)
             , keyLiveBlogs = `as_liveblogs`
         ;
 
         if (keyLiveBlogs in options && options[keyLiveBlogs]) {
-            beneficiaries.push({ account: `denis-skripnik`, weight: 100 });
+            let extraBeneficiaries = [{ account: `denis-skripnik`, weight: 100 }]
+                , authorIncluded = false
+            ;
+            for (let i in beneficiaries) {
+                if (beneficiaries[i].account === author) {
+                    authorIncluded = true;
+                    break;
+                }
+            }
+            if (false === authorIncluded) {
+                extraBeneficiaries.push({ account: author, weight: 1 });
+            }
+
+            beneficiaries = extraBeneficiaries.concat(beneficiaries);
         }
 
         return beneficiaries;
