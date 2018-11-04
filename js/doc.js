@@ -56,10 +56,30 @@ function setDeletableInputHandler($) {
     ;
 }
 
+function fillSections($) {
+    let element = $(constant.htmlNavigation.chooseSection);
+    if (element.length < 1) {
+        console.warn(`Section element not found.`);
+
+        return false;
+    }
+
+    for (let i in constant.enabledAdapters) {
+        element.append(sprintf(
+            constant.htmlPieces.sectionSelectOption,
+            constant.enabledAdapters[i],
+            constant.adapterDisplayNames[constant.enabledAdapters[i]]
+        ));
+    }
+
+    element.selectpicker();
+}
+
 module.exports = {
     setHideShowButtonsHandler: setHideShowButtonsHandler
     , loadFooter: loadFooter
     , loadNavigation: loadNavigation
     , setToTopHandler: setToTopHandler
     , setDeletableInputHandler: setDeletableInputHandler
+    , fillSections: fillSections
 }

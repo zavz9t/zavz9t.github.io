@@ -296,8 +296,7 @@ function setHandlerLoadFacebook($) {
         e.preventDefault();
         e.stopPropagation();
 
-        // reset previous values for Form elements
-        $(constant.htmlNavigation.formResetElements).val(``);
+        formElementsReset($);
 
         let inputElement = $(this).find(`input`)
             , facebookUrl = inputElement.val()
@@ -417,10 +416,7 @@ function setHandlerLoadFacebook($) {
             fbFillSubmitFormAndCloseModal(postTitle, postBody, defaultTags, postImages);
         }
         function fbFillSubmitFormAndCloseModal(title, body, tags, images) {
-            $(constant.htmlNavigation.titleBlock).val(title);
-            $(constant.htmlNavigation.bodyBlock).val(body);
-            $(constant.htmlNavigation.tagsBlock).val(tags);
-            $(constant.htmlNavigation.imagesBlock).val(images);
+            fillPostForm(title, body, tags, images);
 
             $(`#facebookModal .close`).trigger(`click`);
             inputElement.val(``);
@@ -458,8 +454,7 @@ function setHandlerLoadEvernote($) {
         e.preventDefault();
         e.stopPropagation();
 
-        // reset previous values for Form elements
-        $(constant.htmlNavigation.formResetElements).val(``);
+        formElementsReset($);
 
         let inputElement = $(this).find(`input`)
             , url = inputElement.val()
@@ -480,13 +475,7 @@ function setHandlerLoadEvernote($) {
         }
 
         function evernoteFillSubmitFormAndCloseModal(title, body, tags, sectionTags) {
-            $(constant.htmlNavigation.titleBlock).val(title);
-            $(constant.htmlNavigation.bodyBlock).val(body);
-            $(constant.htmlNavigation.tagsBlock).val(tags);
-
-            for (let section in sectionTags) {
-                $(sprintf(constant.htmlNavigation.sectionTagsPattern, section)).val(sectionTags[section]);
-            }
+            fillPostForm(title, body, tags, ``, sectionTags);
 
             $(`#evernoteModal .close`).trigger(`click`);
             inputElement.val(``);
@@ -543,6 +532,41 @@ function setHandlerLoadEvernote($) {
     });
 }
 
+function setHandlerLoadChainPost($) {
+    $(constant.htmlNavigation.chainLoadForm).on(`submit`, function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        formElementsReset($);
+
+        let inputElement = $(this).find(`input`)
+            , url = inputElement.val()
+            , selectElement = $(this).find(`select`)
+            , section = selectElement.val()
+            , buttonElement = $(this).find(`.btn-primary`)
+        ;
+
+        if (!url || !section) {
+            console.error(sprintf(`URL or chain was not set. URL: "%s", Chain: "%s".`, url, section));
+
+            return;
+        }
+
+        function chainFillSubmitFormAndCloseModal(title, body, tags, images) {
+            fillPostForm(title, body, tags, images);
+
+            $(`#chainModal .close`).trigger(`click`);
+            inputElement.val(``);
+            selectElement.val(``);
+            buttonElement.prop(constant.htmlNames.disabledPropName, false);
+        }
+
+        buttonElement.prop(constant.htmlNames.disabledPropName, true);
+
+        adapter.AbstractAdapter.factory(section).processContent(url, chainFillSubmitFormAndCloseModal);
+    });
+}
+
 function setHandlerSubmitFormButton() {
     jQuery(constant.htmlNavigation.submitFormButton).on(`click`, function(e) {
         e.preventDefault();
@@ -572,6 +596,25 @@ function setHandlerResetAccountsButton() {
     });
 }
 
+function formElementsReset($) {
+    // reset previous values for Form elements
+    $(constant.htmlNavigation.formResetElements).val(``);
+}
+
+function fillPostForm(title, body, tags, images, sectionTags) {
+    $(constant.htmlNavigation.titleBlock).val(title);
+    $(constant.htmlNavigation.bodyBlock).val(body);
+    $(constant.htmlNavigation.tagsBlock).val(tags);
+    $(constant.htmlNavigation.imagesBlock).val(images);
+
+    if (!sectionTags) {
+        return;
+    }
+    for (let section in sectionTags) {
+        $(sprintf(constant.htmlNavigation.sectionTagsPattern, section)).val(sectionTags[section]);
+    }
+}
+
 module.exports = {
     addSections: addSections
     , fillAccountsList: fillAccountsList
@@ -581,6 +624,7 @@ module.exports = {
     , setHandlerPostPublish: setHandlerPostPublish
     , setHandlerLoadFacebook: setHandlerLoadFacebook
     , setHandlerLoadEvernote: setHandlerLoadEvernote
+    , setHandlerLoadChainPost: setHandlerLoadChainPost
     , setHandlerSubmitFormButton: setHandlerSubmitFormButton
     , setHandlerResetFormButton: setHandlerResetFormButton
     , setHandlerResetAccountsButton: setHandlerResetAccountsButton

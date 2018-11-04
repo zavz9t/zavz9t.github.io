@@ -12,6 +12,7 @@ jQuery(document).ready(function($) {
 
     doc.addSections(constant.chainPostViewConfig);
     doc.fillAccountsList();
+    commonDoc.fillSections($);
 
     commonDoc.setHideShowButtonsHandler($);
     commonDoc.setToTopHandler($);
@@ -21,6 +22,7 @@ jQuery(document).ready(function($) {
     doc.setHandlerPostPublish(constant.chainPostSubmitConfig);
     doc.setHandlerLoadFacebook($);
     doc.setHandlerLoadEvernote($);
+    doc.setHandlerLoadChainPost($);
     doc.setHandlerSubmitFormButton();
     doc.setHandlerResetFormButton();
     doc.setHandlerResetAccountsButton();

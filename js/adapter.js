@@ -350,6 +350,48 @@ class AbstractAdapter
         });
     }
 
+    async processContent(url, callback) {
+        let params = tool.parsePostUrl(url);
+
+        this.reconnect();
+        let adapterInstance = this;
+
+        adapterInstance.connection.api.getContent(params[`author`], params[`permlink`], function(err, result) {
+            if (err) {
+                console.error(adapterInstance.name + `\n- - -\n` + err);
+
+                return;
+            }
+            if (result.id === 0) {
+                console.error(
+                    sprintf(
+                        `Post with url: "%s" was not found at "%s" chain.`,
+                        url,
+                        constant.adapterDisplayNames[adapterInstance.name]
+                    )
+                );
+
+                return;
+            }
+
+            let tags = ``
+                , tagsKey = `tags`
+                , images = ``
+                , imagesKey = `image`
+                , jsonMetadata = JSON.parse(result.json_metadata)
+            ;
+
+            if (tagsKey in jsonMetadata) {
+                tags = jsonMetadata[tagsKey].join(` `)
+            }
+            if (imagesKey in jsonMetadata) {
+                images = JSON.stringify(jsonMetadata[imagesKey])
+            }
+
+            callback(result.title, result.body, tags, images);
+        });
+    }
+
     buildVoteOperations(author, permlink, weight, accounts) {
         let operations = [];
         for (let username in accounts) {

@@ -78,7 +78,7 @@ span.deleteicon span {
     right: 11px;
     width: 16px;
     height: 16px;
-    background: url('/img/logo/cross-16.png');
+    background: url('/img/tool/cross-16.png');
     cursor: pointer;
 }
 span.deleteicon input {

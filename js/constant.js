@@ -342,7 +342,8 @@ I decided to change this and discovered a new world that surrounds me! Today I s
         , golosVikSettings: `.golos-vik-settings`
         , facebookLoadForm: `#facebook-load-form`
         , evernoteLoadForm: `#evernote-load-form`
-        , voterSection: `#section`
+        , chainLoadForm: `#chain-load-form`
+        , chooseSection: `#choose-section`
         , voterAccountsContainer: `#accounts-container`
         , voterAccountItem: `.account-item`
         , voterUrl: `#url`
@@ -359,7 +360,7 @@ I decided to change this and discovered a new world that surrounds me! Today I s
         adapterSection: `
             <hr />
 
-            <h3 class="mx-auto" style="%3$s"><a href="%4$s" target="_blank" rel="noopener noreferrer"><img src="../img/logo/%1$s-32.png" alt="%2$s" /> %2$s</a> Account</h3>
+            <h3 class="mx-auto" style="%3$s"><a href="%4$s" target="_blank" rel="noopener noreferrer"><img src="../img/chain/%1$s-32.png" alt="%2$s" /> %2$s</a> Account</h3>
 
             <div class="form-group">
                 <input type="text" class="form-control accounts-form" id="%1$s-tags" placeholder="Optional: Specify tags for %2$s (will replace previous)" />
@@ -396,28 +397,28 @@ I decided to change this and discovered a new world that surrounds me! Today I s
         `
         , publishSuccess: `
             <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <img src="../img/logo/%1$s-16.png" alt="%1$s"> <a href="%2$s" target="_blank" rel="noopener noreferrer">%2$s</a> <a href="/voter/?url=%2$s" target="_blank" rel="noopener noreferrer"><img src="../img/logo/upvote-16.png" title="Upvote" /></a>
+                <img src="../img/chain/%1$s-16.png" alt="%1$s"> <a href="%2$s" target="_blank" rel="noopener noreferrer">%2$s</a> <a href="/voter/?url=%2$s" target="_blank" rel="noopener noreferrer"><img src="../img/logo/upvote-16.png" title="Upvote" /></a>
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>`
         , publishError: `
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <img src="../img/logo/%1$s-16.png" alt="%1$s"> %2$s
+                <img src="../img/chain/%1$s-16.png" alt="%1$s"> %2$s
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>`
         , publishWarning: `
             <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                <img src="../img/logo/%1$s-16.png" alt="%1$s"> %2$s
+                <img src="../img/chain/%1$s-16.png" alt="%1$s"> %2$s
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>`
         , voteSuccess: `
             <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <img src="../img/logo/%1$s-16.png" alt="%1$s"> %2$s
+                <img src="../img/chain/%1$s-16.png" alt="%1$s"> %2$s
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -430,7 +431,7 @@ I decided to change this and discovered a new world that surrounds me! Today I s
 ---
 
 <center>[Original Post at Facebook](%s)</center>`
-        , voterSectionSelectOption: `<option value="%1$s" data-content="<img src='../img/logo/%1$s-16.png' title='%2$s'>&nbsp;&nbsp;%2$s">%2$s</option>`
+        , sectionSelectOption: `<option value="%1$s" data-content="<img src='../img/chain/%1$s-16.png' title='%2$s'>&nbsp;&nbsp;%2$s">%2$s</option>`
         , voterAccountItem: `
             <div class="form-check">
                 <input class="form-check-input account-item" type="checkbox" id="%1$s" value="%1$s">
@@ -449,7 +450,7 @@ I decided to change this and discovered a new world that surrounds me! Today I s
             <hr />
 
             <div id="%1$s" class="section-container">
-                <h2 class="section-title text-center"><img src="../img/logo/%1$s-32.png" alt="%2$s" /> %2$s</h2>
+                <h2 class="section-title text-center"><img src="../img/chain/%1$s-32.png" alt="%2$s" /> %2$s</h2>
 
             </div>
             
@@ -475,7 +476,7 @@ I decided to change this and discovered a new world that surrounds me! Today I s
             </div>
         `
         , levelsSectionButton: `
-            <a href="?s=%1$s"><img src="../img/logo/%2$s-32.png" alt="%3$s" /></a>
+            <a href="?s=%1$s"><img src="../img/chain/%2$s-32.png" alt="%3$s" /></a>
             &nbsp;
         `
     }

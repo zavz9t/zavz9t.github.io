@@ -7,23 +7,6 @@ let constant = require(`../../js/constant`)
     , urlParse = require(`url-parse`)
 ;
 
-function fillSections($) {
-    let element = $(constant.htmlNavigation.voterSection);
-    if (element.length < 1) {
-        console.warn(`Section element not found.`);
-
-        return false;
-    }
-
-    for (let i in constant.enabledAdapters) {
-        element.append(sprintf(
-            constant.htmlPieces.voterSectionSelectOption,
-            constant.enabledAdapters[i],
-            constant.adapterDisplayNames[constant.enabledAdapters[i]]
-        ));
-    }
-}
-
 function fillUrl($) {
     let element = $(constant.htmlNavigation.voterUrl);
     if (element.length < 1) {
@@ -132,11 +115,9 @@ function setSubmitHandler($) {
 }
 
 function setChangeChainHandler($) {
-    let sectionEl = $(constant.htmlNavigation.voterSection);
-    sectionEl.on(`change`, function() {
+    $(constant.htmlNavigation.chooseSection).on(`change`, function() {
         fillAccountsList($, $(this).val());
     });
-    sectionEl.selectpicker();
 }
 
 function setCheckAllHandler($) {
@@ -161,10 +142,11 @@ jQuery(document).ready(function($) {
     commonDoc.loadNavigation($);
     commonDoc.loadFooter($);
 
+    commonDoc.fillSections($);
+
     commonDoc.setToTopHandler($);
     commonDoc.setDeletableInputHandler($);
 
-    fillSections($);
     fillUrl($);
 
     setChangeChainHandler($);

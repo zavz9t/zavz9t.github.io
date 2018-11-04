@@ -26,6 +26,8 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="../css/lib/bootstrap.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/lib/bootstrap-select.min.css" crossorigin="anonymous">
+
     <link rel="stylesheet" href="../css/lib/font-awesome.min.css" crossorigin="anonymous">
 
     <link rel="stylesheet" href="../css/app.css" crossorigin="anonymous">
@@ -38,7 +40,7 @@
 
     <div class="card-body">
         <div class="container">
-            <div class="mx-auto header" style="width: 325px;"><img src="../img/chain-post-logo-s.png" alt="Chain Post"></div>
+            <div class="mx-auto header" style="width: 325px;"><img src="../img/internal/chain-post-logo-s.png" alt="Chain Post"></div>
 
             <form action="#" method="POST" id="form" class="needs-validation" novalidate>
                 <div class="form-group">
@@ -87,18 +89,20 @@
     <!-- Tools buttons -->
     <div id="tool-buttons">
         <div class="show-buttons collapse">
-            <a href="#" title="Show buttons" data-toggle="collapse" data-target=".collapse-buttons" aria-expanded="true" aria-controls="tool-container form-buttons"><img src="../img/logo/downvote-32.png" alt="Show buttons" /></a>
+            <a href="#" title="Show buttons" data-toggle="collapse" data-target=".collapse-buttons" aria-expanded="true" aria-controls="tool-container form-buttons"><img src="../img/tool/downvote-32.png" alt="Show buttons" /></a>
         </div>
         <div id="tool-container" class="collapse-buttons collapse show">
-            <img src="../img/info-icon-32.png" alt="info" class="info-tooltip" data-toggle="tooltip" data-placement="left" title="Publish your articles to favorite platforms by one click" />
+            <img src="../img/tool/info-icon-32.png" alt="info" class="info-tooltip" data-toggle="tooltip" data-placement="left" title="Publish your articles to favorite platforms by one click" />
             &nbsp;
             <a href="#" id="facebook-load-btn" title="Load Facebook post to form" data-toggle="modal" data-target="#facebookModal"><img src="../img/logo/facebook-logo-32.png" alt="Facebook" /></a>
             &nbsp;
             <a href="#" id="evernote-load-btn" title="Load Evernote shared note to form" data-toggle="modal" data-target="#evernoteModal"><img src="../img/logo/evernote-32.png" alt="Evernote" /></a>
             &nbsp;
+            <a href="#" id="chain-load-btn" title="Load Chain post to form" data-toggle="modal" data-target="#chainModal"><img src="../img/tool/load-post-32.png" alt="Chain Post Load" /></a>
+            &nbsp;
         </div>
         <div class="hide-buttons collapse show">
-            <a href="#" title="Hide buttons" data-toggle="collapse" data-target=".collapse-buttons" aria-expanded="true" aria-controls="tool-container form-buttons"><img src="../img/logo/upvote-32.png" alt="Hide buttons" /></a>
+            <a href="#" title="Hide buttons" data-toggle="collapse" data-target=".collapse-buttons" aria-expanded="true" aria-controls="tool-container form-buttons"><img src="../img/tool/upvote-32.png" alt="Hide buttons" /></a>
         </div>
     </div>
 
@@ -164,10 +168,51 @@
         </div>
     </div>
 
+    <!-- Chain Modal -->
+    <div class="modal fade" id="chainModal" tabindex="-1" role="dialog" aria-labelledby="chainTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="chainTitle">Load post content from any Chain</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="needs-validation text-center" id="chain-load-form">
+                        <div class="form-group">
+                            <input type="text" class="form-control col-md-12" id="post-url" placeholder="https://" required>
+                            <div class="invalid-feedback">
+                                Post URL should be set.
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <select id="choose-section" title="Select blockchain" class="selectpicker" required>
+                                <option value="" selected>Choose blockchain</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                Chain should be selected.
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Load</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="../js/lib/jquery.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>
     <script src="../js/lib/bootstrap.bundle.min.js" integrity="sha384-pjaaA8dDz/5BgdFUPX6M/9SUZv4d12SUPF0axWc+VRZkx5xU3daN+lYb49+Ax+Tl" crossorigin="anonymous"></script>
+    <script src="../js/lib/bootstrap-select.min.js" crossorigin="anonymous"></script>
 
-    <script src="js/main.min.js?t=1541316673"></script>
+    <script src="js/main.min.js?t=1541342799"></script>
 </body>
 </html>
