@@ -24,42 +24,42 @@ class AbstractAdapter
         return ``;
     }
 
-    static factory(section) {
-        if (!(section in items)) {
-            switch (section) {
+    static factory(chainName) {
+        if (!(chainName in items)) {
+            switch (chainName) {
                 case constant.adapterSteem:
-                    items[section] = new Steem();
+                    items[chainName] = new Steem();
                     break;
                 case constant.adapterGolos:
-                    items[section] = new Golos();
+                    items[chainName] = new Golos();
                     break;
                 case constant.adapterVox:
-                    items[section] = new Vox();
+                    items[chainName] = new Vox();
                     break;
                 case constant.adapterWls:
-                    items[section] = new Wls();
+                    items[chainName] = new Wls();
                     break;
                 case constant.adapterSerey:
-                    items[section] = new Serey();
+                    items[chainName] = new Serey();
                     break;
                 case constant.adapterWeku:
-                    items[section] = new Weku();
+                    items[chainName] = new Weku();
                     break;
                 case constant.adapterSmoke:
-                    items[section] = new Smoke();
+                    items[chainName] = new Smoke();
                     break;
                 case constant.adapterViz:
-                    items[section] = new Viz();
+                    items[chainName] = new Viz();
                     break;
                 default:
                     throw sprintf(
-                        `factory: Section "%s" is not implemented yet!`,
-                        section
+                        `factory: Chain "%s" is not implemented yet!`,
+                        chainName
                     );
             }
         }
 
-        return items[section];
+        return items[chainName];
     }
 
     static buildJsonMetadata(tags, options)
@@ -103,7 +103,7 @@ class AbstractAdapter
 
     async isWifValid(username, wif, successCallback, failCallback) {
         while (true === this.connection.config.get(keyConnBusy)) {
-            console.log(this.name + `:isWifValid: wait execution for 1 sec`);
+            console.info(this.name + `:isWifValid: wait execution for 1 sec`);
 
             await sleep(1000);
         }
@@ -424,6 +424,55 @@ class AbstractAdapter
 
         return operations;
     }
+
+    async claimRewardBalance(wif, username, successCallback, failCallback) {
+        let adapterInstance = this;
+
+        this.reconnect();
+        this.processAccountsInfo([username], function (accounts, gp) {
+            if (accounts.length !== 1) {
+                if (failCallback) {
+                    failCallback(sprintf(`User "%s" not found in "%s" chain.`, username, adapterInstance.name));
+                }
+                console.error(message);
+
+                return;
+            }
+
+            adapterInstance.claimRewardBalanceProcess(wif, accounts[0], gp, successCallback, failCallback);
+        });
+    }
+
+    async claimRewardBalanceProcess(wif, account, gp, successCallback, failCallback) {
+        let adapterInstance = this;
+
+        this.connection.broadcast.claimRewardBalance(
+            wif
+            , account.name
+            , account.reward_steem_balance
+            , account.reward_sbd_balance
+            , account.reward_vesting_balance
+            , function(error, result) {
+                if (error) {
+                    failCallback(sprintf(`Failed to claim rewards of "%s" account.`, account.name));
+                    console.error(error);
+
+                    return;
+                }
+
+                adapterInstance.connection.api.getAccounts([account.name], function(error, result) {
+                    if (error) {
+                        failCallback(sprintf(`Failed to load new account "%s" data.`, account.name));
+                        console.error(error);
+
+                        return;
+                    }
+
+                    successCallback(result[0], gp);
+                });
+            }
+        );
+    }
 }
 
 class Steem extends AbstractAdapter
@@ -624,6 +673,36 @@ class Wls extends AbstractAdapter
     reconnect() {
         this.connection.api.setOptions({ url: `https://rpc.wls.services` })
     }
+
+    async claimRewardBalanceProcess(wif, account, gp, successCallback, failCallback) {
+        let adapterInstance = this;
+
+        this.connection.broadcast.claimRewardBalance(
+            wif
+            , account.name
+            , account.reward_steem_balance
+            , account.reward_vesting_balance
+            , function(error, result) {
+                if (error) {
+                    failCallback(sprintf(`Failed to claim rewards of "%s" account.`, account.name));
+                    console.error(error);
+
+                    return;
+                }
+
+                adapterInstance.connection.api.getAccounts([account.name], function(error, result) {
+                    if (error) {
+                        failCallback(sprintf(`Failed to load new account "%s" data.`, account.name));
+                        console.error(error);
+
+                        return;
+                    }
+
+                    successCallback(result[0], gp);
+                });
+            }
+        );
+    }
 }
 
 class Serey extends AbstractAdapter
@@ -731,6 +810,36 @@ class Smoke extends AbstractAdapter
         delete operations[1][1][`percent_steem_dollars`];
 
         return operations;
+    }
+
+    async claimRewardBalanceProcess(wif, account, gp, successCallback, failCallback) {
+        let adapterInstance = this;
+
+        this.connection.broadcast.claimRewardBalance(
+            wif
+            , account.name
+            , account.reward_steem_balance
+            , account.reward_vesting_balance
+            , function(error, result) {
+                if (error) {
+                    failCallback(sprintf(`Failed to claim rewards of "%s" account.`, account.name));
+                    console.error(error);
+
+                    return;
+                }
+
+                adapterInstance.connection.api.getAccounts([account.name], function(error, result) {
+                    if (error) {
+                        failCallback(sprintf(`Failed to load new account "%s" data.`, account.name));
+                        console.error(error);
+
+                        return;
+                    }
+
+                    successCallback(result[0], gp);
+                });
+            }
+        );
     }
 }
 

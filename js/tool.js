@@ -183,17 +183,21 @@ function startPublishing(buttonElement) {
     jQuery(buttonElement).addClass(constant.htmlNames.loadingClassName);
 }
 
-function finishPublishing() {
+function finishPublishing(buttonElement) {
+    if (!buttonElement) {
+        buttonElement = jQuery(constant.htmlNavigation.submitFormButton);
+    }
+
     if (false === areAdaptersPublishing()) {
-        jQuery(constant.htmlNavigation.submitFormButton).prop(constant.htmlNames.disabledPropName, false);
-        jQuery(constant.htmlNavigation.submitFormButton).removeClass(constant.htmlNames.loadingClassName);
+        buttonElement.prop(constant.htmlNames.disabledPropName, false);
+        buttonElement.removeClass(constant.htmlNames.loadingClassName);
     }
 }
 
 function handleSuccessfulPost(section, result) {
     decreasePublishAdapters();
 
-    console.log(section, result);
+    console.info(section, result);
 
     let funcName = parseFunctionName(arguments.callee.toString())
         , urlFormat = `%s/%s/@%s/%s`
@@ -252,7 +256,7 @@ function handleSuccessfulPost(section, result) {
 }
 
 function handleSuccessfulVote(section, accounts) {
-    console.log(section, accounts);
+    console.info(section, accounts);
 
     jQuery(constant.htmlNavigation.resultBlock).append(
         sprintf(

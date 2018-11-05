@@ -461,8 +461,8 @@ I decided to change this and discovered a new world that surrounds me! Today I s
         , levelsSectionItem: `
             <hr />
 
-            <div id="%1$s" class="section-container">
-                <h2 class="section-title text-center"><img src="../img/chain/%1$s-32.png" alt="%2$s" /> %2$s</h2>
+            <div id="%1$s" class="chain-container">
+                <h2 class="chain-title text-center"><img src="../img/chain/%1$s-32.png" alt="%2$s" /> %2$s</h2>
 
             </div>
             
@@ -471,7 +471,7 @@ I decided to change this and discovered a new world that surrounds me! Today I s
         , levelsAccountItem: `
             <hr />
             <div class="account-wrapper row align-items-center justify-content-center">
-                <div class="col-4"><h5>@%1$s</h5></div>
+                <div class="col-4"><h5 class="username">@%1$s</h5></div>
                 <div class="col-8">
                     <div class="progress-title">Voting Power</div>
                     <div class="progress">
@@ -483,7 +483,9 @@ I decided to change this and discovered a new world that surrounds me! Today I s
                         <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: %3$s%%" aria-valuenow="%3$s" aria-valuemin="0" aria-valuemax="100">%3$s%%</div>
                     </div>
 
-                    <div class="pending-rewards">Pending rewards: %4$s</div>
+                    <div class="power">Power: <span class="power-value">%4$s</span></div>
+                    
+                    <div class="pending-rewards">Pending rewards: <span class="rewards-value">%5$s</span> <button class="btn btn-outline-info btn-sm claim-rewards"><i class="fa fa-refresh fa-spin loader"></i> Claim</button></div>
                 </div>
             </div>
         `

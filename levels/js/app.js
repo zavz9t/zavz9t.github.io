@@ -3,7 +3,6 @@ let sprintf = require(`sprintf-js`).sprintf
     , constant = require(`../../js/constant`)
     , commonDoc = require(`../../js/doc`)
     , tool = require(`../../js/tool`)
-    , doc = require(`../../js/doc`)
     , AbstractAdapter = require(`../../js/adapter`).AbstractAdapter
     , Storage = require(`../../js/storage`).Storage
 ;
@@ -92,9 +91,9 @@ function calculateRc(account) {
     return (estimated_mana / estimated_max * 100).toFixed(2);
 }
 
-function addSectionLevels(sectionId, sectionName, accounts, properties) {
+function addChainLevels(chainId, sectionName, accounts, properties) {
     if (accounts.length < 1) {
-        console.warn(sprintf(`addSectionLevels: No accounts found for section "%s".`, sectionId));
+        console.warn(sprintf(`addChainLevels: No accounts found for section "%s".`, chainId));
 
         return;
     }
@@ -109,12 +108,12 @@ function addSectionLevels(sectionId, sectionName, accounts, properties) {
     });
     let sectionEl = jQuery(sprintf(
         constant.htmlPieces.levelsSectionItem
-        , sectionId
+        , chainId
         , sectionName
     ));
 
     jQuery(constant.htmlNavigation.levelsSectionsContainer).append(sectionEl);
-    sectionEl = jQuery(`#` + sectionId);
+    sectionEl = jQuery(`#` + chainId);
 
     for (let i in accounts) {
         sectionEl.append(sprintf(
@@ -122,6 +121,7 @@ function addSectionLevels(sectionId, sectionName, accounts, properties) {
             , accounts[i].name
             , calculateVotingPower(accounts[i])
             , calculateResources(accounts[i], properties)
+            , tool.vestsToPower(accounts[i], properties)
             , (`reward_vesting_steem` in accounts[i]) ? accounts[i].reward_vesting_steem : `N/A`
         ));
     }
@@ -135,16 +135,17 @@ function fillChainsButtons($) {
     container.append(sprintf(constant.htmlPieces.levelsSectionButton, ``, `cross`, `All sections`));
 
     for (let i in constant.enabledAdapters) {
-        let sectionId = constant.enabledAdapters[i]
-            , sectionName = constant.adapterDisplayNames[sectionId]
+        let chainId = constant.enabledAdapters[i]
+            , sectionName = constant.adapterDisplayNames[chainId]
         ;
-        container.append(sprintf(constant.htmlPieces.levelsSectionButton, sectionId, sectionId, sectionName))
+        container.append(sprintf(constant.htmlPieces.levelsSectionButton, chainId, chainId, sectionName))
     }
 }
 
 function loadLevels() {
     let onlySection = ``
-        , parsed = urlParse(window.location.href);
+        , parsed = urlParse(window.location.href)
+    ;
     if (parsed.query) {
         let queryParams = tool.parseQueryParams(parsed.query);
         if (`s` in queryParams) {
@@ -156,20 +157,75 @@ function loadLevels() {
         if (onlySection && constant.enabledAdapters[i] !== onlySection) {
             continue;
         }
-        let sectionId = constant.enabledAdapters[i]
-            , sectionName = constant.adapterDisplayNames[sectionId]
-            , accounts = Storage.getAccounts(sectionId)
+        let chainId = constant.enabledAdapters[i]
+            , sectionName = constant.adapterDisplayNames[chainId]
+            , accounts = Storage.getAccounts(chainId)
         ;
         if (!accounts) {
-            console.info(sprintf(`No saved accounts found for "%s" section.`, sectionId));
+            console.info(sprintf(`No saved accounts found for "%s" section.`, chainId));
 
             continue;
         }
 
-        AbstractAdapter.factory(sectionId).processAccountsInfo(accounts, function (accountsInfo, properties) {
-            addSectionLevels(sectionId, sectionName, accountsInfo, properties)
+        AbstractAdapter.factory(chainId).processAccountsInfo(accounts, function (accountsInfo, properties) {
+            addChainLevels(chainId, sectionName, accountsInfo, properties)
         });
     }
+}
+
+function setClaimRewardsHandler($) {
+    $(`body`).on(`click`, `.claim-rewards`, function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        let buttonEl = $(this)
+            , containerEl = buttonEl.closest(`.chain-container`)
+            , accountEl = buttonEl.closest(`.account-wrapper`)
+        ;
+        if (containerEl.length === 0) {
+            console.error(`setClaimRewardsHandler: Can't find chain container element...`);
+
+            return false;
+        }
+        if (accountEl.length === 0) {
+            console.error(`setClaimRewardsHandler: Can't find account container element...`);
+
+            return false;
+        }
+
+        let chain = containerEl.attr(`id`)
+            , username = accountEl.find(`.username`).text()
+            , powerValueEl = accountEl.find(`.power-value`)
+            , rewardsValueEl = accountEl.find(`.rewards-value`)
+        ;
+
+        if (rewardsValueEl.text().split(` `)[0] === `0.000`) {
+            console.warn(`Cannot claim zero balance.`);
+
+            return;
+        }
+
+        if (username[0] === `@`) {
+            username = username.substring(1);
+        }
+
+        tool.startPublishing(buttonEl);
+
+        AbstractAdapter.factory(chain).claimRewardBalance(
+            Storage.getAccountWif(chain, username)
+            , username
+            , function(account, gp) {
+                powerValueEl.text(tool.vestsToPower(account, gp));
+                rewardsValueEl.text(account.reward_vesting_steem);
+
+                tool.finishPublishing(buttonEl);
+            }
+            , function(message) {
+                console.error(message);
+                tool.finishPublishing(buttonEl);
+            }
+        );
+    });
 }
 
 jQuery(document).ready(function($) {
@@ -180,9 +236,9 @@ jQuery(document).ready(function($) {
     fillChainsButtons($);
 
     commonDoc.setToTopHandler($);
-
-    doc.setHideShowButtonsHandler($);
+    commonDoc.setHideShowButtonsHandler($);
 
     loadLevels();
 
+    setClaimRewardsHandler($);
 });
