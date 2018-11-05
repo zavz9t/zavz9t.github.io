@@ -224,8 +224,7 @@ class AbstractAdapter
         this.reconnect();
         let adapterInstance = this;
 
-        adapterInstance.connection.config.set(keyConnBusy, true);
-        adapterInstance.connection.api.getContent(author, permlink, function(err, result) {
+        adapterInstance.processGetGetContent(author, permlink, this.getReturnVotesParameter(), function(err, result) {
             if (err) {
                 tool.handlePublishError(adapterInstance.name, err);
                 adapterInstance.connection.config.set(keyConnBusy, false);
@@ -257,13 +256,30 @@ class AbstractAdapter
         });
     }
 
+    async processGetGetContent(author, permlink, votes, callback) {
+        this.connection.config.set(keyConnBusy, true);
+        if (votes === null) {
+            this.connection.api.getContent(author, permlink, function (err, result) {
+                callback(err, result);
+            });
+        } else {
+            this.connection.api.getContent(author, permlink, votes, function (err, result) {
+                callback(err, result);
+            });
+        }
+    }
+
+    getReturnVotesParameter() {
+        return null
+    }
+
     vote(url, accounts) {
         let params = tool.parsePostUrl(url);
 
         this.reconnect();
         let adapterInstance = this;
 
-        adapterInstance.connection.api.getContent(params[`author`], params[`permlink`], function(err, result) {
+        this.processGetGetContent(params[`author`], params[`permlink`], this.getReturnVotesParameter(), function(err, result) {
             if (err) {
                 tool.handlePublishError(adapterInstance.name, err);
 
@@ -356,7 +372,7 @@ class AbstractAdapter
         this.reconnect();
         let adapterInstance = this;
 
-        adapterInstance.connection.api.getContent(params[`author`], params[`permlink`], function(err, result) {
+        this.processGetGetContent(params[`author`], params[`permlink`], this.getReturnVotesParameter(), function(err, result) {
             if (err) {
                 console.error(adapterInstance.name + `\n- - -\n` + err);
 
@@ -522,6 +538,10 @@ class Golos extends AbstractAdapter
 
     reconnect() {
         this.connection.config.set(`websocket`, `wss://ws.golos.io`);
+    }
+
+    getReturnVotesParameter() {
+        return -1
     }
 }
 
@@ -776,6 +796,10 @@ class Viz extends AbstractAdapter
         this.connection.config.set(`websocket`, `wss://ws.viz.ropox.tools`);
     }
 
+    getReturnVotesParameter() {
+        return -1
+    }
+
     async broadcastSend(wif, author, permlink, operations) {
         while (true === this.connection.config.get(keyConnBusy)) {
             console.info(this.name + `:broadcastSend: wait execution for 1 sec`);
@@ -786,8 +810,7 @@ class Viz extends AbstractAdapter
         this.reconnect();
         let adapterInstance = this;
 
-        adapterInstance.connection.config.set(keyConnBusy, true);
-        adapterInstance.connection.api.getContent(author, permlink, 0, function(err, result) {
+        this.processGetGetContent(author, permlink, 0, function(err, result) {
             if (err) {
                 tool.handlePublishError(adapterInstance.name, err);
                 adapterInstance.connection.config.set(keyConnBusy, false);
@@ -831,7 +854,7 @@ class Viz extends AbstractAdapter
         this.reconnect();
         let adapterInstance = this;
 
-        adapterInstance.connection.api.getContent(params[`author`], params[`permlink`], -1, function(err, result) {
+        this.processGetGetContent(params[`author`], params[`permlink`], this.getReturnVotesParameter(), function(err, result) {
             if (err) {
                 tool.handlePublishError(adapterInstance.name, err);
 

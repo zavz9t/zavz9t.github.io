@@ -397,7 +397,7 @@ I decided to change this and discovered a new world that surrounds me! Today I s
         `
         , publishSuccess: `
             <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <img src="../img/chain/%1$s-16.png" alt="%1$s"> <a href="%2$s" target="_blank" rel="noopener noreferrer">%2$s</a> <a href="/voter/?url=%2$s" target="_blank" rel="noopener noreferrer"><img src="../img/logo/upvote-16.png" title="Upvote" /></a>
+                <img src="../img/chain/%1$s-16.png" alt="%1$s"> <a href="%2$s" target="_blank" rel="noopener noreferrer">%2$s</a> <a href="/voter/?url=%2$s" target="_blank" rel="noopener noreferrer"><img src="../img/tool/upvote-16.png" title="Upvote" /></a>
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
