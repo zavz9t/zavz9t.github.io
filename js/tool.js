@@ -5,6 +5,7 @@ let sprintf = require(`sprintf-js`).sprintf
     , ss = require(`sessionstorage`)
     , urlParse = require(`url-parse`)
     , numeral = require(`numeral`)
+    , Remarkable = require(`remarkable`)
 ;
 
 function stripAndTransliterate(input, spaceReplacement, ruPrefix) {
@@ -455,6 +456,60 @@ function vestsToPower(account, gp) {
     return numeral(accountVests / 1e6 * steemPerVests).format(`0,0.000`);
 }
 
+function steemMarkdownToHtml(markdownText) {
+    function changeBrTag( html ) {
+        return html.replace(/(\r\n\|\r|\n)/gi, `\<br\/\>`);
+    }
+    function changeYouTubeTag( html ) {
+        return html.replace(/https:\/\/youtu.be\/([\w]*)/gi, `\<p\>\<iframe wdith="420" height="315" src="https:\/\/www.youtube.com\/embed\/$1"\>\<\/iframe\>\<\/p\>`);
+    }
+    function imageSetting(html)
+    {
+        var html_change = html;
+        var regex = /(<([^>]+)>)/ig
+        var result = html_change.replace(regex, ``);
+
+        regex = /(https?:\/\/.*\.(?:png|jpg|jpeg))/ig;
+        var arrMatch = result.match(regex);
+        if(arrMatch != null)
+        {
+            // console.log(arrMatch);
+            for(var i=0;i<arrMatch.length;i++)
+            {
+                re = new RegExp(arrMatch[i], "g");
+                html_change = html_change.replace(re, `<img src="` + arrMatch[i] + `"/>`);
+                if(i!=arrMatch.lenght-1)
+                {
+                    for(var j=i+1;j<arrMatch.length;j++)
+                    {
+                        if(arrMatch[j]==arrMatch[i])
+                        {
+                            arrMatch.splice(j,1);
+                        }
+                    }
+                }
+            }
+        }
+        return html_change;
+    }
+
+    let remarkable = new Remarkable({
+        html: true, // remarkable renders first then sanitize runs...
+        breaks: true,
+        linkify: false, // linkify is done locally
+        typographer: false, // https://github.com/jonschlinkert/remarkable/issues/142#issuecomment-221546793
+        quotes: `“”‘’`,
+    });
+
+    let renderedText = remarkable.render(markdownText);
+    // If content isn't wrapped with an html element at this point, add it.
+    if (renderedText.indexOf(`<html>`) !== 0) {
+        renderedText = `<html>` + renderedText + `</html>`;
+    }
+
+    return changeYouTubeTag(changeBrTag(imageSetting(renderedText)));
+}
+
 module.exports = {
     stripAndTransliterate: stripAndTransliterate
     , stripAccount: stripAccount
@@ -487,4 +542,5 @@ module.exports = {
     , getArrayProperty: getArrayProperty
     , receiveImagesUrlFromText: receiveImagesUrlFromText
     , vestsToPower: vestsToPower
+    , steemMarkdownToHtml: steemMarkdownToHtml
 }

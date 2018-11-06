@@ -23,6 +23,7 @@ jQuery(document).ready(function($) {
     doc.setHandlerLoadFacebook($);
     doc.setHandlerLoadEvernote($);
     doc.setHandlerLoadChainPost($);
+    doc.setHandlerShowPostPreview($);
     doc.setHandlerSubmitFormButton();
     doc.setHandlerResetFormButton();
     doc.setHandlerResetAccountsButton();

@@ -349,6 +349,10 @@ I decided to change this and discovered a new world that surrounds me! Today I s
         , voterUrl: `#url`
         , voterCheckAll: `#check-all`
         , levelsSectionsContainer: `.container`
+        , postPreviewModal: `#postPreviewModal`
+        , postPreviewModalTitle: `#postPreviewModal .modal-title`
+        , postPreviewModalBody: `#postPreviewModal .modal-body`
+        , postPreviewModalTags: `#postPreviewModal .modal-tags`
     }
     , htmlNames = {
         invalidClassName: `is-invalid`

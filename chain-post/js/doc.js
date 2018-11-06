@@ -8,7 +8,7 @@ let sprintf = require(`sprintf-js`).sprintf
     , urlParse = require(`url-parse`)
     , tool = require(`../../js/tool`)
     , Storage = require(`../../js/storage`).Storage
-    , adapter = require(`../../js/adapter`)
+    , AbstractAdapter = require(`../../js/adapter`).AbstractAdapter
     , constant = require(`../../js/constant`)
 ;
 
@@ -118,7 +118,7 @@ function setHandlerAddAccount() {
             return false;
         }
 
-        adapter.AbstractAdapter.factory(section).isWifValid(
+        AbstractAdapter.factory(section).isWifValid(
             username,
             wif,
             function (section, username, wif) {
@@ -250,7 +250,7 @@ function setHandlerPostPublish(sections) {
             if (sectionAuthor && sectionWif) {
                 tool.increasePublishAdapters();
 
-                let adapterObj = adapter.AbstractAdapter.factory(section)
+                let adapterObj = AbstractAdapter.factory(section)
                     , sectionOptions = {images: imagesValue}
                 ;
 
@@ -563,7 +563,23 @@ function setHandlerLoadChainPost($) {
 
         buttonElement.prop(constant.htmlNames.disabledPropName, true);
 
-        adapter.AbstractAdapter.factory(section).processContent(url, chainFillSubmitFormAndCloseModal);
+        AbstractAdapter.factory(section).processContent(url, chainFillSubmitFormAndCloseModal);
+    });
+}
+
+function setHandlerShowPostPreview($) {
+    $(constant.htmlNavigation.postPreviewModal).on(`show.bs.modal`, function(e) {
+        let postTitle = $(constant.htmlNavigation.titleBlock).val()
+            , postBody = $(constant.htmlNavigation.bodyBlock).val()
+            , postTags = $(constant.htmlNavigation.tagsBlock).val()
+            , titleBlock = $(constant.htmlNavigation.postPreviewModalTitle)
+            , bodyBlock = $(constant.htmlNavigation.postPreviewModalBody)
+            , tagsBlock = $(constant.htmlNavigation.postPreviewModalTags)
+        ;
+
+        titleBlock.text(postTitle);
+        bodyBlock.html(tool.steemMarkdownToHtml(AbstractAdapter.factory(`steem`).buildPostBody(postBody)));
+        tagsBlock.text(postTags);
     });
 }
 
@@ -625,6 +641,7 @@ module.exports = {
     , setHandlerLoadFacebook: setHandlerLoadFacebook
     , setHandlerLoadEvernote: setHandlerLoadEvernote
     , setHandlerLoadChainPost: setHandlerLoadChainPost
+    , setHandlerShowPostPreview: setHandlerShowPostPreview
     , setHandlerSubmitFormButton: setHandlerSubmitFormButton
     , setHandlerResetFormButton: setHandlerResetFormButton
     , setHandlerResetAccountsButton: setHandlerResetAccountsButton

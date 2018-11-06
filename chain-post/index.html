@@ -100,6 +100,8 @@
             &nbsp;
             <a href="#" id="chain-load-btn" title="Load Chain post to form" data-toggle="modal" data-target="#chainModal"><img src="../img/tool/load-post-32.png" alt="Chain Post Load" /></a>
             &nbsp;
+            <a href="#" id="postPreviewBtn" title="Post Preview" data-toggle="modal" data-target="#postPreviewModal"><img src="../img/tool/preview-32.png" alt="Preview" /></a>
+            &nbsp;
         </div>
         <div class="hide-buttons collapse show">
             <a href="#" title="Hide buttons" data-toggle="collapse" data-target=".collapse-buttons" aria-expanded="true" aria-controls="tool-container form-buttons"><img src="../img/tool/upvote-32.png" alt="Hide buttons" /></a>
@@ -208,11 +210,30 @@
         </div>
     </div>
 
+    <!-- Post Preview Modal -->
+    <div class="modal fade" id="postPreviewModal" tabindex="-1" role="dialog" aria-labelledby="postPreviewModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="postPreviewModalTitle"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body"></div>
+                <div class="modal-footer">
+                    <div class="modal-tags"></div>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="../js/lib/jquery.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>
     <script src="../js/lib/bootstrap.bundle.min.js" integrity="sha384-pjaaA8dDz/5BgdFUPX6M/9SUZv4d12SUPF0axWc+VRZkx5xU3daN+lYb49+Ax+Tl" crossorigin="anonymous"></script>
     <script src="../js/lib/bootstrap-select.min.js" crossorigin="anonymous"></script>
 
-    <script src="js/main.min.js?t=1541448270"></script>
+    <script src="js/main.min.js?t=1541527584"></script>
 </body>
 </html>
