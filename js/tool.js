@@ -113,6 +113,14 @@ function isTest(urlString) {
     return url.searchParams.get('test');
 }
 
+function isDebug(urlString) {
+    urlString = urlString || window.location.href;
+
+    let url = new URL(urlString);
+
+    return url.searchParams.get('debug');
+}
+
 function isTerminal() {
     if (!process.stdout) {
         return false;
@@ -516,6 +524,7 @@ module.exports = {
     , stripWif: stripWif
     , buildDefaultPermlink: buildDefaultPermlink
     , isTest: isTest
+    , isDebug: isDebug
     , isTerminal: isTerminal
     , handleTags: handleTags
     , stripPlaceholders: stripPlaceholders

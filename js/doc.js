@@ -1,5 +1,7 @@
 let constant = require(`./constant`)
+    , tool = require(`./tool`)
     , numeral = require(`numeral`)
+    , urlParse = require(`url-parse`)
 ;
 
 function setHideShowButtonsHandler($) {
@@ -48,7 +50,7 @@ function setDeletableInputHandler($) {
         .after($(`<span/>`).click(function() {
                 $(this).prev(`input`).val(``).trigger(`keyup`).trigger(`change`).focus()
             }).fadeOut()
-        ).keyup(function() {
+        ).on(`keyup change paste`, function() {
             if ($(this).val().length > 0) {
                 $(this).siblings(`span`).fadeIn()
             } else {
@@ -74,7 +76,59 @@ function fillEnabledChains($) {
         ));
     }
 
+    setAutoChangeChainHandler($, element);
+
     element.selectpicker();
+}
+
+function setAutoChangeChainHandler($, chainElement) {
+    let urlSelector, urlElement;
+    if (
+        !(urlSelector = chainElement.data(`url-container`))
+        || (urlElement = $(urlSelector)).length < 1
+    ) {
+        console.error(sprintf(`Can't find url element to watch. Used selector: "%s"`, urlSelector));
+
+        return false;
+    }
+
+    urlElement.on(`keyup change paste`, function(e) {
+        let hostname = urlParse($(this).val()).hostname
+            , chainName = ``
+        ;
+
+        for (let i in constant.adapterToClients) {
+            if (constant.adapterToClients[i].includes(hostname)) {
+                chainName = i;
+                break;
+            }
+        }
+
+        if (!chainName) {
+            if (tool.isDebug()) {
+                console.warn(sprintf(`Chain wasn't found for domain: "%s"`, hostname));
+            }
+
+            return;
+        }
+        let chainExists = false;
+        chainElement.find(`option`).each(function(i, item) {
+            if ($(item).val() === chainName) {
+                chainExists = true;
+            }
+        });
+
+        if (!chainExists) {
+            console.error(sprintf(`Chain "%s" doesn't exists in enabled chains.`, chainName));
+
+            return;
+        }
+
+        if (chainElement.val() !== chainName) {
+            chainElement.val(chainName);
+            chainElement.selectpicker(`refresh`);
+        }
+    });
 }
 
 function setSortHandler($, containerSelector) {

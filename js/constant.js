@@ -235,6 +235,16 @@ I decided to change this and discovered a new world that surrounds me! Today I s
         , smoke: `Smoke`
         , viz: `VIZ`
     }
+    , adapterToClients = {
+        golos: [`golos.io`, `goldvoice.club`, `mapala.net`, `golos.cf`, `golos.today`]
+        , steem: [`steemit.com`, `steemd.com`, `busy.org`]
+        , vox: [`vox.community`]
+        , wls: [`whaleshares.io`]
+        , serey: [`serey.io`]
+        , weku: [`deals.weku.io`]
+        , smoke: [`smoke.io`]
+        , viz: [`viz.world`, `liveblogs.space`, `viz-client.mysteemit.xyz`]
+    }
     , chainPostViewConfig = {
         steem: { title: adapterDisplayNames.steem, title_style: `width: 235px;` }
         , golos: {
@@ -521,6 +531,7 @@ module.exports = {
     , adapterSmoke: adapterSmoke
     , adapterViz: adapterViz
     , enabledAdapters: enabledAdapters
+    , adapterToClients: adapterToClients
     , adapterDisplayNames: adapterDisplayNames
     , chainPostViewConfig: chainPostViewConfig
     , chainPostSubmitConfig: chainPostSubmitConfig
