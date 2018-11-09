@@ -22,13 +22,13 @@
     "jquery": "^3.3.1",
     "local-storage": "^1.4.2",
     "numeral": "^2.0.6",
-    "sessionstorage": "^0.1.0",
     "remarkable": "^1.7.1",
+    "sessionstorage": "^0.1.0",
     "sleep-promise": "^8.0.1",
     "sortablejs": "^1.7.0",
     "sprintf-js": "^1.1.1",
     "url-parse": "^1.4.4",
-    "viz-world-js": "^0.9.9",
+    "viz-world-js": "^0.9.10",
     "wlsjs-staging": "^0.1.4"
   },
   "devDependencies": {

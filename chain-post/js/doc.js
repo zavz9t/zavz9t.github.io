@@ -307,6 +307,7 @@ function setHandlerLoadFacebook($) {
             , buttonElement = $(this).find(`.btn-primary`)
             , onePhotoMode = false
             , defaultTags = `facebook`
+            , queryParams = tool.parseQueryParams(urlParse(facebookUrl).query)
         ;
 
         buttonElement.prop(constant.htmlNames.disabledPropName, true);
@@ -314,14 +315,15 @@ function setHandlerLoadFacebook($) {
         if (facebookUrl.startsWith(`https://m.facebook.com/photo.php`)) {
             onePhotoMode = true;
         }
+        if (`substory_index` in queryParams && facebookUrl.startsWith(`https://m.facebook.com/story.php`)) {
+            facebookUrl = sprintf(`https://m.facebook.com/photo.php?fbid=%s`, queryParams.story_fbid);
+            onePhotoMode = true;
+        }
         if (
             facebookUrl.startsWith(`https://m.facebook.com/permalink.php`)
             || facebookUrl.startsWith(`https://m.facebook.com/story.php`)
         ) {
-            let parsed = urlParse(facebookUrl)
-                , queryParams = tool.parseQueryParams(parsed.query)
-                , urlPattern = `https://m.facebook.com/%s/posts/pcb.%s/`
-            ;
+            let urlPattern = `https://m.facebook.com/%s/posts/pcb.%s/`;
 
             facebookUrl = sprintf(urlPattern, queryParams.id, queryParams.story_fbid);
         }
