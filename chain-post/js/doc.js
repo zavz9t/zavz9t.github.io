@@ -432,7 +432,7 @@ function setHandlerLoadFacebook($) {
                     let el = $(`<div></div>`);
                     el.html(data.contents);
 
-                    photoUrl = $(`meta[property="og:image"]`, el).attr(`content`).replace(/&/g, `&amp;`);
+                    photoUrl = $(`meta[property="og:image"]`, el).attr(`content`);
 
                     let fbData = $(`script:contains('require("MRenderingScheduler").getInstance().schedule({"id":"MPhotoContent"')`, el)
                         .text()

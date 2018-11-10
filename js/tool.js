@@ -473,31 +473,22 @@ function steemMarkdownToHtml(markdownText) {
     }
     function imageSetting(html)
     {
-        var html_change = html;
-        var regex = /(<([^>]+)>)/ig
-        var result = html_change.replace(regex, ``);
+        let html_change = html
+            , regex = /(<([^>]+)>)/ig
+            , result = html_change.replace(regex, ``)
+        ;
 
-        regex = /(https?:\/\/.*\.(?:png|jpg|jpeg))/ig;
-        var arrMatch = result.match(regex);
-        if(arrMatch != null)
-        {
-            // console.log(arrMatch);
-            for(var i=0;i<arrMatch.length;i++)
-            {
-                re = new RegExp(arrMatch[i], "g");
-                html_change = html_change.replace(re, `<img src="` + arrMatch[i] + `"/>`);
-                if(i!=arrMatch.lenght-1)
-                {
-                    for(var j=i+1;j<arrMatch.length;j++)
-                    {
-                        if(arrMatch[j]==arrMatch[i])
-                        {
-                            arrMatch.splice(j,1);
-                        }
-                    }
-                }
-            }
+        regex = /(https?:\/\/.*\.(?:png|jpg|jpeg)(?:\?[^(?:<|\s)]+)?)/ig;
+        let arrMatch = result.match(regex);
+
+        if (arrMatch.length < 1) {
+            return html_change
         }
+        let uniqueArray = [...new Set(arrMatch)];
+        for (let i in uniqueArray) {
+            html_change = strReplace(html_change, uniqueArray[i], `<img src="` + uniqueArray[i] + `"/>`)
+        }
+
         return html_change;
     }
 
@@ -516,6 +507,20 @@ function steemMarkdownToHtml(markdownText) {
     }
 
     return changeYouTubeTag(changeBrTag(imageSetting(renderedText)));
+}
+
+function strReplace(string, orig, replace) {
+    let index = string.indexOf(orig);
+
+    if (index < 0) {
+        return string;
+    }
+
+    do {
+        string = string.replace(orig, replace);
+    } while((index = string.indexOf(string, index + replace.length)) > -1);
+
+    return string;
 }
 
 module.exports = {
@@ -552,4 +557,5 @@ module.exports = {
     , receiveImagesUrlFromText: receiveImagesUrlFromText
     , vestsToPower: vestsToPower
     , steemMarkdownToHtml: steemMarkdownToHtml
+    , strReplace: strReplace
 }
