@@ -24,7 +24,9 @@ function fillUrl($) {
         , urlParamName = `url`
     ;
     if (urlParamName in queryParams) {
-        element.val(queryParams[urlParamName]);
+        element.val(queryParams[urlParamName])
+            .trigger(`change`)
+        ;
     }
 }
 
@@ -151,9 +153,9 @@ jQuery(document).ready(function($) {
     commonDoc.setDeletableInputHandler($);
     commonDoc.setSortHandler($, constant.htmlNavigation.voterAccountsContainer);
 
-    fillUrl($);
-
     setChangeChainHandler($);
     setCheckAllHandler($);
     setSubmitHandler($);
+
+    fillUrl($);
 });

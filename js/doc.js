@@ -125,8 +125,10 @@ function setAutoChangeChainHandler($, chainElement) {
         }
 
         if (chainElement.val() !== chainName) {
-            chainElement.val(chainName);
-            chainElement.selectpicker(`refresh`);
+            chainElement.val(chainName)
+                .trigger(`change`)
+                .selectpicker(`refresh`)
+            ;
         }
     });
 }
