@@ -134,6 +134,33 @@ After many times when I walked near garbage at the park/forest I decided to chan
 <center>https://i.postimg.cc/pLq4vk5R/nature-saver-footer.jpg</center>
 
 <center>[Image Source](https://www.lifegate.it/imprese/news/lifegate-5-giugno-led)</center>
+`,
+        '{f_dr}': `
+
+---
+
+| <center>![UA](https://i.postimg.cc/05thg3rP/Ukraine-Flag-16.png) Нотатки</center> | <center>![EN](https://i.postimg.cc/G2fPKkhw/United-States-Flag-16.png) Notes</center> |
+| --- | --- |
+| **Енергетика та Здоров'я (ЕЗ)** &#124; 1 день <br /> Прогулятися природою, побути з собою наодинці, або зайнятися здоров'ям. | **Energy and Health (EH)** &#124; 1 day <br /> Walk at the nature, spend some time with myself or do some stuff for my health. |
+| **Побут (Пб)** &#124; 1 день <br /> Приготувати їсти, поприбирати і т.д. | **Household (Ho)** &#124; 1 day <br /> Cooking, cleaning apartment and so on. |
+| **Проф. розвиток (ПР)** &#124; 5 днів <br /> Почитати статтю по спеціальності, відвідати конференцію, послухати онлайн доповідь та подібне. | **Professional growth (PG)** &#124; 5 days <br /> Read tech article, listen online lesson or take part of conference. |
+| **Робота (Рб)** &#124; 1 день <br /> Реалізувати певний функціонал, поспілкуватися з рекрутерами / клієнтами, написати статтю по новим можливостям | **Work (Wo)** &#124; 1 day <br /> Implement some feature, communicate with client/HR or write documentation. |
+| **Розваги (Рв)** &#124; 3 дні <br /> Відвідати нове місце з дружиною, сходити в кафе, кіно і т.п. | **Relax (Rl)** &#124; 3 days <br /> Go to new place with wife, visit a cafe, cinema, etc. |
+| **Сім'я (См)** &#124; 1 день <br /> Зробити щось для членів сім'ї, провести разом час, підтримати один одного. | **Family (Fm)** &#124; 1 day <br /> To do something for relative, spend time together, etc. |
+| **Саморозвиток (Ср)** &#124; 3 дні <br /> Почитати цікаву книжку, зробити те, що раніше не робив. | **Self-Development (SD)** &#124; 3 days <br /> Read interesting book, do something new. |
+
+---
+
+| <center>![UA](https://i.postimg.cc/05thg3rP/Ukraine-Flag-16.png) Декілька слів про розділ</center> | <center>![EN](https://i.postimg.cc/G2fPKkhw/United-States-Flag-16.png) A few words about section</center> |
+| --- | --- |
+| Протягом експерименту з **Щоденником досягнень** ( #achievements-diary ) я усвідомив, що воно трохи занадто. Тобто, з моєї точки зору, майже неможливо кожного дня робити якесь досягнення, тоді потрібно лише цим і займатися, а це якось дивно. | During experiment with #achievements-diary I understood that it is not best way to develop yourself. As I noticed, make achievements each day takes too much energy and I can't do nothing else. |
+| Під кінець того експерименту і прийшов до висновку, щоб бути ефективним і чогось досягати, потрібно ставити собі задачі та їх виконувати. Таким чином, крок за кроком рухатися вперед. А в результаті таких кроків будуть і досягнення, і відчуття ефективно прожитого дня. | At the end of that experiment I decided to change the way how plan my day and which tasks do during it. I believe that by doing some tasks each day to may develop yourself and feel happy at the end of day. |
+| Тому, я вирішив спробувати трохи інший підхід. | So, I will check such methodology. |
+| <center>**Подивимось що з цього вийде 🙂**</center> | <center>**Let's look how it will change me 🙂**</center> |
+
+---
+
+<center>[Image source](http://www.zaarapp.com/features/inspection)</center>
 `
 }
     , steemPlaceholders = {
