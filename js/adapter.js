@@ -1018,13 +1018,4 @@ class Viz extends AbstractAdapter
     }
 }
 
-function isWif(wif) {
-    let golos = require(`golos-js`);
-
-    return golos.auth.isWif(wif);
-}
-
-module.exports = {
-    isWif: isWif
-    , AbstractAdapter: AbstractAdapter
-}
+module.exports.AbstractAdapter = AbstractAdapter;

@@ -108,7 +108,7 @@ function setHandlerAddAccount() {
             usernameItem.addClass(constant.htmlNames.invalidClassName);
             dataValid = false;
         }
-        if (!wif || false === adapter.isWif(wif)) {
+        if (!wif || false === AbstractAdapter.factory(constant.adapterGolos).isWif(wif)) {
             wifItem.addClass(constant.htmlNames.invalidClassName);
             dataValid = false;
         }
