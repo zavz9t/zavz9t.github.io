@@ -117,12 +117,14 @@ function setSubmitHandler($) {
 
         AbstractAdapter.factory(section).vote(url, accountsList);
 
-        ga(`send`, {
-            hitType: `event`,
-            eventCategory: `voter`,
-            eventAction: `vote`,
-            eventValue: section
-        });
+        gtag(
+            `event`,
+            `vote`,
+            {
+                event_category: `voter`,
+                event_value: section
+            }
+        );
     });
 }
 

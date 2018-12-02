@@ -226,12 +226,14 @@ function setClaimRewardsHandler($) {
             }
         );
 
-        ga(`send`, {
-            hitType: `event`,
-            eventCategory: `levels`,
-            eventAction: `claim-rewards`,
-            eventValue: chain
-        });
+        gtag(
+            `event`,
+            `claim-rewards`,
+            {
+                event_category: `levels`,
+                event_value: chain
+            }
+        );
     });
 }
 

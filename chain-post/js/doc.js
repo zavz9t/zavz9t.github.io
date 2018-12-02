@@ -137,12 +137,14 @@ function setHandlerAddAccount($) {
             }
         );
 
-        ga(`send`, {
-            hitType: `event`,
-            eventCategory: `chain-post`,
-            eventAction: `add-account`,
-            eventValue: section
-        });
+        gtag(
+            `event`,
+            `add-account`,
+            {
+                event_category: `chain-post`,
+                event_value: section
+            }
+        );
     });
 }
 
@@ -292,12 +294,14 @@ function setHandlerPostPublish(sections) {
                     sectionOptions
                 );
 
-                ga(`send`, {
-                    hitType: `event`,
-                    eventCategory: `chain-post`,
-                    eventAction: `post-publish`,
-                    eventValue: section
-                });
+                gtag(
+                    `event`,
+                    `post-publish`,
+                    {
+                        event_category: `chain-post`,
+                        event_value: section
+                    }
+                );
             }
         }
 
@@ -463,7 +467,11 @@ function setHandlerLoadFacebook($) {
             }
         );
 
-        ga(`send`, `event`, `chain-post`, `load-facebook`);
+        gtag(
+            `event`,
+            `load-facebook`,
+            { event_category: `chain-post` }
+        );
     });
 }
 
@@ -548,7 +556,11 @@ function setHandlerLoadEvernote($) {
             }
         );
 
-        ga(`send`, `event`, `chain-post`, `load-evernote`);
+        gtag(
+            `event`,
+            `load-evernote`,
+            { event_category: `chain-post` }
+        );
     });
 }
 
@@ -585,7 +597,11 @@ function setHandlerLoadChainPost($) {
 
         AbstractAdapter.factory(section).processContent(url, chainFillSubmitFormAndCloseModal);
 
-        ga(`send`, `event`, `chain-post`, `load-chain-post`);
+        gtag(
+            `event`,
+            `load-chain-post`,
+            { event_category: `chain-post` }
+        );
     });
 }
 
@@ -603,7 +619,11 @@ function setHandlerShowPostPreview($) {
         bodyBlock.html(tool.steemMarkdownToHtml(AbstractAdapter.factory(`steem`).buildPostBody(postBody)));
         tagsBlock.text(postTags);
 
-        ga(`send`, `event`, `chain-post`, `show-post-preview`);
+        gtag(
+            `event`,
+            `show-post-preview`,
+            { event_category: `chain-post` }
+        );
     });
 }
 
@@ -621,7 +641,11 @@ function setHandlerResetFormButton($) {
         e.preventDefault();
         e.stopPropagation();
 
-        ga(`send`, `event`, `chain-post`, `reset-form`);
+        gtag(
+            `event`,
+            `reset-form`,
+            { event_category: `chain-post` }
+        );
 
         location.reload();
     });
@@ -636,7 +660,11 @@ function setHandlerResetAccountsButton($) {
             $(this).val(``);
         })
 
-        ga(`send`, `event`, `chain-post`, `reset-accounts`);
+        gtag(
+            `event`,
+            `reset-accounts`,
+            { event_category: `chain-post` }
+        );
     });
 }
 
