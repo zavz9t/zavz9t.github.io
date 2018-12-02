@@ -225,6 +225,13 @@ function setClaimRewardsHandler($) {
                 tool.finishPublishing(buttonEl);
             }
         );
+
+        ga(`send`, {
+            hitType: `event`,
+            eventCategory: `levels`,
+            eventAction: `claim-rewards`,
+            eventValue: chain
+        });
     });
 }
 

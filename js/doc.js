@@ -8,9 +8,13 @@ function setHideShowButtonsHandler($) {
     $(constant.htmlNavigation.toolButtonsContainer).on(`show.bs.collapse`, function () {
         $(constant.htmlNavigation.toolButtonsShow).collapse(`hide`);
         $(constant.htmlNavigation.toolButtonsHide).collapse(`show`);
+
+        ga(`send`, `event`, `tool-buttons`, `show`);
     }).on(`hide.bs.collapse`, function () {
         $(constant.htmlNavigation.toolButtonsShow).collapse(`show`);
         $(constant.htmlNavigation.toolButtonsHide).collapse(`hide`);
+
+        ga(`send`, `event`, `tool-buttons`, `hide`);
     })
 }
 
@@ -41,6 +45,9 @@ function setToTopHandler($) {
     });
     $(constant.htmlNavigation.toTopButton).click(function() {
         $(`html, body`).animate({ scrollTop: 0 }, 600);
+
+        ga(`send`, `event`, `tool-buttons`, `to-top`);
+
         return false;
     });
 }

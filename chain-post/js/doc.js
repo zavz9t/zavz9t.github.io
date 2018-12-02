@@ -84,8 +84,8 @@ function addAccountToList(section, username, check) {
     }
 }
 
-function setHandlerAddAccount() {
-    jQuery(`.btn-add-account`).on(`click`, function(e) {
+function setHandlerAddAccount($) {
+    $(`.btn-add-account`).on(`click`, function(e) {
         e.preventDefault();
         e.stopPropagation();
 
@@ -136,6 +136,13 @@ function setHandlerAddAccount() {
                 wifItem.addClass(constant.htmlNames.invalidClassName);
             }
         );
+
+        ga(`send`, {
+            hitType: `event`,
+            eventCategory: `chain-post`,
+            eventAction: `add-account`,
+            eventValue: section
+        });
     });
 }
 
@@ -284,6 +291,13 @@ function setHandlerPostPublish(sections) {
                     sectionTags ? sectionTags : defaultTags,
                     sectionOptions
                 );
+
+                ga(`send`, {
+                    hitType: `event`,
+                    eventCategory: `chain-post`,
+                    eventAction: `post-publish`,
+                    eventValue: section
+                });
             }
         }
 
@@ -448,6 +462,8 @@ function setHandlerLoadFacebook($) {
                 }
             }
         );
+
+        ga(`send`, `event`, `chain-post`, `load-facebook`);
     });
 }
 
@@ -531,6 +547,8 @@ function setHandlerLoadEvernote($) {
                 );
             }
         );
+
+        ga(`send`, `event`, `chain-post`, `load-evernote`);
     });
 }
 
@@ -566,6 +584,8 @@ function setHandlerLoadChainPost($) {
         buttonElement.prop(constant.htmlNames.disabledPropName, true);
 
         AbstractAdapter.factory(section).processContent(url, chainFillSubmitFormAndCloseModal);
+
+        ga(`send`, `event`, `chain-post`, `load-chain-post`);
     });
 }
 
@@ -582,35 +602,41 @@ function setHandlerShowPostPreview($) {
         titleBlock.text(postTitle);
         bodyBlock.html(tool.steemMarkdownToHtml(AbstractAdapter.factory(`steem`).buildPostBody(postBody)));
         tagsBlock.text(postTags);
+
+        ga(`send`, `event`, `chain-post`, `show-post-preview`);
     });
 }
 
-function setHandlerSubmitFormButton() {
-    jQuery(constant.htmlNavigation.submitFormButton).on(`click`, function(e) {
+function setHandlerSubmitFormButton($) {
+    $(constant.htmlNavigation.submitFormButton).on(`click`, function(e) {
         e.preventDefault();
         e.stopPropagation();
 
-        jQuery(constant.htmlNavigation.submitForm).trigger(`submit`);
+        $(constant.htmlNavigation.submitForm).trigger(`submit`);
     });
 }
 
-function setHandlerResetFormButton() {
-    jQuery(constant.htmlNavigation.resetFormButton).on(`click`, function(e) {
+function setHandlerResetFormButton($) {
+    $(constant.htmlNavigation.resetFormButton).on(`click`, function(e) {
         e.preventDefault();
         e.stopPropagation();
+
+        ga(`send`, `event`, `chain-post`, `reset-form`);
 
         location.reload();
     });
 }
 
-function setHandlerResetAccountsButton() {
-    jQuery(constant.htmlNavigation.resetAccountsButton).on(`click`, function(e) {
+function setHandlerResetAccountsButton($) {
+    $(constant.htmlNavigation.resetAccountsButton).on(`click`, function(e) {
         e.preventDefault();
         e.stopPropagation();
 
-        jQuery(constant.htmlNavigation.accountsResetElements).each(function() {
-            jQuery(this).val(``);
+        $(constant.htmlNavigation.accountsResetElements).each(function() {
+            $(this).val(``);
         })
+
+        ga(`send`, `event`, `chain-post`, `reset-accounts`);
     });
 }
 

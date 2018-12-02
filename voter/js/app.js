@@ -116,6 +116,13 @@ function setSubmitHandler($) {
         });
 
         AbstractAdapter.factory(section).vote(url, accountsList);
+
+        ga(`send`, {
+            hitType: `event`,
+            eventCategory: `voter`,
+            eventAction: `vote`,
+            eventValue: section
+        });
     });
 }
 

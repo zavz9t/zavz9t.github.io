@@ -16,7 +16,7 @@ jQuery(document).ready(function($) {
 
     commonDoc.setHideShowButtonsHandler($);
     commonDoc.setToTopHandler($);
-    doc.setHandlerAddAccount();
+    doc.setHandlerAddAccount($);
     doc.setHandlerChangeAccount();
     doc.setHandlerChangeGolosVik();
     doc.setHandlerPostPublish(constant.chainPostSubmitConfig);
@@ -24,7 +24,7 @@ jQuery(document).ready(function($) {
     doc.setHandlerLoadEvernote($);
     doc.setHandlerLoadChainPost($);
     doc.setHandlerShowPostPreview($);
-    doc.setHandlerSubmitFormButton();
-    doc.setHandlerResetFormButton();
-    doc.setHandlerResetAccountsButton();
+    doc.setHandlerSubmitFormButton($);
+    doc.setHandlerResetFormButton($);
+    doc.setHandlerResetAccountsButton($);
 });
