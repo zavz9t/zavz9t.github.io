@@ -671,7 +671,7 @@ class Wls extends AbstractAdapter
     }
 
     reconnect() {
-        this.connection.api.setOptions({ url: `https://rpc.wls.services` })
+        this.connection.api.setOptions({ url: `https://pubrpc.whaleshares.io` })
     }
 
     async claimRewardBalanceProcess(wif, account, gp, successCallback, failCallback) {
