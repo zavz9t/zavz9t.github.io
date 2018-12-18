@@ -19,7 +19,7 @@ jQuery(document).ready(function($) {
     doc.setHandlerAddAccount($);
     doc.setHandlerChangeAccount();
     doc.setHandlerChangeGolosVik();
-    doc.setHandlerPostPublish(constant.chainPostSubmitConfig);
+    doc.setHandlerPostPublish($, constant.chainPostSubmitConfig);
     doc.setHandlerLoadFacebook($);
     doc.setHandlerLoadEvernote($);
     doc.setHandlerLoadChainPost($);

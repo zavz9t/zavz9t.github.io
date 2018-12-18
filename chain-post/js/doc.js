@@ -191,23 +191,23 @@ function setHandlerChangeGolosVik() {
     });
 }
 
-function setHandlerPostPublish(sections) {
-    jQuery(`#form`).on(`submit`, function(e) {
+function setHandlerPostPublish($, sections) {
+    $(constant.htmlNavigation.submitForm).on(`submit`, function(e) {
         e.preventDefault();
         e.stopPropagation();
 
-        let buttonElement = jQuery(constant.htmlNavigation.submitFormButton)
+        let buttonElement = $(constant.htmlNavigation.submitFormButton)
             , dataValid = true
             , usernamePattern = `#%s-username`
             , wifPattern = `#%s-wif`
-            , postTitleElement = jQuery(constant.htmlNavigation.titleBlock)
+            , postTitleElement = $(constant.htmlNavigation.titleBlock)
             , postTitle = postTitleElement.val().trim()
-            , postBodyElement = jQuery(constant.htmlNavigation.bodyBlock)
+            , postBodyElement = $(constant.htmlNavigation.bodyBlock)
             , postBody = postBodyElement.val()
             , tagsPattern = `#%s-tags`
-            , postTagsElement = jQuery(constant.htmlNavigation.tagsBlock)
+            , postTagsElement = $(constant.htmlNavigation.tagsBlock)
             , defaultTags = tool.handleTags(postTagsElement.val().trim())
-            , imagesValue = jQuery(constant.htmlNavigation.imagesBlock).val()
+            , imagesValue = $(constant.htmlNavigation.imagesBlock).val()
         ;
         if (imagesValue) {
             imagesValue = JSON.parse(imagesValue);
@@ -251,9 +251,9 @@ function setHandlerPostPublish(sections) {
 
         // publishing
         for (let section in sections) {
-            let sectionAuthor = tool.stripAccount(jQuery(sprintf(usernamePattern, section)).val())
-                , sectionWif = tool.stripWif(jQuery(sprintf(wifPattern, section)).val())
-                , sectionTags = tool.handleTags(jQuery(sprintf(tagsPattern, section)).val())
+            let sectionAuthor = tool.stripAccount($(sprintf(usernamePattern, section)).val())
+                , sectionWif = tool.stripWif($(sprintf(wifPattern, section)).val())
+                , sectionTags = tool.handleTags($(sprintf(tagsPattern, section)).val())
             ;
 
             if (sectionAuthor && sectionWif) {
@@ -266,7 +266,7 @@ function setHandlerPostPublish(sections) {
                 if (sections[section] && sections[section].length > 0) {
                     for (let i in sections[section]) {
                         let optionValue = null
-                            , optionElement = jQuery(`#` + sections[section][i][`html_id`])
+                            , optionElement = $(`#` + sections[section][i][`html_id`])
                         ;
                         switch (sections[section][i][`type`]) {
                             case `checkbox`:
@@ -295,11 +295,11 @@ function setHandlerPostPublish(sections) {
                 );
 
                 gtag(
-                    `event`,
-                    `post-publish`,
-                    {
-                        event_category: `chain-post`,
-                        event_value: section
+                    `event`
+                    , `post-publish`
+                    , {
+                        event_category: `chain-post`
+                        , event_value: section
                     }
                 );
             }

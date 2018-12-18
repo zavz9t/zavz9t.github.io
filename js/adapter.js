@@ -159,7 +159,12 @@ class AbstractAdapter
             console.log(this.name, operations);
             tool.handleSuccessfulPost(this.name, operations);
         } else {
-            this.broadcastSend(wif, author, this.constructor.buildPermlink(postTitle), operations);
+            this.broadcastSend(
+                wif
+                , author
+                , this.constructor.buildPermlink(postTitle)
+                , operations
+            ).catch((err) => { console.error(err) });
         }
     }
 
@@ -253,7 +258,7 @@ class AbstractAdapter
                     }
                 }
             );
-        });
+        }).catch((err) => { console.error(err) });
     }
 
     async processGetGetContent(author, permlink, votes, callback) {
@@ -330,7 +335,7 @@ class AbstractAdapter
                     }
                 }
             );
-        });
+        }).catch((err) => { console.error(err) });
     }
 
     async processAccountsInfo(accounts, callback) {
@@ -405,7 +410,7 @@ class AbstractAdapter
             }
 
             callback(result.title, result.body, tags, images);
-        });
+        }).catch((err) => { console.error(err) });
     }
 
     buildVoteOperations(author, permlink, weight, accounts) {
@@ -439,8 +444,14 @@ class AbstractAdapter
                 return;
             }
 
-            adapterInstance.claimRewardBalanceProcess(wif, accounts[0], gp, successCallback, failCallback);
-        });
+            adapterInstance.claimRewardBalanceProcess(
+                wif
+                , accounts[0]
+                , gp
+                , successCallback
+                , failCallback
+            ).catch((err) => { console.error(err) });
+        }).catch((err) => { console.error(err) });
     }
 
     async claimRewardBalanceProcess(wif, account, gp, successCallback, failCallback) {
@@ -544,7 +555,8 @@ class Steem extends AbstractAdapter
             });
         }
 
-        super.processAccountsInfo(accounts, rcLoadCallback);
+        super.processAccountsInfo(accounts, rcLoadCallback)
+            .catch((err) => { console.error(err) });
     }
 }
 
@@ -954,7 +966,7 @@ class Viz extends AbstractAdapter
                     }
                 }
             );
-        });
+        }).catch((err) => { console.error(err) });
     }
 
     vote(url, accounts) {
@@ -1014,7 +1026,7 @@ class Viz extends AbstractAdapter
                     }
                 }
             );
-        });
+        }).catch((err) => { console.error(err) });
     }
 }
 
